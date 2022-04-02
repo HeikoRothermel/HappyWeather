@@ -13,6 +13,8 @@
 		E87DA5AB27F8E3D9004BB7AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E87DA5A927F8E3D9004BB7AA /* Main.storyboard */; };
 		E87DA5AD27F8E3E2004BB7AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E87DA5AC27F8E3E2004BB7AA /* Assets.xcassets */; };
 		E87DA5B027F8E3E2004BB7AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E87DA5AE27F8E3E2004BB7AA /* LaunchScreen.storyboard */; };
+		E87DA5B927F90CC1004BB7AA /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DA5B827F90CC1004BB7AA /* APIService.swift */; };
+		E87DA5BB27F90D00004BB7AA /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DA5BA27F90D00004BB7AA /* Forecast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,9 @@
 		E87DA5AC27F8E3E2004BB7AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E87DA5AF27F8E3E2004BB7AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E87DA5B127F8E3E2004BB7AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E87DA5B827F90CC1004BB7AA /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		E87DA5BA27F90D00004BB7AA /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
+		E87DA5BC27F90DD8004BB7AA /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +68,9 @@
 				E87DA5AC27F8E3E2004BB7AA /* Assets.xcassets */,
 				E87DA5AE27F8E3E2004BB7AA /* LaunchScreen.storyboard */,
 				E87DA5B127F8E3E2004BB7AA /* Info.plist */,
+				E87DA5B827F90CC1004BB7AA /* APIService.swift */,
+				E87DA5BA27F90D00004BB7AA /* Forecast.swift */,
+				E87DA5BC27F90DD8004BB7AA /* MyPlayground.playground */,
 			);
 			path = HappyWeather;
 			sourceTree = "<group>";
@@ -139,7 +147,9 @@
 			files = (
 				E87DA5A827F8E3D9004BB7AA /* ViewController.swift in Sources */,
 				E87DA5A427F8E3D9004BB7AA /* AppDelegate.swift in Sources */,
+				E87DA5B927F90CC1004BB7AA /* APIService.swift in Sources */,
 				E87DA5A627F8E3D9004BB7AA /* SceneDelegate.swift in Sources */,
+				E87DA5BB27F90D00004BB7AA /* Forecast.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
