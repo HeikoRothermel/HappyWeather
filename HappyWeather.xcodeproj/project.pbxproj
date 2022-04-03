@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A69C81A8EC8850AE6A35634 /* Pods_HappyWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75DCC89CDF309914F948AB63 /* Pods_HappyWeather.framework */; };
 		E87DA5A427F8E3D9004BB7AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DA5A327F8E3D9004BB7AA /* AppDelegate.swift */; };
 		E87DA5A627F8E3D9004BB7AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DA5A527F8E3D9004BB7AA /* SceneDelegate.swift */; };
 		E87DA5A827F8E3D9004BB7AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DA5A727F8E3D9004BB7AA /* ViewController.swift */; };
@@ -15,9 +16,12 @@
 		E87DA5B027F8E3E2004BB7AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E87DA5AE27F8E3E2004BB7AA /* LaunchScreen.storyboard */; };
 		E87DA5B927F90CC1004BB7AA /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DA5B827F90CC1004BB7AA /* APIService.swift */; };
 		E87DA5BB27F90D00004BB7AA /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DA5BA27F90D00004BB7AA /* Forecast.swift */; };
+		E8E0E4BE27F9B7E9007206C8 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0E4BD27F9B7E9007206C8 /* ContentViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		75DCC89CDF309914F948AB63 /* Pods_HappyWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HappyWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D201A9AE359ADDF3755D6E36 /* Pods-HappyWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyWeather.release.xcconfig"; path = "Target Support Files/Pods-HappyWeather/Pods-HappyWeather.release.xcconfig"; sourceTree = "<group>"; };
 		E87DA5A027F8E3D9004BB7AA /* HappyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E87DA5A327F8E3D9004BB7AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E87DA5A527F8E3D9004BB7AA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -29,6 +33,8 @@
 		E87DA5B827F90CC1004BB7AA /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		E87DA5BA27F90D00004BB7AA /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		E87DA5BC27F90DD8004BB7AA /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		E8E0E4BD27F9B7E9007206C8 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		F2EA79E252CEFDC6069C3142 /* Pods-HappyWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyWeather.debug.xcconfig"; path = "Target Support Files/Pods-HappyWeather/Pods-HappyWeather.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,17 +42,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A69C81A8EC8850AE6A35634 /* Pods_HappyWeather.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D7F3BC93F8DE696235B5F0E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F2EA79E252CEFDC6069C3142 /* Pods-HappyWeather.debug.xcconfig */,
+				D201A9AE359ADDF3755D6E36 /* Pods-HappyWeather.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		E3EB366D79C73569408A041D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				75DCC89CDF309914F948AB63 /* Pods_HappyWeather.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E87DA59727F8E3D9004BB7AA = {
 			isa = PBXGroup;
 			children = (
 				E87DA5A227F8E3D9004BB7AA /* HappyWeather */,
 				E87DA5A127F8E3D9004BB7AA /* Products */,
+				1D7F3BC93F8DE696235B5F0E /* Pods */,
+				E3EB366D79C73569408A041D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,9 +87,10 @@
 		E87DA5A227F8E3D9004BB7AA /* HappyWeather */ = {
 			isa = PBXGroup;
 			children = (
+				E8E0E4C027F9BA40007206C8 /* WeaklyWeather */,
+				E8E0E4BF27F9BA2B007206C8 /* DailyWeather */,
 				E87DA5A327F8E3D9004BB7AA /* AppDelegate.swift */,
 				E87DA5A527F8E3D9004BB7AA /* SceneDelegate.swift */,
-				E87DA5A727F8E3D9004BB7AA /* ViewController.swift */,
 				E87DA5A927F8E3D9004BB7AA /* Main.storyboard */,
 				E87DA5AC27F8E3E2004BB7AA /* Assets.xcassets */,
 				E87DA5AE27F8E3E2004BB7AA /* LaunchScreen.storyboard */,
@@ -75,6 +102,22 @@
 			path = HappyWeather;
 			sourceTree = "<group>";
 		};
+		E8E0E4BF27F9BA2B007206C8 /* DailyWeather */ = {
+			isa = PBXGroup;
+			children = (
+				E8E0E4BD27F9B7E9007206C8 /* ContentViewController.swift */,
+			);
+			path = DailyWeather;
+			sourceTree = "<group>";
+		};
+		E8E0E4C027F9BA40007206C8 /* WeaklyWeather */ = {
+			isa = PBXGroup;
+			children = (
+				E87DA5A727F8E3D9004BB7AA /* ViewController.swift */,
+			);
+			path = WeaklyWeather;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -82,9 +125,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E87DA5B427F8E3E2004BB7AA /* Build configuration list for PBXNativeTarget "HappyWeather" */;
 			buildPhases = (
+				0FB7E920B6B98C1ED7DB9BCF /* [CP] Check Pods Manifest.lock */,
 				E87DA59C27F8E3D9004BB7AA /* Sources */,
 				E87DA59D27F8E3D9004BB7AA /* Frameworks */,
 				E87DA59E27F8E3D9004BB7AA /* Resources */,
+				3B449FC50EF3119AC1BE1B4E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -140,6 +185,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0FB7E920B6B98C1ED7DB9BCF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HappyWeather-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3B449FC50EF3119AC1BE1B4E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HappyWeather/Pods-HappyWeather-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HappyWeather/Pods-HappyWeather-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HappyWeather/Pods-HappyWeather-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E87DA59C27F8E3D9004BB7AA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -149,6 +236,7 @@
 				E87DA5A427F8E3D9004BB7AA /* AppDelegate.swift in Sources */,
 				E87DA5B927F90CC1004BB7AA /* APIService.swift in Sources */,
 				E87DA5A627F8E3D9004BB7AA /* SceneDelegate.swift in Sources */,
+				E8E0E4BE27F9B7E9007206C8 /* ContentViewController.swift in Sources */,
 				E87DA5BB27F90D00004BB7AA /* Forecast.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,6 +381,7 @@
 		};
 		E87DA5B527F8E3E2004BB7AA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F2EA79E252CEFDC6069C3142 /* Pods-HappyWeather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -312,6 +401,7 @@
 		};
 		E87DA5B627F8E3E2004BB7AA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D201A9AE359ADDF3755D6E36 /* Pods-HappyWeather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
