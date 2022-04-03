@@ -46,16 +46,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24-Stunden-Vorschau" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Pz-Py-KEH">
+                                <rect key="frame" x="0.0" y="54" width="414" height="65"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" red="0.32827726010000002" green="0.65211355689999995" blue="0.58038687710000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="a8u-OH-yKh">
-                                <rect key="frame" x="0.0" y="94" width="414" height="768"/>
+                                <rect key="frame" x="0.0" y="119" width="414" height="743"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="pwo-LO-IY6"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="a8u-OH-yKh" firstAttribute="top" secondItem="pwo-LO-IY6" secondAttribute="top" constant="50" id="Cz5-xy-9ia"/>
+                            <constraint firstItem="pwo-LO-IY6" firstAttribute="trailing" secondItem="6Pz-Py-KEH" secondAttribute="trailing" id="2c0-EK-R3A"/>
+                            <constraint firstItem="a8u-OH-yKh" firstAttribute="top" secondItem="pwo-LO-IY6" secondAttribute="top" constant="75" id="Cz5-xy-9ia"/>
                             <constraint firstItem="a8u-OH-yKh" firstAttribute="leading" secondItem="pwo-LO-IY6" secondAttribute="leading" id="RQ8-xr-s99"/>
+                            <constraint firstItem="a8u-OH-yKh" firstAttribute="top" secondItem="6Pz-Py-KEH" secondAttribute="bottom" id="esE-XW-B5Q"/>
+                            <constraint firstItem="6Pz-Py-KEH" firstAttribute="top" secondItem="pwo-LO-IY6" secondAttribute="top" constant="10" id="hc7-Xm-IKS"/>
+                            <constraint firstItem="6Pz-Py-KEH" firstAttribute="leading" secondItem="pwo-LO-IY6" secondAttribute="leading" id="nKk-gT-vBP"/>
                             <constraint firstItem="pwo-LO-IY6" firstAttribute="trailing" secondItem="a8u-OH-yKh" secondAttribute="trailing" id="pzi-0b-k0Y"/>
                             <constraint firstItem="pwo-LO-IY6" firstAttribute="bottom" secondItem="a8u-OH-yKh" secondAttribute="bottom" id="ryg-aB-qdH"/>
                         </constraints>
@@ -66,7 +76,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c3N-gJ-XIw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="922" y="94"/>
+            <point key="canvasLocation" x="921.73913043478262" y="93.75"/>
         </scene>
     </scenes>
 </document>
