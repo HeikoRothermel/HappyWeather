@@ -15,9 +15,37 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZT-LB-Wuo">
+                                <rect key="frame" x="131.5" y="433" width="151" height="30"/>
+                                <state key="normal" title="Remove FloatingPanel"/>
+                                <connections>
+                                    <action selector="removePanel:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9d5-pq-KJL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xN7-Fq-3S4">
+                                <rect key="frame" x="184" y="348" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="showPanel:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Ss-HH-m3S"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemPinkColor"/>
+                        <constraints>
+                            <constraint firstItem="xN7-Fq-3S4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="304" id="65s-LQ-LS4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xN7-Fq-3S4" secondAttribute="trailing" constant="184" id="R91-Io-jhZ"/>
+                            <constraint firstItem="WZT-LB-Wuo" firstAttribute="top" secondItem="xN7-Fq-3S4" secondAttribute="bottom" constant="55" id="WH1-ki-lA1"/>
+                            <constraint firstItem="xN7-Fq-3S4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="184" id="WHx-hl-yiC"/>
+                            <constraint firstItem="WZT-LB-Wuo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="a2B-xV-i0d"/>
+                            <constraint firstItem="WZT-LB-Wuo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mrT-Ww-SCV"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="myRemovePanel" destination="WZT-LB-Wuo" id="Fkn-gb-AXY"/>
+                        <outlet property="myShowPanel" destination="xN7-Fq-3S4" id="iuD-L0-5yA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -32,20 +60,33 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="a8u-OH-yKh">
-                                <rect key="frame" x="0.0" y="94" width="414" height="768"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="718"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bmN-MD-2GX">
+                                <rect key="frame" x="0.0" y="94" width="414" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="PrintSemthing:" destination="ORj-Rl-T0A" eventType="touchUpInside" id="hYv-ln-yXH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="pwo-LO-IY6"/>
                         <color key="backgroundColor" systemColor="systemGreenColor"/>
                         <constraints>
-                            <constraint firstItem="a8u-OH-yKh" firstAttribute="top" secondItem="pwo-LO-IY6" secondAttribute="top" constant="50" id="Cz5-xy-9ia"/>
+                            <constraint firstItem="bmN-MD-2GX" firstAttribute="top" secondItem="pwo-LO-IY6" secondAttribute="top" constant="50" id="4v8-oI-7Za"/>
+                            <constraint firstItem="a8u-OH-yKh" firstAttribute="top" secondItem="pwo-LO-IY6" secondAttribute="top" constant="100" id="Cz5-xy-9ia"/>
+                            <constraint firstItem="a8u-OH-yKh" firstAttribute="top" secondItem="bmN-MD-2GX" secondAttribute="bottom" id="OOK-0x-FGh"/>
                             <constraint firstItem="a8u-OH-yKh" firstAttribute="leading" secondItem="pwo-LO-IY6" secondAttribute="leading" id="RQ8-xr-s99"/>
+                            <constraint firstItem="bmN-MD-2GX" firstAttribute="leading" secondItem="pwo-LO-IY6" secondAttribute="leading" id="cP4-d6-eDX"/>
+                            <constraint firstItem="pwo-LO-IY6" firstAttribute="trailing" secondItem="bmN-MD-2GX" secondAttribute="trailing" id="oWX-SO-tkR"/>
                             <constraint firstItem="pwo-LO-IY6" firstAttribute="trailing" secondItem="a8u-OH-yKh" secondAttribute="trailing" id="pzi-0b-k0Y"/>
                             <constraint firstItem="pwo-LO-IY6" firstAttribute="bottom" secondItem="a8u-OH-yKh" secondAttribute="bottom" id="ryg-aB-qdH"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="myButton" destination="bmN-MD-2GX" id="Ox4-EE-z6D"/>
                         <outlet property="myTableView" destination="a8u-OH-yKh" id="4Zv-wv-JnB"/>
                     </connections>
                 </viewController>
