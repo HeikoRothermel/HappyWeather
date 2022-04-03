@@ -11,7 +11,6 @@ class WeatherTableViewCell: UITableViewCell {
     
     @IBOutlet var timeLabel: UILabel!
     @IBOutlet var highTempLabel: UILabel!
-    @IBOutlet var lowTempLabel: UILabel!
     @IBOutlet var iconImageView: UIImageView!
 
     override func awakeFromNib() {
@@ -32,24 +31,23 @@ class WeatherTableViewCell: UITableViewCell {
     
     func configure(with model: Hourly) {
         self.highTempLabel.textAlignment = .center
-        self.lowTempLabel.textAlignment = .center
         
-        self.lowTempLabel.text = "\(Int(model.temp))°"
-        self.highTempLabel.text = "\(Int(model.feels_like))°"
+        self.highTempLabel.text = "\(Int(model.temp))°"
         self.timeLabel.text = "\(getDayForDate(Date(timeIntervalSince1970: Double(model.dt)))) Uhr"
         self.iconImageView.contentMode = .scaleAspectFit
         
         
         let icon = model.weather.first?.main.lowercased()  ?? ""
         if icon.contains("cloud") {
-            self.iconImageView.image = UIImage(named: "cloud")
+            self.iconImageView.image = UIImage(systemName: "cloud.fill")
         } else if icon.contains("rain") {
-            self.iconImageView.image = UIImage(named: "rain")
+            self.iconImageView.image = UIImage(systemName: "cloud.rain.fill")
         } else if icon.contains("snow") {
-            self.iconImageView.image = UIImage(named: "snow")
+            self.iconImageView.image = UIImage(systemName: "snow")
         } else {
-            self.iconImageView.image = UIImage(named: "sun")
+            self.iconImageView.image = UIImage(systemName: "sun.max.fill")
         }
+        
     }
     
     

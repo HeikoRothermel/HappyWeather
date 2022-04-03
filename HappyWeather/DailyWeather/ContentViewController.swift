@@ -13,7 +13,6 @@ class ContentViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet var myTableView: UITableView!
     
     
-    var models = [Daily]()
     var hourlyModels = [Hourly]()
     
     override func viewDidLoad() {
@@ -21,11 +20,15 @@ class ContentViewController: UIViewController, UITableViewDelegate, UITableViewD
         myTableView.register(WeatherTableViewCell.nib(), forCellReuseIdentifier: WeatherTableViewCell.identifier)
         myTableView.delegate = self
         myTableView.dataSource = self
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        requestWeatherForLocation()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.requestWeatherForLocation()
+        }
+        
     }
     
     
@@ -33,10 +36,10 @@ class ContentViewController: UIViewController, UITableViewDelegate, UITableViewD
     func requestWeatherForLocation() {
         
         
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(long)&units=metric&lang=de&appid=7e5da986d80232efd714c8abf2a1db1b") else {
-            return
-        }
-       let task = URLSession.shared.dataTask(with: url) { data, _, error in
+        
+        
+        
+        let task = URLSession.shared.dataTask(with: urlToUse!) { data, _, error in
             guard let data = data, error == nil else {
                 print("something went wrong")
                 return
@@ -51,14 +54,13 @@ class ContentViewController: UIViewController, UITableViewDelegate, UITableViewD
                     guard let result = json else {
                         return
                     }
-        print(result.timezone)
         
         let entries = result.hourly
         
         self.hourlyModels.append(contentsOf: entries)
-//        for itm in result.daily {
-//            print("Value: \(result.timezone) \n \(itm.dt), \(itm.clouds), \(itm.uvi), \(itm.pop), \(itm.wind_gust),\(itm.temp.max),\(itm.weather.first?.main ?? "")")
-//        }
+        for itm in result.hourly {
+            print("Value: \(result.timezone) \n \(itm.dt) ,\(itm.weather.first?.main ?? "")")
+        }
         DispatchQueue.main.async {
             self.myTableView.reloadData()
         }
@@ -81,7 +83,7 @@ class ContentViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 75
     }
     
     

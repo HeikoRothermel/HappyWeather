@@ -34,34 +34,23 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XOq-58-Suy">
-                        <rect key="frame" x="135" y="0.0" width="50" height="44"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="XOq-58-Suy">
+                        <rect key="frame" x="215" y="8" width="50" height="28.5"/>
+                        <color key="tintColor" red="0.32827726010000002" green="0.65211355689999995" blue="0.58038687710000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="poL-93-VYP"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQf-Ps-fcf">
-                        <rect key="frame" x="210" y="0.0" width="50" height="44"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="Tb1-al-Ccz"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Xd1-bN-FVu" secondAttribute="trailing" id="2Su-VT-1dO"/>
-                    <constraint firstAttribute="bottom" secondItem="bQf-Ps-fcf" secondAttribute="bottom" id="4Ha-cq-lhe"/>
-                    <constraint firstItem="Xd1-bN-FVu" firstAttribute="leading" secondItem="bQf-Ps-fcf" secondAttribute="trailing" constant="10" id="7h3-4Z-ydS"/>
-                    <constraint firstItem="XOq-58-Suy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="HA5-7p-USQ"/>
+                    <constraint firstItem="XOq-58-Suy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="HA5-7p-USQ"/>
                     <constraint firstAttribute="bottom" secondItem="Xd1-bN-FVu" secondAttribute="bottom" id="SaO-oX-rPR"/>
-                    <constraint firstAttribute="bottom" secondItem="XOq-58-Suy" secondAttribute="bottom" id="YkS-ub-S7q"/>
+                    <constraint firstAttribute="bottom" secondItem="XOq-58-Suy" secondAttribute="bottom" constant="5" id="YkS-ub-S7q"/>
                     <constraint firstAttribute="bottom" secondItem="EcT-c0-HdJ" secondAttribute="bottom" id="bud-dc-p5E"/>
                     <constraint firstItem="EcT-c0-HdJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="dvE-sb-BuU"/>
-                    <constraint firstItem="bQf-Ps-fcf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fOK-qv-Nah"/>
+                    <constraint firstItem="Xd1-bN-FVu" firstAttribute="leading" secondItem="XOq-58-Suy" secondAttribute="trailing" constant="5" id="gRM-LG-cUh"/>
                     <constraint firstItem="EcT-c0-HdJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="mva-KG-XSd"/>
-                    <constraint firstItem="XOq-58-Suy" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="yM2-9g-Klb"/>
                     <constraint firstItem="Xd1-bN-FVu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="yv9-CV-jYR"/>
                 </constraints>
             </tableViewCellContentView>
@@ -69,10 +58,12 @@
             <connections>
                 <outlet property="highTempLabel" destination="Xd1-bN-FVu" id="Dtu-Sb-yNv"/>
                 <outlet property="iconImageView" destination="XOq-58-Suy" id="5LV-Ul-JxF"/>
-                <outlet property="lowTempLabel" destination="bQf-Ps-fcf" id="Iow-XZ-ZE0"/>
                 <outlet property="timeLabel" destination="EcT-c0-HdJ" id="dex-Lv-9nQ"/>
             </connections>
             <point key="canvasLocation" x="116" y="106"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="cloud.fill" catalog="system" width="128" height="84"/>
+    </resources>
 </document>

@@ -19,31 +19,19 @@
                                 <rect key="frame" x="131.5" y="433" width="151" height="30"/>
                                 <state key="normal" title="Remove FloatingPanel"/>
                                 <connections>
-                                    <action selector="removePanel:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9d5-pq-KJL"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xN7-Fq-3S4">
-                                <rect key="frame" x="184" y="348" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="showPanel:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Ss-HH-m3S"/>
+                                    <action selector="TestLoc:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OEf-6U-Rgx"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="xN7-Fq-3S4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="304" id="65s-LQ-LS4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xN7-Fq-3S4" secondAttribute="trailing" constant="184" id="R91-Io-jhZ"/>
-                            <constraint firstItem="WZT-LB-Wuo" firstAttribute="top" secondItem="xN7-Fq-3S4" secondAttribute="bottom" constant="55" id="WH1-ki-lA1"/>
-                            <constraint firstItem="xN7-Fq-3S4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="184" id="WHx-hl-yiC"/>
                             <constraint firstItem="WZT-LB-Wuo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="a2B-xV-i0d"/>
                             <constraint firstItem="WZT-LB-Wuo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mrT-Ww-SCV"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="myRemovePanel" destination="WZT-LB-Wuo" id="Fkn-gb-AXY"/>
-                        <outlet property="myShowPanel" destination="xN7-Fq-3S4" id="iuD-L0-5yA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

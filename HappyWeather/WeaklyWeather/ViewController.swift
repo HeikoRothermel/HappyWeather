@@ -12,11 +12,11 @@ import CoreLocation
 
 var long = Double()
 var lat = Double()
+var urlToUse = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=48.14&lon=11.57&units=metric&lang=de&appid=7e5da986d80232efd714c8abf2a1db1b")
 
 class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocationManagerDelegate {
 
     @IBOutlet var myRemovePanel: UIButton!
-    @IBOutlet var myShowPanel: UIButton!
     let fpc = FloatingPanelController()
     
     
@@ -98,45 +98,24 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
             return
         }
         
-        let long = currentLocation.coordinate.longitude
-        let lat = currentLocation.coordinate.latitude
+        long = currentLocation.coordinate.longitude
+        lat = currentLocation.coordinate.latitude
         print("\(lat) | \(long)")
-        
-//        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(long)&units=metric&lang=de&appid=7e5da986d80232efd714c8abf2a1db1b") else {
-//            return
-//        }
-//       let task = URLSession.shared.dataTask(with: url) {data, _, error in
-//
-//            //Validation
-//            guard let data = data, error == nil else {
-//                print("something went wrong")
-//                return
-//            }
-//
-//
-//
-//
-//
-//            var json: WeatherResponse?
-//                    do {
-//                        json = try JSONDecoder().decode(WeatherResponse.self, from: data)
-//                    }
-//                    catch {
-//                        print("error: \(error)")
-//                    }
-//                    guard let result = json else {
-//                        return
-//                    }
-
-//        entries = result.daily
-//        self.models.append(contentsOf: entries)
-
-
-//        }
-//        task.resume()
-        
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(long)&units=metric&lang=de&appid=7e5da986d80232efd714c8abf2a1db1b") else {
+            return
+        }
+        urlToUse = url
         
     }
+    
+    
+    
+    @IBAction func TestLoc(_ sender: UIButton) {
+        print("\(lat) | \(long)")
+    }
+    
+    
+    
     
 }
     
