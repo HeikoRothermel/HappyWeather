@@ -9,7 +9,7 @@ import UIKit
 
 class WeatherTableViewCell: UITableViewCell {
     
-    @IBOutlet var dayLabel: UILabel!
+    @IBOutlet var timeLabel: UILabel!
     @IBOutlet var highTempLabel: UILabel!
     @IBOutlet var lowTempLabel: UILabel!
     @IBOutlet var iconImageView: UIImageView!
@@ -30,13 +30,13 @@ class WeatherTableViewCell: UITableViewCell {
         return UINib(nibName: "WeatherTableViewCell", bundle: nil)
     }
     
-    func configure(with model: Daily) {
+    func configure(with model: Hourly) {
         self.highTempLabel.textAlignment = .center
         self.lowTempLabel.textAlignment = .center
         
-        self.lowTempLabel.text = "\(Int(model.temp.min))°"
-        self.highTempLabel.text = "\(Int(model.temp.max))°"
-        self.dayLabel.text = getDayForDate(Date(timeIntervalSince1970: Double(model.dt)))
+        self.lowTempLabel.text = "\(Int(model.temp))°"
+        self.highTempLabel.text = "\(Int(model.feels_like))°"
+        self.timeLabel.text = "\(getDayForDate(Date(timeIntervalSince1970: Double(model.dt)))) Uhr"
         self.iconImageView.contentMode = .scaleAspectFit
         
         
@@ -59,7 +59,7 @@ class WeatherTableViewCell: UITableViewCell {
             }
             
             let formatter = DateFormatter()
-            formatter.dateFormat = "eeee (d. MMMM)"
+            formatter.dateFormat = "H"
             return formatter.string(from: inputDate)
             
             

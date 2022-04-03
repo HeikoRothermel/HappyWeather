@@ -67,10 +67,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="dayLabel" destination="EcT-c0-HdJ" id="XLw-YH-kr3"/>
                 <outlet property="highTempLabel" destination="Xd1-bN-FVu" id="Dtu-Sb-yNv"/>
                 <outlet property="iconImageView" destination="XOq-58-Suy" id="5LV-Ul-JxF"/>
                 <outlet property="lowTempLabel" destination="bQf-Ps-fcf" id="Iow-XZ-ZE0"/>
+                <outlet property="timeLabel" destination="EcT-c0-HdJ" id="dex-Lv-9nQ"/>
             </connections>
             <point key="canvasLocation" x="116" y="106"/>
         </tableViewCell>

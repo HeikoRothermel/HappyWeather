@@ -9,11 +9,12 @@ import UIKit
 
 class ContentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet var myButton: UIButton!
+    
     @IBOutlet var myTableView: UITableView!
     
-    var models = [Daily]()
     
+    var models = [Daily]()
+    var hourlyModels = [Hourly]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,8 +52,10 @@ class ContentViewController: UIViewController, UITableViewDelegate, UITableViewD
                         return
                     }
         print(result.timezone)
-        let entries = result.daily
-        self.models.append(contentsOf: entries)
+        
+        let entries = result.hourly
+        
+        self.hourlyModels.append(contentsOf: entries)
 //        for itm in result.daily {
 //            print("Value: \(result.timezone) \n \(itm.dt), \(itm.clouds), \(itm.uvi), \(itm.pop), \(itm.wind_gust),\(itm.temp.max),\(itm.weather.first?.main ?? "")")
 //        }
@@ -68,12 +71,12 @@ class ContentViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return models.count
+        return min(hourlyModels.count, 24)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeatherTableViewCell.identifier, for: indexPath) as! WeatherTableViewCell
-        cell.configure(with: models[indexPath.row])
+        cell.configure(with: hourlyModels[indexPath.row])
         return cell
     }
     
@@ -85,11 +88,7 @@ class ContentViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     
-    @IBAction func PrintSemthing(_ sender: UIButton) {
-        print("hello")
-        
-    }
-    
+
 }
 
 
@@ -107,6 +106,7 @@ struct WeatherResponse: Codable {
 
 struct Hourly: Codable {
     var temp: Float
+    var feels_like: Float
     let dt: Int
     struct Weather: Codable {
         let main: String

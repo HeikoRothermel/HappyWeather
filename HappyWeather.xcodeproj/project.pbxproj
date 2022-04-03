@@ -110,7 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				E8E0E4BD27F9B7E9007206C8 /* ContentViewController.swift */,
-				E8E0E4C127F9C1A4007206C8 /* Cell */,
+				E8E0E4C127F9C1A4007206C8 /* TableView */,
 			);
 			path = DailyWeather;
 			sourceTree = "<group>";
@@ -123,13 +123,13 @@
 			path = WeaklyWeather;
 			sourceTree = "<group>";
 		};
-		E8E0E4C127F9C1A4007206C8 /* Cell */ = {
+		E8E0E4C127F9C1A4007206C8 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
 				E8E0E4C827F9C249007206C8 /* WeatherTableViewCell.swift */,
 				E8E0E4C927F9C249007206C8 /* WeatherTableViewCell.xib */,
 			);
-			path = Cell;
+			path = TableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
