@@ -7,7 +7,11 @@
 
 import UIKit
 
-class ContentViewController: UIViewController, UITableViewDelegate {
+class ContentViewController: UIViewController, UITableViewDelegate, WeatherTableViewCellDelegate {
+    
+    
+    
+    
 
     
 //    @IBOutlet var myTableView: UITableView!
@@ -33,14 +37,13 @@ class ContentViewController: UIViewController, UITableViewDelegate {
     
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.addSubview(myTableView)
         view.addSubview(preview24h)
         
-        myTableView.register(WeatherTableViewCell.nib(), forCellReuseIdentifier: WeatherTableViewCell.identifier)
+        myTableView.register(WeatherTableViewCell.self, forCellReuseIdentifier: WeatherTableViewCell.identifier)
         myTableView.delegate = self
         myTableView.dataSource = self
         
@@ -98,6 +101,14 @@ class ContentViewController: UIViewController, UITableViewDelegate {
        }
         task.resume()
     }
+    
+    
+    func didTapButton(with title: String) {
+//        print("\(title)")
+        if title == "5" {
+            print("yes")
+        }
+    }
 }
 
 
@@ -114,6 +125,7 @@ extension ContentViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeatherTableViewCell.identifier, for: indexPath) as! WeatherTableViewCell
         cell.configure(with: hourlyModels[indexPath.row])
+        cell.delegate = self
         return cell
     }
     
@@ -121,9 +133,16 @@ extension ContentViewController: UITableViewDataSource {
         return 75
     }
     
+    
+    
+    
 }
 
-
+extension ViewController: WeatherTableViewCellDelegate {
+    func didTapButton(with title: String) {
+        print("(\(title)")
+    }
+}
 
 
 
