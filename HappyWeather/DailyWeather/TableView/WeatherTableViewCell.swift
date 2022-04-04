@@ -30,6 +30,11 @@ class WeatherTableViewCell: UITableViewCell {
     }
     
     func configure(with model: Hourly) {
+        
+        
+        
+        
+        
         self.highTempLabel.textAlignment = .center
         
         self.highTempLabel.text = "\(Int(model.temp))°"

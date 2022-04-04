@@ -48,7 +48,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         appearance.shadows = [shadow]
 
         // Define corner radius and background color
-        appearance.cornerRadius = 25
+        appearance.cornerRadius = 40
         appearance.backgroundColor = .white
 
         // Set the new appearance
