@@ -6,9 +6,21 @@
 //
 
 import UIKit
+import FloatingPanel
 
-class ContentViewController: UIViewController, UITableViewDelegate, WeatherTableViewCellDelegate {
+class ContentViewController: UIViewController, UITableViewDelegate, FloatingPanelControllerDelegate, WeatherTableViewCellDelegate {
     
+//    func endedTextField(with: String){
+//        print("\(title)")
+//        if title == "5" {
+//            print("yes")
+//        }
+//    }
+    func didTapButton(with title: String) {
+        if title == "5" {
+            print("yes")
+        }
+    }
     
     
     
@@ -92,9 +104,9 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         let entries = result.hourly
         
         self.hourlyModels.append(contentsOf: entries)
-        for itm in result.hourly {
-            print("Value: \(result.timezone) \n \(itm.dt) ,\(itm.weather.first?.main ?? "")")
-        }
+//        for itm in result.hourly {
+//            print("Value: \(result.timezone) \n \(itm.dt) ,\(itm.weather.first?.main ?? "")")
+//        }
         DispatchQueue.main.async {
             self.myTableView.reloadData()
         }
@@ -103,12 +115,19 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
     }
     
     
-    func didTapButton(with title: String) {
-//        print("\(title)")
-        if title == "5" {
-            print("yes")
-        }
-    }
+//    func didTapButton(with title: String) {
+////        print("\(title)")
+//        if title == "5" {
+//            print("yes")
+//        }
+//    }
+    
+    
+//    func editingDidEnd(with: String){
+//        if title == "5" {
+//            print("yes")
+//        }
+//    }
 }
 
 
@@ -138,11 +157,12 @@ extension ContentViewController: UITableViewDataSource {
     
 }
 
-extension ViewController: WeatherTableViewCellDelegate {
-    func didTapButton(with title: String) {
-        print("(\(title)")
-    }
-}
+//extension ViewController: WeatherTableViewCellDelegate {
+//    func didTapButton(with title: String) {
+//        print("(\(title)")
+//    }
+//
+//}
 
 
 

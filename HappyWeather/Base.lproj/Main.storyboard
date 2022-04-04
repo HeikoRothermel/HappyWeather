@@ -23,16 +23,35 @@
                                     <action selector="TestLoc:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OEf-6U-Rgx"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ny5-Ht-TsZ">
+                                <rect key="frame" x="192" y="663" width="30" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EWh-xb-aBj">
+                                <rect key="frame" x="158.5" y="239" width="97" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="97" id="76Y-8a-bQK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="ny5-Ht-TsZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7dx-KV-fpo"/>
+                            <constraint firstItem="EWh-xb-aBj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SiT-al-UEL"/>
                             <constraint firstItem="WZT-LB-Wuo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="a2B-xV-i0d"/>
+                            <constraint firstItem="EWh-xb-aBj" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="195" id="a9P-vT-6B5"/>
                             <constraint firstItem="WZT-LB-Wuo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mrT-Ww-SCV"/>
+                            <constraint firstItem="ny5-Ht-TsZ" firstAttribute="top" secondItem="WZT-LB-Wuo" secondAttribute="bottom" constant="200" id="rsg-R3-dIN"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="myRemovePanel" destination="WZT-LB-Wuo" id="Fkn-gb-AXY"/>
+                        <outlet property="testLabel" destination="ny5-Ht-TsZ" id="rqE-Tx-tND"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -9,6 +9,7 @@ import UIKit
 
 protocol WeatherTableViewCellDelegate: AnyObject {
     func didTapButton(with title: String)
+//    func endedTextField(with title: String)
 }
 
 class WeatherTableViewCell: UITableViewCell {
@@ -63,6 +64,7 @@ class WeatherTableViewCell: UITableViewCell {
         contentView.addSubview(textFieldNote)
         contentView.addSubview(testButton)
         testButton.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
+//        textFieldNote.addTarget(self, action: #selector(endedTextField(sender:)), for: .editingDidEnd)
     }
     
     required init?(coder: NSCoder) {
@@ -102,6 +104,10 @@ class WeatherTableViewCell: UITableViewCell {
         delegate?.didTapButton(with: title)
     }
 
+//    @objc func endedTextField(sender: UITextField){
+//        delegate?.endedTextField(with: title)
+//    }
+    
     
     
     
