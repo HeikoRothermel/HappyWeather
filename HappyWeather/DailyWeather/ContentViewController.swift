@@ -7,21 +7,46 @@
 
 import UIKit
 
-class ContentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ContentViewController: UIViewController, UITableViewDelegate {
 
     
-    @IBOutlet var myTableView: UITableView!
+//    @IBOutlet var myTableView: UITableView!
     
+    
+    private let myTableView: UITableView = {
+        let myTableView = UITableView()
+        return myTableView
+    }()
+    
+    private let preview24h: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        label.text = "24-Stunden-Vorschau"
+        return label
+    }()
+   
     
     var hourlyModels = [Hourly]()
     
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(myTableView)
+        view.addSubview(preview24h)
+        
         myTableView.register(WeatherTableViewCell.nib(), forCellReuseIdentifier: WeatherTableViewCell.identifier)
         myTableView.delegate = self
         myTableView.dataSource = self
         
     }
+    
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -33,12 +58,18 @@ class ContentViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        myTableView.frame = CGRect(x: 0, y: 75, width: view.frame.width, height: view.frame.height - 75)
+        preview24h.frame = CGRect(x: 0, y: 10, width: view.frame.size.width, height: view.frame.size.height - myTableView.frame.size.height - 10)
+    }
+    
+    
+    
+    
+    
     func requestWeatherForLocation() {
-        
-        
-        
-        
-        
         let task = URLSession.shared.dataTask(with: urlToUse!) { data, _, error in
             guard let data = data, error == nil else {
                 print("something went wrong")
@@ -67,9 +98,13 @@ class ContentViewController: UIViewController, UITableViewDelegate, UITableViewD
        }
         task.resume()
     }
-    
-    
-    
+}
+
+
+
+
+
+extension ContentViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -86,70 +121,13 @@ class ContentViewController: UIViewController, UITableViewDelegate, UITableViewD
         return 75
     }
     
-    
-    
-    
-    
-
-}
-
-
-
-struct WeatherResponse: Codable {
-
-//
-    let timezone: String
-    let daily: [Daily]
-    let current: Current
-    let hourly: [Hourly]
-
-
-}
-
-struct Hourly: Codable {
-    var temp: Float
-    var feels_like: Float
-    let dt: Int
-    struct Weather: Codable {
-        let main: String
-    }
-    let weather: [Weather]
 }
 
 
 
 
 
-struct Current: Codable {
-    let temp: Float
-    struct Weather: Codable {
-        let main: String
-    }
-    let weather: [Weather]
 
-}
 
-struct Daily: Codable {
-    let dt: Int
-    let clouds: Int
-    let wind_gust: Float
-    let pop: Float
-    let uvi: Float
-    struct Temp: Codable {
 
-        let eve: Float
-        let morn: Float
-        let max: Float
-        let min: Float
 
-    }
-    let temp: Temp
-
-    struct Weather: Codable {
-
-        let main: String
-
-    }
-    let weather: [Weather]
-
-}

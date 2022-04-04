@@ -19,6 +19,7 @@
 		E8E0E4BE27F9B7E9007206C8 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0E4BD27F9B7E9007206C8 /* ContentViewController.swift */; };
 		E8E0E4CA27F9C249007206C8 /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0E4C827F9C249007206C8 /* WeatherTableViewCell.swift */; };
 		E8E0E4CB27F9C249007206C8 /* WeatherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E0E4C927F9C249007206C8 /* WeatherTableViewCell.xib */; };
+		E8E0E4D327FB8946007206C8 /* Structure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0E4D227FB8945007206C8 /* Structure.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		E8E0E4BD27F9B7E9007206C8 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		E8E0E4C827F9C249007206C8 /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
 		E8E0E4C927F9C249007206C8 /* WeatherTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherTableViewCell.xib; sourceTree = "<group>"; };
+		E8E0E4D227FB8945007206C8 /* Structure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structure.swift; sourceTree = "<group>"; };
 		F2EA79E252CEFDC6069C3142 /* Pods-HappyWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyWeather.debug.xcconfig"; path = "Target Support Files/Pods-HappyWeather/Pods-HappyWeather.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,6 +104,7 @@
 				E87DA5B827F90CC1004BB7AA /* APIService.swift */,
 				E87DA5BA27F90D00004BB7AA /* Forecast.swift */,
 				E87DA5BC27F90DD8004BB7AA /* MyPlayground.playground */,
+				E8E0E4D227FB8945007206C8 /* Structure.swift */,
 			);
 			path = HappyWeather;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				E87DA5A827F8E3D9004BB7AA /* ViewController.swift in Sources */,
 				E87DA5A427F8E3D9004BB7AA /* AppDelegate.swift in Sources */,
 				E8E0E4CA27F9C249007206C8 /* WeatherTableViewCell.swift in Sources */,
+				E8E0E4D327FB8946007206C8 /* Structure.swift in Sources */,
 				E87DA5B927F90CC1004BB7AA /* APIService.swift in Sources */,
 				E87DA5A627F8E3D9004BB7AA /* SceneDelegate.swift in Sources */,
 				E8E0E4BE27F9B7E9007206C8 /* ContentViewController.swift in Sources */,
