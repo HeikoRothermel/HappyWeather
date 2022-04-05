@@ -17,14 +17,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZT-LB-Wuo">
-                                <rect key="frame" x="131.5" y="433" width="151" height="30"/>
+                                <rect key="frame" x="131.5" y="533" width="151" height="30"/>
                                 <state key="normal" title="Remove FloatingPanel"/>
                                 <connections>
                                     <action selector="TestLoc:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OEf-6U-Rgx"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EWh-xb-aBj">
-                                <rect key="frame" x="158.5" y="239" width="97" height="34"/>
+                                <rect key="frame" x="158.5" y="644" width="97" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="97" id="76Y-8a-bQK"/>
                                     <constraint firstAttribute="height" constant="34" id="nc9-y6-3Ds"/>
@@ -41,8 +41,8 @@
                         <constraints>
                             <constraint firstItem="EWh-xb-aBj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SiT-al-UEL"/>
                             <constraint firstItem="WZT-LB-Wuo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="a2B-xV-i0d"/>
-                            <constraint firstItem="EWh-xb-aBj" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="195" id="a9P-vT-6B5"/>
-                            <constraint firstItem="WZT-LB-Wuo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mrT-Ww-SCV"/>
+                            <constraint firstItem="EWh-xb-aBj" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="600" id="a9P-vT-6B5"/>
+                            <constraint firstItem="WZT-LB-Wuo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="100" id="mrT-Ww-SCV"/>
                         </constraints>
                     </view>
                     <connections>

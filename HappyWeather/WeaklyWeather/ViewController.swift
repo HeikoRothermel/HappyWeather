@@ -19,33 +19,50 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     private let overviewDailyNotes: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 25
+        view.layer.borderWidth = 3
+        view.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         return view
     }()
     
     
     private let myTableView: UITableView = {
         let myTableView = UITableView()
+        myTableView.backgroundColor = .clear
         return myTableView
     }()
     
-    private let dailyTimeLabel: UILabel = {
+   
+    private let dailyInfoLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "Test"
-        label.backgroundColor = .white
-        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.text = "Füge neue Ereignisse hinzu, um direkt zu sehen, wie sich das Wetter entickelt..."
+        label.backgroundColor = .clear
+        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.textAlignment = .center
         return label
     }()
-    private let dailyNoteLabel: UILabel = {
+    private let dailyHeaderLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.text = "TestTest"
-        label.backgroundColor = .white
-        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        label.text = "Übersicht deiner Events:"
+        label.backgroundColor = .clear
+        label.font = .systemFont(ofSize: 30, weight: .bold)
+        label.textAlignment = .center
         return label
     }()
     
+    private let headerHappyWeather: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        label.text = "Happy Weather"
+        label.backgroundColor = .clear
+        label.font = UIFont(name: "Copperplate", size: 100)
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .center
+        return label
+    }()
     
     
     let locationManager = CLLocationManager()
@@ -57,9 +74,11 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.addSubview(headerHappyWeather)
         view.addSubview(overviewDailyNotes)
-        overviewDailyNotes.addSubview(dailyTimeLabel)
-        overviewDailyNotes.addSubview(dailyNoteLabel)
+        overviewDailyNotes.addSubview(dailyHeaderLabel)
+        overviewDailyNotes.addSubview(myTableView)
+        overviewDailyNotes.addSubview(dailyInfoLabel)
         
         let fpc = FloatingPanelController()
         fpc.delegate = self
@@ -83,17 +102,22 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        overviewDailyNotes.frame = CGRect(x: 15, y: view.frame.height / 2, width: view.frame.width - 30, height: (view.frame.height / 2) - 15)
-        dailyTimeLabel.frame = CGRect(x: 5, y:  5, width: (overviewDailyNotes.frame.width / 2) - 10, height: overviewDailyNotes.frame.height - 10)
-        dailyNoteLabel.frame = CGRect(x: (overviewDailyNotes.frame.width / 2) + 5, y:  5, width: (overviewDailyNotes.frame.width / 2) - 10, height: overviewDailyNotes.frame.height - 10)
+        headerHappyWeather.frame = CGRect(x: 50, y: 50, width: view.frame.width - 100, height: 50)
+        overviewDailyNotes.frame = CGRect(x: 25, y: (view.frame.height / 2) + 50, width: view.frame.width - 30, height: (view.frame.height / 2) - 150)
+        dailyInfoLabel.frame = CGRect(x: 5, y:  60, width: overviewDailyNotes.frame.width - 10, height: overviewDailyNotes.frame.height - 60)
+        myTableView.frame = dailyInfoLabel.frame
+        dailyHeaderLabel.frame = CGRect(x: 10, y:  25, width: overviewDailyNotes.frame.width - 20, height: 35)
     }
    
 
     
     func floatingPanelWillBeginDragging(_ vc: FloatingPanelController) {
         if arrayTimes.count > 0 {
-            dailyTimeLabel.text = "\(arrayTimes[0])"
-            dailyNoteLabel.text = "\(dict[Int(exactly: arrayTimes[0])!]!)"
+//            dailyTimeLabel.text = "\(arrayTimes[0])"
+//            dailyNoteLabel.text = "\(dict[Int(exactly: arrayTimes[0])!]!)"
+            dailyInfoLabel.isHidden = true
+        } else {
+            dailyInfoLabel.isHidden = true
         }
     }
     
