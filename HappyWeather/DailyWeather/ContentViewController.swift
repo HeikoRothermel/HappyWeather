@@ -6,20 +6,14 @@
 //
 
 import UIKit
-import FloatingPanel
 
-class ContentViewController: UIViewController, UITableViewDelegate, FloatingPanelControllerDelegate, WeatherTableViewCellDelegate {
+class ContentViewController: UIViewController, UITableViewDelegate, WeatherTableViewCellDelegate {
     
-//    func endedTextField(with: String){
-//        print("\(title)")
-//        if title == "5" {
-//            print("yes")
-//        }
-//    }
+    
+    func didUseTF(with text: String) {
+    }
+    
     func didTapButton(with title: String) {
-        if title == "5" {
-            print("yes")
-        }
     }
     
     
@@ -115,19 +109,7 @@ class ContentViewController: UIViewController, UITableViewDelegate, FloatingPane
     }
     
     
-//    func didTapButton(with title: String) {
-////        print("\(title)")
-//        if title == "5" {
-//            print("yes")
-//        }
-//    }
-    
-    
-//    func editingDidEnd(with: String){
-//        if title == "5" {
-//            print("yes")
-//        }
-//    }
+
 }
 
 

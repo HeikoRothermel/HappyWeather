@@ -33,9 +33,13 @@
                                 <rect key="frame" x="158.5" y="239" width="97" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="97" id="76Y-8a-bQK"/>
+                                    <constraint firstAttribute="height" constant="34" id="nc9-y6-3Ds"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="TapTextField:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="OSc-hl-3P9"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -51,6 +55,7 @@
                     </view>
                     <connections>
                         <outlet property="myRemovePanel" destination="WZT-LB-Wuo" id="Fkn-gb-AXY"/>
+                        <outlet property="noteTextField" destination="EWh-xb-aBj" id="PuG-BX-x8n"/>
                         <outlet property="testLabel" destination="ny5-Ht-TsZ" id="rqE-Tx-tND"/>
                     </connections>
                 </viewController>

@@ -10,24 +10,17 @@ import FloatingPanel
 import CoreLocation
 
 
-var long = Double()
-var lat = Double()
-var urlToUse = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=48.14&lon=11.57&units=metric&lang=de&appid=7e5da986d80232efd714c8abf2a1db1b")
-
 class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocationManagerDelegate {
     
 
     @IBOutlet var myRemovePanel: UIButton!
     @IBOutlet var testLabel: UILabel!
+    @IBOutlet weak var noteTextField: UITextField!
     
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
     
-    
-    
-    
-//    let fpc = FloatingPanelController()
     
     var fpc: FloatingPanelController!
     
@@ -113,7 +106,10 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         print("\(lat) | \(long)")
     }
     
-   
+    @IBAction func TapTextField(_ sender: UITextField) {
+//        print("mmmm")
+    }
+    
     
     
 }

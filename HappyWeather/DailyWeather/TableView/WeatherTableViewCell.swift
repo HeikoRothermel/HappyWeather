@@ -9,10 +9,10 @@ import UIKit
 
 protocol WeatherTableViewCellDelegate: AnyObject {
     func didTapButton(with title: String)
-//    func endedTextField(with title: String)
+    func didUseTF(with text: String)
 }
 
-class WeatherTableViewCell: UITableViewCell {
+class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     weak var delegate: WeatherTableViewCellDelegate?
     
@@ -51,20 +51,27 @@ class WeatherTableViewCell: UITableViewCell {
         return testButton
     }()
 
-
     
     static let identifier = "WeatherTableViewCell"
     
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        textFieldNote.delegate = self
+        
+        // To let Constraints-Issue of keyboard disappear
+        let item = textFieldNote.inputAssistantItem
+        item.leadingBarButtonGroups = []
+        item.trailingBarButtonGroups = []
+        
         contentView.addSubview(highTempLabel)
         contentView.addSubview(timeLabel)
         contentView.addSubview(iconImageView)
         contentView.addSubview(textFieldNote)
         contentView.addSubview(testButton)
         testButton.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
-//        textFieldNote.addTarget(self, action: #selector(endedTextField(sender:)), for: .editingDidEnd)
+        textFieldNote.addTarget(self, action: #selector(fieldClicked(sender:)), for: .editingDidEnd)
     }
     
     required init?(coder: NSCoder) {
@@ -75,9 +82,8 @@ class WeatherTableViewCell: UITableViewCell {
     
     func configure(with model: Hourly) {
         
-        self.title = "\(getDayForDate(Date(timeIntervalSince1970: Double(model.dt))))"
+        self.title = "\(model.dt)"
         testButton.setTitle("hello", for: .normal)
-        
         
         
         self.highTempLabel.text = "\(Int(model.temp))°"
@@ -97,18 +103,24 @@ class WeatherTableViewCell: UITableViewCell {
         }
     }
     
+
     
-    
+    @objc func fieldClicked(sender: UITextField){
+        delegate?.didUseTF(with: title)
+        if self.textFieldNote.text != "" {
+            dict[Int(title)!] = self.textFieldNote.text ?? ""
+            arrayTimes += [Int(title)!]
+            print(dict[Int(title)!]!)
+        }
+    }
+
     
     @objc func buttonClicked(sender: UIButton){
         delegate?.didTapButton(with: title)
+        print(title)
     }
+    
 
-//    @objc func endedTextField(sender: UITextField){
-//        delegate?.endedTextField(with: title)
-//    }
-    
-    
     
     
     override func layoutSubviews() {
@@ -129,7 +141,5 @@ class WeatherTableViewCell: UITableViewCell {
             let formatter = DateFormatter()
             formatter.dateFormat = "H"
             return formatter.string(from: inputDate)
-            
-            
         }
 }
