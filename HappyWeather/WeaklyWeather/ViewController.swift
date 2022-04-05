@@ -14,8 +14,38 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
 
     @IBOutlet var myRemovePanel: UIButton!
-    @IBOutlet var testLabel: UILabel!
     @IBOutlet weak var noteTextField: UITextField!
+    
+    
+    private let overviewDailyNotes: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        return view
+    }()
+    
+    
+    private let myTableView: UITableView = {
+        let myTableView = UITableView()
+        return myTableView
+    }()
+    
+    private let dailyTimeLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.text = "Test"
+        label.backgroundColor = .white
+        label.font = .systemFont(ofSize: 17, weight: .bold)
+        return label
+    }()
+    private let dailyNoteLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.text = "TestTest"
+        label.backgroundColor = .white
+        label.font = .systemFont(ofSize: 17, weight: .bold)
+        return label
+    }()
+    
     
     
     let locationManager = CLLocationManager()
@@ -27,7 +57,9 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        view.addSubview(overviewDailyNotes)
+        overviewDailyNotes.addSubview(dailyTimeLabel)
+        overviewDailyNotes.addSubview(dailyNoteLabel)
         
         let fpc = FloatingPanelController()
         fpc.delegate = self
@@ -35,7 +67,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         guard let contentVC = storyboard?.instantiateViewController(identifier: "FloatingPanelControler_content") as? ContentViewController else {
             return
         }
-
         let appearance = SurfaceAppearance()
         let shadow = SurfaceAppearance.Shadow()
         shadow.color = UIColor.black
@@ -48,15 +79,23 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         fpc.surfaceView.appearance = appearance
         fpc.set(contentViewController: contentVC)
         fpc.addPanel(toParent: self)
-
-        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        overviewDailyNotes.frame = CGRect(x: 15, y: view.frame.height / 2, width: view.frame.width - 30, height: (view.frame.height / 2) - 15)
+        dailyTimeLabel.frame = CGRect(x: 5, y:  5, width: (overviewDailyNotes.frame.width / 2) - 10, height: overviewDailyNotes.frame.height - 10)
+        dailyNoteLabel.frame = CGRect(x: (overviewDailyNotes.frame.width / 2) + 5, y:  5, width: (overviewDailyNotes.frame.width / 2) - 10, height: overviewDailyNotes.frame.height - 10)
     }
    
 
     
     func floatingPanelWillBeginDragging(_ vc: FloatingPanelController) {
-                print("funktioniert")
+        if arrayTimes.count > 0 {
+            dailyTimeLabel.text = "\(arrayTimes[0])"
+            dailyNoteLabel.text = "\(dict[Int(exactly: arrayTimes[0])!]!)"
         }
+    }
     
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,29 +106,23 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     // Location
     func setupLocation() {
-        
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         if !locations.isEmpty, currentLocation == nil {
             currentLocation = locations.first
             locationManager.stopUpdatingLocation()
             requestWeatherForLocation()
         }
-        
     }
     
     func requestWeatherForLocation() {
-        
         guard let currentLocation = currentLocation else {
             return
         }
-        
         long = currentLocation.coordinate.longitude
         lat = currentLocation.coordinate.latitude
         print("\(lat) | \(long)")
@@ -97,7 +130,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
             return
         }
         urlToUse = url
-        
     }
     
     
@@ -122,10 +154,7 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
             .full: FloatingPanelLayoutAnchor(absoluteInset: 50.0, edge: .top, referenceGuide: .superview),
             .tip: FloatingPanelLayoutAnchor(absoluteInset: 75.0, edge: .bottom, referenceGuide: .superview),
         ]
-        
     }
-    
-   
 }
 
 
