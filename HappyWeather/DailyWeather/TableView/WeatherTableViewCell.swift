@@ -133,7 +133,7 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         if self.textFieldNote.text != "" {
             dict[Int(title)!] = self.textFieldNote.text ?? ""
             arrayTimes += [Int(title)!]
-            print(dict[Int(title)!]!)
+            arrayTimes.sort()
         }
     }
 

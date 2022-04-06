@@ -31,7 +31,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     private let dailyTableView: UITableView = {
         let TableView = UITableView()
-        TableView.backgroundColor = .red
         return TableView
     }()
     
@@ -69,7 +68,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     private let alarmButton: UIButton = {
         let button = UIButton()
         button.tintColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
-        button.setImage(UIImage(named: "alarm"), for: .normal)
+        button.setImage(UIImage(systemName: "alarm"), for: .normal)
         return button
     }()
     
@@ -83,12 +82,12 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        dailyTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         dailyTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         view.addSubview(headerHappyWeather)
         view.addSubview(overviewDailyNotes)
         overviewDailyNotes.addSubview(dailyHeaderLabel)
-//        overviewDailyNotes.addSubview(dailyInfoLabel)
+        overviewDailyNotes.addSubview(dailyInfoLabel)
         overviewDailyNotes.addSubview(dailyTableView)
         overviewDailyNotes.addSubview(alarmButton)
         
@@ -125,11 +124,11 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         headerHappyWeather.frame = CGRect(x: 50, y: 50, width: view.frame.width - 100, height: 50)
-        overviewDailyNotes.frame = CGRect(x: 25, y: (view.frame.height / 2) + 50, width: view.frame.width - 50, height: (view.frame.height / 2) - 150)
+        overviewDailyNotes.frame = CGRect(x: 35, y: (view.frame.height / 2) + 50, width: view.frame.width - 70, height: (view.frame.height / 2) - 150)
         dailyInfoLabel.frame = CGRect(x: 5, y:  60, width: overviewDailyNotes.frame.width - 10, height: overviewDailyNotes.frame.height - 60)
         dailyTableView.frame = dailyInfoLabel.frame
         dailyHeaderLabel.frame = CGRect(x: 10, y:  25, width: overviewDailyNotes.frame.width - 20, height: 35)
-        alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75, y:  50, width: 50, height: 50)
+        alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75, y:  15, width: 60, height: 60)
     }
    
 
@@ -142,6 +141,8 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         } else {
             dailyInfoLabel.isHidden = false
         }
+        
+        dailyTableView.reloadData()
     }
     
     
@@ -187,13 +188,12 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     @IBAction func TapTextField(_ sender: UITextField) {
 //        print("mmmm")
-        
-        overviewDailyNotes.addSubview(dailyTableView)
     }
     
         @objc func alarmButtonClicked(sender: UIButton){
             alarmButton.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         }
+    
     
 }
     
@@ -218,7 +218,8 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
-        cell!.configure()
+        cell!.configure(uhrzeit: indexPath.row)
+        cell!.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell!
     }
     

@@ -37,6 +37,7 @@ class NoteTableViewCell: UITableViewCell {
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
     
@@ -63,14 +64,14 @@ class NoteTableViewCell: UITableViewCell {
     }
 
     
-    func configure() {
+    func configure(uhrzeit: Int) {
+        print(uhrzeit)
+        print([arrayTimes])
+        timeLabel.text = "\(getDayForDate(Date(timeIntervalSince1970: TimeInterval(arrayTimes[uhrzeit])))) Uhr"
+        noteLabel.text = "\(dict[arrayTimes[uhrzeit]] ?? "Nichts")"
         
-        timeLabel.text = "\(arrayTimes[0])"
-        noteLabel.text = "\(dict[Int(exactly: arrayTimes[0])!]!)"
-        self.timeLabel.text = "\(getDayForDate(Date(timeIntervalSince1970: Double(dict[Int(exactly: arrayTimes[0])!]!)!))) Uhr"
         highTempLabel.text = "25"
-        iconImageView.image = UIImage(systemName: "sun.max.fill")
-        
+        iconImageView.image = UIImage(systemName: "cloud.fill")
         
     }
     
@@ -78,8 +79,8 @@ class NoteTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         greyBackgroundView.frame = CGRect(x: 20, y: 7.5, width: contentView.frame.size.width - 40, height: contentView.frame.size.height - 15)
-        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 12.5, width: 50, height: 60)
-        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 15, width: 50, height: 60)
+        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 60 - 15, y: 12.5, width: 60, height: 60)
+        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 60 - 15, y: 15, width: 60, height: 60)
         timeLabel.frame = CGRect(x: 15, y: 15, width: 100, height: 25)
         noteLabel.frame = CGRect(x: 15, y: 47.5, width: greyBackgroundView.frame.size.width - 45 - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
         
