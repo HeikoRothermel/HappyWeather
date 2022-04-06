@@ -17,7 +17,6 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
     }
     
     
-    
 
     
 //    @IBOutlet var myTableView: UITableView!
@@ -37,6 +36,11 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         return label
     }()
    
+    private let backgroundImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = UIColor(red: 246 / 255, green: 246 / 255, blue: 248 / 255, alpha: 1)
+        return imageView
+    }()
     
     var hourlyModels = [Hourly]()
     
@@ -52,7 +56,6 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         myTableView.register(WeatherTableViewCell.self, forCellReuseIdentifier: WeatherTableViewCell.identifier)
         myTableView.delegate = self
         myTableView.dataSource = self
-        
     }
     
     
@@ -62,7 +65,6 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.requestWeatherForLocation()
         }
-        
     }
     
     
@@ -70,8 +72,12 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        myTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        
         myTableView.frame = CGRect(x: 0, y: 75, width: view.frame.width, height: view.frame.height - 75)
         preview24h.frame = CGRect(x: 0, y: 10, width: view.frame.size.width, height: view.frame.size.height - myTableView.frame.size.height - 10)
+        print("klappt")
     }
     
     
@@ -126,12 +132,13 @@ extension ContentViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeatherTableViewCell.identifier, for: indexPath) as! WeatherTableViewCell
         cell.configure(with: hourlyModels[indexPath.row])
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.delegate = self
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 75
+        return 100
     }
     
     
@@ -139,12 +146,7 @@ extension ContentViewController: UITableViewDataSource {
     
 }
 
-//extension ViewController: WeatherTableViewCellDelegate {
-//    func didTapButton(with title: String) {
-//        print("(\(title)")
-//    }
-//
-//}
+
 
 
 

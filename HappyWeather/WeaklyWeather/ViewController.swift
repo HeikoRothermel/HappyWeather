@@ -74,6 +74,8 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        myTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         view.addSubview(headerHappyWeather)
         view.addSubview(overviewDailyNotes)
         overviewDailyNotes.addSubview(dailyHeaderLabel)
@@ -103,7 +105,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         headerHappyWeather.frame = CGRect(x: 50, y: 50, width: view.frame.width - 100, height: 50)
-        overviewDailyNotes.frame = CGRect(x: 25, y: (view.frame.height / 2) + 50, width: view.frame.width - 30, height: (view.frame.height / 2) - 150)
+        overviewDailyNotes.frame = CGRect(x: 25, y: (view.frame.height / 2) + 50, width: view.frame.width - 50, height: (view.frame.height / 2) - 150)
         dailyInfoLabel.frame = CGRect(x: 5, y:  60, width: overviewDailyNotes.frame.width - 10, height: overviewDailyNotes.frame.height - 60)
         myTableView.frame = dailyInfoLabel.frame
         dailyHeaderLabel.frame = CGRect(x: 10, y:  25, width: overviewDailyNotes.frame.width - 20, height: 35)
@@ -117,7 +119,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
 //            dailyNoteLabel.text = "\(dict[Int(exactly: arrayTimes[0])!]!)"
             dailyInfoLabel.isHidden = true
         } else {
-            dailyInfoLabel.isHidden = true
+            dailyInfoLabel.isHidden = false
         }
     }
     

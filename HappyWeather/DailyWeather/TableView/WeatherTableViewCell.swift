@@ -12,14 +12,16 @@ protocol WeatherTableViewCellDelegate: AnyObject {
     func didUseTF(with text: String)
 }
 
+
+
 class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     weak var delegate: WeatherTableViewCellDelegate?
     
     private let highTempLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.textColor = .white
+        label.font = .systemFont(ofSize: 15, weight: .bold)
         label.textAlignment = .center
         return label
     }()
@@ -37,7 +39,7 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         return imageView
     }()
     
-    private let textFieldNote: UITextField = {
+    let textFieldNote: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Notizen"
         textField.borderStyle = UITextField.BorderStyle.roundedRect
@@ -50,11 +52,21 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         testButton.isUserInteractionEnabled = true
         return testButton
     }()
-
+    
+    
+    private let greyBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 234 / 255, green: 234 / 255, blue: 239 / 255, alpha: 1)
+        view.layer.cornerRadius = 20
+        return view
+    }()
     
     static let identifier = "WeatherTableViewCell"
     
 
+    
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -65,13 +77,17 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         item.leadingBarButtonGroups = []
         item.trailingBarButtonGroups = []
         
-        contentView.addSubview(highTempLabel)
-        contentView.addSubview(timeLabel)
-        contentView.addSubview(iconImageView)
-        contentView.addSubview(textFieldNote)
-        contentView.addSubview(testButton)
+        contentView.addSubview(greyBackgroundView)
+        greyBackgroundView.addSubview(timeLabel)
+        greyBackgroundView.addSubview(iconImageView)
+        greyBackgroundView.addSubview(highTempLabel)
+        greyBackgroundView.addSubview(textFieldNote)
+//        greyBackgroundView.addSubview(testButton)
+        
         testButton.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
         textFieldNote.addTarget(self, action: #selector(fieldClicked(sender:)), for: .editingDidEnd)
+        
+        print("klappt2")
     }
     
     required init?(coder: NSCoder) {
@@ -97,10 +113,12 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         } else if icon.contains("rain") {
             self.iconImageView.image = UIImage(systemName: "cloud.rain.fill")
         } else if icon.contains("snow") {
-            self.iconImageView.image = UIImage(systemName: "snow")
+            self.iconImageView.image = UIImage(systemName: "cloud.snow.fill")
         } else {
             self.iconImageView.image = UIImage(systemName: "sun.max.fill")
         }
+        
+        print("klappt1")
     }
     
 
@@ -126,11 +144,13 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        iconImageView.frame = CGRect(x: contentView.frame.size.width - 50 - 5, y: 0, width: 50, height: 65)
-        highTempLabel.frame = CGRect(x: contentView.frame.size.width - (iconImageView.frame.size.width * 2) - 10, y: 5, width: iconImageView.frame.size.width, height: 65)
-        timeLabel.frame = CGRect(x: 10, y: 0, width: 100, height: 30)
-        textFieldNote.frame = CGRect(x: 10, y: 35, width: contentView.frame.size.width - 25 - iconImageView.frame.size.width - highTempLabel.frame.size.width, height: timeLabel.frame.size.height)
-        testButton.frame = CGRect(x: 110, y: 0, width: 80, height: 30)
+        
+        greyBackgroundView.frame = CGRect(x: 20, y: 7.5, width: contentView.frame.size.width - 40, height: contentView.frame.size.height - 15)
+        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 12.5, width: 50, height: 60)
+        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 15, width: 50, height: 60)
+        timeLabel.frame = CGRect(x: 15, y: 15, width: 100, height: 25)
+        textFieldNote.frame = CGRect(x: 15, y: 47.5, width: greyBackgroundView.frame.size.width - 45 - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
+//        testButton.frame = CGRect(x: 110, y: 0, width: 80, height: 30)
     }
     
     func getDayForDate(_ date: Date?) -> String {
