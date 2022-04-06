@@ -13,13 +13,9 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
     func didUseTF(with text: String) {
     }
     
-    func didTapButton(with title: String) {
-    }
+//    func didTapButton(with title: String) {
+//    }
     
-    
-
-    
-//    @IBOutlet var myTableView: UITableView!
     
     
     private let myTableView: UITableView = {

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol WeatherTableViewCellDelegate: AnyObject {
-    func didTapButton(with title: String)
+//    func didTapButton(with title: String)
     func didUseTF(with text: String)
 }
 
@@ -46,17 +46,17 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         return textField
     }()
     
-    private let testButton: UIButton = {
-        let testButton = UIButton()
-        testButton.backgroundColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
-        testButton.isUserInteractionEnabled = true
-        return testButton
-    }()
+//    private let testButton: UIButton = {
+//        let testButton = UIButton()
+//        testButton.backgroundColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+//        testButton.isUserInteractionEnabled = true
+//        return testButton
+//    }()
     
     
     private let greyBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 234 / 255, green: 234 / 255, blue: 239 / 255, alpha: 1)
+        view.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
         view.layer.cornerRadius = 20
         return view
     }()
@@ -84,7 +84,7 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         greyBackgroundView.addSubview(textFieldNote)
 //        greyBackgroundView.addSubview(testButton)
         
-        testButton.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
+//        testButton.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
         textFieldNote.addTarget(self, action: #selector(fieldClicked(sender:)), for: .editingDidEnd)
         
         print("klappt2")
@@ -99,7 +99,7 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     func configure(with model: Hourly) {
         
         self.title = "\(model.dt)"
-        testButton.setTitle("hello", for: .normal)
+//        testButton.setTitle("hello", for: .normal)
         
         
         self.highTempLabel.text = "\(Int(model.temp))°"
@@ -121,6 +121,11 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         print("klappt1")
     }
     
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        textFieldNote.text = nil
+    }
 
     
     @objc func fieldClicked(sender: UITextField){
@@ -133,10 +138,10 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     
-    @objc func buttonClicked(sender: UIButton){
-        delegate?.didTapButton(with: title)
-        print(title)
-    }
+//    @objc func buttonClicked(sender: UIButton){
+//        delegate?.didTapButton(with: title)
+//        print(title)
+//    }
     
 
     
