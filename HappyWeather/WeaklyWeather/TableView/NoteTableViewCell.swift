@@ -30,7 +30,7 @@ class NoteTableViewCell: UITableViewCell {
     private let noteLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.font = .systemFont(ofSize: 17, weight: .medium)
         return label
     }()
     
@@ -64,14 +64,35 @@ class NoteTableViewCell: UITableViewCell {
     }
 
     
-    func configure(uhrzeit: Int) {
-        print(uhrzeit)
-        print([arrayTimes])
-        timeLabel.text = "\(getDayForDate(Date(timeIntervalSince1970: TimeInterval(arrayTimes[uhrzeit])))) Uhr"
-        noteLabel.text = "\(dict[arrayTimes[uhrzeit]] ?? "Nichts")"
+    func configure(timeOfDay: Int) {
         
-        highTempLabel.text = "25"
+        var today = Int()
+        today = Int(Date().timeIntervalSince1970) - (Int(getDayForDate(Date()))! + 1)  * 3600
+        if timeOfDay - today < (3600 * 24) {
+            timeLabel.text = "Heute, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(arrayTimes[timeOfDay])))) Uhr"
+        } else if timeOfDay - today < (3600 * 48) {
+            self.timeLabel.text = "Morgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(arrayTimes[timeOfDay])))) Uhr"
+        } else if timeOfDay - today < (3600 * 72) {
+            self.timeLabel.text = "Übermorgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(arrayTimes[timeOfDay])))) Uhr"
+        } else if timeOfDay - today < (3600 * 48) {
+            self.timeLabel.text = "Überübermorgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(arrayTimes[timeOfDay])))) Uhr"
+        }
+        
+        noteLabel.text = "\(dictEventsNoted[arrayTimes[timeOfDay]] ?? "Nichts")"
+        
+        highTempLabel.text = "\(Int(dictWeatherForEvents[arrayTimes[timeOfDay]]?.temp ?? 0))°"
         iconImageView.image = UIImage(systemName: "cloud.fill")
+        
+        let icon = dictWeatherForEvents[arrayTimes[timeOfDay]]!.main.lowercased()
+        if icon.contains("cloud") {
+            self.iconImageView.image = UIImage(systemName: "cloud.fill")
+        } else if icon.contains("rain") {
+            self.iconImageView.image = UIImage(systemName: "cloud.rain.fill")
+        } else if icon.contains("snow") {
+            self.iconImageView.image = UIImage(systemName: "cloud.snow.fill")
+        } else {
+            self.iconImageView.image = UIImage(systemName: "sun.max.fill")
+        }
         
     }
     
@@ -81,7 +102,7 @@ class NoteTableViewCell: UITableViewCell {
         greyBackgroundView.frame = CGRect(x: 20, y: 7.5, width: contentView.frame.size.width - 40, height: contentView.frame.size.height - 15)
         iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 60 - 15, y: 12.5, width: 60, height: 60)
         highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 60 - 15, y: 15, width: 60, height: 60)
-        timeLabel.frame = CGRect(x: 15, y: 15, width: 100, height: 25)
+        timeLabel.frame = CGRect(x: 15, y: 15, width: 200, height: 25)
         noteLabel.frame = CGRect(x: 15, y: 47.5, width: greyBackgroundView.frame.size.width - 45 - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
         
     }

@@ -18,6 +18,9 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     @IBOutlet weak var noteTextField: UITextField!
     
     var hourlyModels = [Hourly]()
+    var dailyModels = [Daily]()
+    var currentModels = [Current]()
+    
     
     private let overviewDailyNotes: UIView = {
         let view = UIView()
@@ -143,6 +146,54 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         }
         
         dailyTableView.reloadData()
+        
+        
+        
+        
+        
+        
+        let task = URLSession.shared.dataTask(with: urlToUse!) { data, _, error in
+            guard let data = data, error == nil else {
+                print("something went wrong")
+                return
+            }
+            var json: WeatherResponse?
+                    do {
+                        json = try JSONDecoder().decode(WeatherResponse.self, from: data)
+                    }
+                    catch {
+                        print("error: \(error)")
+                    }
+                    guard let result = json else {
+                        return
+                    }
+
+        let entries = result.hourly
+
+        self.hourlyModels.append(contentsOf: entries)
+//        for itm in result.hourly {
+//            print("Value: \(result.timezone) \n \(itm.dt) ,\(itm.weather.first?.main ?? "")")
+//        }
+
+            dictWeatherForEvents.removeAll()
+            for counter in result.hourly {
+//                dictWeatherForEvents[counter.dt] = counter.temp
+                dictWeatherForEvents[counter.dt] = MultipleValue(temp: counter.temp, main: counter.weather.first!.main)
+            }
+            
+             
+            
+       }
+        task.resume()
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
     
@@ -218,7 +269,7 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
-        cell!.configure(uhrzeit: indexPath.row)
+        cell!.configure(timeOfDay: indexPath.row)
         cell!.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell!
     }

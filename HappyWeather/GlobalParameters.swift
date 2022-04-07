@@ -15,10 +15,13 @@ var urlToUse = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=
 
 
 
-var dict = [Int: String]()
+var dictEventsNoted = [Int: String]()
 var arrayTimes = [Int]()
-//typealias MultipleValue = (firstObject: String, secondObject: String)
-//var dict2 = [Int: MultipleValue]()
+//var dictWeatherForEvents = [Int: Float]()
+
+
+typealias MultipleValue = (temp: Float, main: String)
+var dictWeatherForEvents = [Int: MultipleValue]()
 //dict2[1] = MultipleValue(firstObject: "Hausaufgaben", secondObject: "Sport")
 //var value = dict2[1]
 //print value?.firstObject

@@ -112,6 +112,14 @@
 			path = HappyWeather;
 			sourceTree = "<group>";
 		};
+		E87FA01627FF3F3E00C314E3 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				E87FA01427FCD23700C314E3 /* NoteTableViewCell.swift */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
 		E8E0E4BF27F9BA2B007206C8 /* DailyWeather */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,7 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				E87DA5A727F8E3D9004BB7AA /* ViewController.swift */,
-				E87FA01427FCD23700C314E3 /* NoteTableViewCell.swift */,
+				E87FA01627FF3F3E00C314E3 /* TableView */,
 			);
 			path = WeaklyWeather;
 			sourceTree = "<group>";

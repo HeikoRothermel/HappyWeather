@@ -94,16 +94,29 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var title: String = ""
+    private var timeOfDay = Int()
     
     func configure(with model: Hourly) {
         
-        self.title = "\(model.dt)"
+        self.timeOfDay = model.dt
 //        testButton.setTitle("hello", for: .normal)
         
         
         self.highTempLabel.text = "\(Int(model.temp))°"
-        self.timeLabel.text = "\(getDayForDate(Date(timeIntervalSince1970: Double(model.dt)))) Uhr"
+        
+        var today = Int()
+        today = Int(Date().timeIntervalSince1970) - (Int(getDayForDate(Date()))! + 1)  * 3600
+        if timeOfDay - today < (3600 * 24) {
+            self.timeLabel.text = "Heute, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr"
+        } else if timeOfDay - today < (3600 * 48) {
+            self.timeLabel.text = "Morgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr"
+        } else if timeOfDay - today < (3600 * 72) {
+            self.timeLabel.text = "Übermorgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr"
+        } else if timeOfDay - today < (3600 * 48) {
+            self.timeLabel.text = "Überübermorgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr"
+        }
+        
+        
         self.iconImageView.contentMode = .scaleAspectFit
         
         
@@ -118,7 +131,11 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.iconImageView.image = UIImage(systemName: "sun.max.fill")
         }
         
-        print("klappt1")
+        if arrayTimes.contains(timeOfDay) {
+            textFieldNote.text = "\(dictEventsNoted[timeOfDay] ?? "")"
+        } else {
+            textFieldNote.text = ""
+        }
     }
     
     
@@ -129,10 +146,13 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     
     @objc func fieldClicked(sender: UITextField){
-        delegate?.didUseTF(with: title)
+        delegate?.didUseTF(with: String(timeOfDay))
+        if let index = arrayTimes.firstIndex(of: timeOfDay) {
+            arrayTimes.remove(at: index)
+        }
         if self.textFieldNote.text != "" {
-            dict[Int(title)!] = self.textFieldNote.text ?? ""
-            arrayTimes += [Int(title)!]
+            dictEventsNoted[timeOfDay] = self.textFieldNote.text ?? ""
+            arrayTimes += [timeOfDay]
             arrayTimes.sort()
         }
     }
@@ -153,7 +173,7 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         greyBackgroundView.frame = CGRect(x: 20, y: 7.5, width: contentView.frame.size.width - 40, height: contentView.frame.size.height - 15)
         iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 12.5, width: 50, height: 60)
         highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 15, width: 50, height: 60)
-        timeLabel.frame = CGRect(x: 15, y: 15, width: 100, height: 25)
+        timeLabel.frame = CGRect(x: 15, y: 15, width: 200, height: 25)
         textFieldNote.frame = CGRect(x: 15, y: 47.5, width: greyBackgroundView.frame.size.width - 45 - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
 //        testButton.frame = CGRect(x: 110, y: 0, width: 80, height: 30)
     }
@@ -168,3 +188,5 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
             return formatter.string(from: inputDate)
         }
 }
+
+
