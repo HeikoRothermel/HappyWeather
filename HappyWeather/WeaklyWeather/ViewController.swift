@@ -124,6 +124,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         label.text = "15°"
         label.font = .systemFont(ofSize: 45, weight: .medium)
         label.textAlignment = .center
+        label.layer.masksToBounds = true
         label.layer.borderWidth = 2
         label.layer.borderColor = CGColor(red: 255 / 255, green: 255 / 255, blue: 255 / 255, alpha: 1)
         label.layer.cornerRadius = 10
@@ -199,12 +200,12 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         overviewDailyNotes.frame = CGRect(x: 60, y: (view.frame.height / 2) + 85, width: view.frame.width - 120, height: (view.frame.size.height / 2) - 200)
         dailyInfoLabel.frame = CGRect(x: 10, y:  60, width: overviewDailyNotes.frame.width - 20, height: overviewDailyNotes.frame.height - 70)
         dailyTableView.frame = dailyInfoLabel.frame
-        dailyHeaderLabel.frame = CGRect(x: 15, y:  25, width: overviewDailyNotes.frame.width - 30, height: 35)
+        dailyHeaderLabel.frame = CGRect(x: 15, y:  20, width: overviewDailyNotes.frame.width - 30, height: 35)
         alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75, y:  15, width: 60, height: 60)
         
         
         
-        overviewWeeklyWeather.frame = CGRect(x: 150, y:  165, width: view.frame.width - 300, height: (view.frame.size.height / 2) - 125)
+        overviewWeeklyWeather.frame = CGRect(x: 150, y:  150, width: view.frame.width - 300, height: (view.frame.size.height / 2) - 100)
         photoWeatherView.frame = CGRect(x: 0, y:  0, width: overviewWeeklyWeather.frame.width , height: overviewWeeklyWeather.frame.size.height - 100)
         weeklyTempLabel.frame = CGRect(x: overviewWeeklyWeather.frame.width - 125, y: 25, width: 100 , height: 60)
         

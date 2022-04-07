@@ -18,6 +18,19 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     weak var delegate: WeatherTableViewCellDelegate?
     
+    
+    private let greyBackgroundView: UIView = {
+        let view = UIView()
+//        view.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 10
+        return view
+    }()
+    
     private let highTempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -54,12 +67,7 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
 //    }()
     
     
-    private let greyBackgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
-        view.layer.cornerRadius = 20
-        return view
-    }()
+    
     
     static let identifier = "WeatherTableViewCell"
     
@@ -170,11 +178,11 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         super.layoutSubviews()
         
         
-        greyBackgroundView.frame = CGRect(x: 20, y: 7.5, width: contentView.frame.size.width - 40, height: contentView.frame.size.height - 15)
-        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 12.5, width: 60, height: 60)
-        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 15, width: 60, height: 60)
-        timeLabel.frame = CGRect(x: 15, y: 15, width: 200, height: 25)
-        textFieldNote.frame = CGRect(x: 15, y: 47.5, width: greyBackgroundView.frame.size.width - 45 - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
+        greyBackgroundView.frame = CGRect(x: 20, y: 10, width: contentView.frame.size.width - 40, height: contentView.frame.size.height - 20)
+        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 25, y: 10, width: 60, height: 60)
+        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 25, y: 12.5, width: 60, height: 60)
+        timeLabel.frame = CGRect(x: 20, y: 12.5, width: 200, height: 25)
+        textFieldNote.frame = CGRect(x: 20, y: 45, width: greyBackgroundView.frame.size.width - 60 - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
 //        testButton.frame = CGRect(x: 110, y: 0, width: 80, height: 30)
     }
     

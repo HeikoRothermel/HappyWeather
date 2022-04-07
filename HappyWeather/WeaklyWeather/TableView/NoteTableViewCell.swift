@@ -11,6 +11,19 @@ class NoteTableViewCell: UITableViewCell {
     static let identifier = "NoteTableViewCell"
 
     
+    
+    private let greyBackgroundView: UIView = {
+        let view = UIView()
+//        view.backgroundColor = UIColor(red: 242 / 255, green: 242 / 255, blue: 247 / 255, alpha: 1)
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 10
+        return view
+    }()
+    
     private let highTempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -22,7 +35,7 @@ class NoteTableViewCell: UITableViewCell {
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         return label
     }()
@@ -39,13 +52,6 @@ class NoteTableViewCell: UITableViewCell {
         imageView.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         imageView.contentMode = .scaleAspectFit
         return imageView
-    }()
-    
-    private let greyBackgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
-        view.layer.cornerRadius = 20
-        return view
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -93,17 +99,16 @@ class NoteTableViewCell: UITableViewCell {
         } else {
             self.iconImageView.image = UIImage(systemName: "sun.max.fill")
         }
-        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        greyBackgroundView.frame = CGRect(x: 20, y: 7.5, width: contentView.frame.size.width - 40, height: contentView.frame.size.height - 15)
-        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 60 - 15, y: 17.5, width: 60, height: 50)
+        greyBackgroundView.frame = CGRect(x: 20, y: 10, width: contentView.frame.size.width - 40, height: contentView.frame.size.height - 15)
+        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 60 - 15, y: 17.5, width: 60, height: 60)
         highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 60 - 15, y: 15, width: 60, height: 60)
-        timeLabel.frame = CGRect(x: 15, y: 15, width: 200, height: 25)
-        noteLabel.frame = CGRect(x: 15, y: 47.5, width: greyBackgroundView.frame.size.width - 45 - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
+        timeLabel.frame = CGRect(x: 15, y: 12.5, width: 200, height: 25)
+        noteLabel.frame = CGRect(x: 15, y: 45, width: greyBackgroundView.frame.size.width - 45 - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
         
     }
     
