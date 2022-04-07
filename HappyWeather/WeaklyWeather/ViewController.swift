@@ -23,16 +23,16 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     
 //    Header
-    private let headerHappyWeather: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
-        label.text = "Happy Weather"
-        label.backgroundColor = .clear
-        label.font = UIFont(name: "Copperplate", size: 100)
-        label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .center
-        return label
-    }()
+//    private let headerHappyWeather: UILabel = {
+//        let label = UILabel()
+//        label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+//        label.text = "Happy Weather"
+//        label.backgroundColor = .clear
+//        label.font = UIFont(name: "Copperplate", size: 100)
+//        label.adjustsFontSizeToFitWidth = true
+//        label.textAlignment = .center
+//        return label
+//    }()
     
     
     
@@ -42,15 +42,21 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     private let overviewDailyNotes: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
-        view.layer.borderWidth = 3
-        view.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+//        view.layer.borderWidth = 3
+//        view.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.125
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 16
+        view.backgroundColor = .white
         return view
     }()
     
     
     private let dailyTableView: UITableView = {
-        let TableView = UITableView()
-        return TableView
+        let tableView = UITableView()
+        tableView.clipsToBounds = true
+        return tableView
     }()
     
     private let dailyInfoLabel: UILabel = {
@@ -60,6 +66,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         label.backgroundColor = .clear
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textAlignment = .center
+        label.clipsToBounds = true
         return label
     }()
     
@@ -92,6 +99,11 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     private let overviewWeeklyWeather: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.125
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 16
+        view.backgroundColor = .white
         return view
     }()
     
@@ -99,6 +111,8 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         let imageView = UIImageView()
         imageView.image = UIImage(named: "fotoRain")
         imageView.layer.cornerRadius = 25
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -110,6 +124,8 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         label.text = "15°"
         label.font = .systemFont(ofSize: 45, weight: .medium)
         label.textAlignment = .center
+        label.layer.borderWidth = 2
+        label.layer.borderColor = CGColor(red: 255 / 255, green: 255 / 255, blue: 255 / 255, alpha: 1)
         label.layer.cornerRadius = 10
         return label
     }()
@@ -128,7 +144,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         dailyTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        view.addSubview(headerHappyWeather)
+//        view.addSubview(headerHappyWeather)
         view.addSubview(overviewDailyNotes)
         overviewDailyNotes.addSubview(dailyHeaderLabel)
         overviewDailyNotes.addSubview(dailyTableView)
@@ -176,21 +192,21 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        headerHappyWeather.frame = CGRect(x: 50, y: 50, width: view.frame.width - 100, height: 50)
+//        headerHappyWeather.frame = CGRect(x: 50, y: 70, width: view.frame.width - 100, height: 50)
         
         
         
-        overviewDailyNotes.frame = CGRect(x: 35, y: (view.frame.height / 2) + 50, width: view.frame.width - 70, height: (view.frame.height / 2) - 150)
-        dailyInfoLabel.frame = CGRect(x: 5, y:  60, width: overviewDailyNotes.frame.width - 10, height: overviewDailyNotes.frame.height - 60)
+        overviewDailyNotes.frame = CGRect(x: 60, y: (view.frame.height / 2) + 85, width: view.frame.width - 120, height: (view.frame.size.height / 2) - 200)
+        dailyInfoLabel.frame = CGRect(x: 10, y:  60, width: overviewDailyNotes.frame.width - 20, height: overviewDailyNotes.frame.height - 70)
         dailyTableView.frame = dailyInfoLabel.frame
         dailyHeaderLabel.frame = CGRect(x: 15, y:  25, width: overviewDailyNotes.frame.width - 30, height: 35)
         alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75, y:  15, width: 60, height: 60)
         
         
         
-        overviewWeeklyWeather.frame = CGRect(x: 35, y:  135, width: view.frame.width - 70, height: (view.frame.size.height / 2) - headerHappyWeather.frame.size.height - 75)
-        photoWeatherView.frame = CGRect(x: 0, y:  0, width: overviewWeeklyWeather.frame.width , height: overviewWeeklyWeather.frame.size.height)
-        weeklyTempLabel.frame = CGRect(x: 15, y:  15, width: 100 , height: 60)
+        overviewWeeklyWeather.frame = CGRect(x: 150, y:  165, width: view.frame.width - 300, height: (view.frame.size.height / 2) - 125)
+        photoWeatherView.frame = CGRect(x: 0, y:  0, width: overviewWeeklyWeather.frame.width , height: overviewWeeklyWeather.frame.size.height - 100)
+        weeklyTempLabel.frame = CGRect(x: overviewWeeklyWeather.frame.width - 125, y: 25, width: 100 , height: 60)
         
         
         
@@ -226,17 +242,29 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
                         return
                     }
 
-        let entries = result.hourly
-
-        self.hourlyModels.append(contentsOf: entries)
+        let entriesHourly = result.hourly
+        self.hourlyModels.append(contentsOf: entriesHourly)
+            
+            let entriesDaily = result.daily
+            self.dailyModels.append(contentsOf: entriesDaily)
+            
+            
+            
+            
 //        for itm in result.hourly {
 //            print("Value: \(result.timezone) \n \(itm.dt) ,\(itm.weather.first?.main ?? "")")
 //        }
 
+            
+            
+            
             dictWeatherForEvents.removeAll()
             for counter in result.hourly {
                 dictWeatherForEvents[counter.dt] = MultipleValue(temp: counter.temp, main: counter.weather.first!.main)
             }
+            
+            
+            
             
              
             
