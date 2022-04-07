@@ -14,17 +14,33 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
 
     
-    @IBOutlet var myRemovePanel: UIButton!
-    @IBOutlet weak var noteTextField: UITextField!
+
     
     var hourlyModels = [Hourly]()
     var dailyModels = [Daily]()
     var currentModels = [Current]()
     
     
+    
+//    Header
+    private let headerHappyWeather: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        label.text = "Happy Weather"
+        label.backgroundColor = .clear
+        label.font = UIFont(name: "Copperplate", size: 100)
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .center
+        return label
+    }()
+    
+    
+    
+    
+    
+// DailyView
     private let overviewDailyNotes: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
         view.layer.cornerRadius = 25
         view.layer.borderWidth = 3
         view.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
@@ -37,16 +53,17 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         return TableView
     }()
     
-   
     private let dailyInfoLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "Füge neue Ereignisse hinzu, um direkt zu sehen, wie sich das Wetter entickelt..."
+        label.text = "Füge neue Ereignisse hinzu, um das Wetter direkt zu sehen..."
         label.backgroundColor = .clear
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textAlignment = .center
         return label
     }()
+    
+    
     private let dailyHeaderLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
@@ -57,22 +74,44 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         return label
     }()
     
-    private let headerHappyWeather: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
-        label.text = "Happy Weather"
-        label.backgroundColor = .clear
-        label.font = UIFont(name: "Copperplate", size: 100)
-        label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .center
-        return label
-    }()
-    
     private let alarmButton: UIButton = {
         let button = UIButton()
         button.tintColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
         button.setImage(UIImage(systemName: "alarm"), for: .normal)
+        button.isHidden = true
         return button
+    }()
+    
+    
+    
+    
+    
+    
+    
+//    WeeklyView
+    private let overviewWeeklyWeather: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 25
+        return view
+    }()
+    
+    private let photoWeatherView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "fotoRain")
+        imageView.layer.cornerRadius = 25
+        return imageView
+    }()
+    
+    private let weeklyTempLabel: UILabel = {
+        let label = UILabel()
+        label.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        label.backgroundColor = .white
+        label.alpha = 0.5
+        label.text = "15°"
+        label.font = .systemFont(ofSize: 45, weight: .medium)
+        label.textAlignment = .center
+        label.layer.cornerRadius = 10
+        return label
     }()
     
     
@@ -85,16 +124,27 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dailyTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+//        overrideUserInterfaceStyle = .dark
+        
+        
         dailyTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         view.addSubview(headerHappyWeather)
         view.addSubview(overviewDailyNotes)
         overviewDailyNotes.addSubview(dailyHeaderLabel)
-        overviewDailyNotes.addSubview(dailyInfoLabel)
         overviewDailyNotes.addSubview(dailyTableView)
+        overviewDailyNotes.addSubview(dailyInfoLabel)
         overviewDailyNotes.addSubview(alarmButton)
         
+        
+        view.addSubview(overviewWeeklyWeather)
+        overviewWeeklyWeather.addSubview(photoWeatherView)
+        overviewWeeklyWeather.addSubview(weeklyTempLabel)
+        
+        
         alarmButton.addTarget(self, action: #selector(alarmButtonClicked(sender:)), for: .touchUpInside)
+        
+        
+        
         
         let fpc = FloatingPanelController()
         fpc.delegate = self
@@ -127,29 +177,37 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         headerHappyWeather.frame = CGRect(x: 50, y: 50, width: view.frame.width - 100, height: 50)
+        
+        
+        
         overviewDailyNotes.frame = CGRect(x: 35, y: (view.frame.height / 2) + 50, width: view.frame.width - 70, height: (view.frame.height / 2) - 150)
         dailyInfoLabel.frame = CGRect(x: 5, y:  60, width: overviewDailyNotes.frame.width - 10, height: overviewDailyNotes.frame.height - 60)
         dailyTableView.frame = dailyInfoLabel.frame
-        dailyHeaderLabel.frame = CGRect(x: 10, y:  25, width: overviewDailyNotes.frame.width - 20, height: 35)
+        dailyHeaderLabel.frame = CGRect(x: 15, y:  25, width: overviewDailyNotes.frame.width - 30, height: 35)
         alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75, y:  15, width: 60, height: 60)
+        
+        
+        
+        overviewWeeklyWeather.frame = CGRect(x: 35, y:  135, width: view.frame.width - 70, height: (view.frame.size.height / 2) - headerHappyWeather.frame.size.height - 75)
+        photoWeatherView.frame = CGRect(x: 0, y:  0, width: overviewWeeklyWeather.frame.width , height: overviewWeeklyWeather.frame.size.height)
+        weeklyTempLabel.frame = CGRect(x: 15, y:  15, width: 100 , height: 60)
+        
+        
+        
     }
    
 
     
     func floatingPanelWillBeginDragging(_ vc: FloatingPanelController) {
         if arrayTimes.count > 0 {
-//            dailyTimeLabel.text = "\(arrayTimes[0])"
-//            dailyNoteLabel.text = "\(dict[Int(exactly: arrayTimes[0])!]!)"
             dailyInfoLabel.isHidden = true
+            alarmButton.isHidden = false
         } else {
             dailyInfoLabel.isHidden = false
+            alarmButton.isHidden = true
         }
         
         dailyTableView.reloadData()
-        
-        
-        
-        
         
         
         let task = URLSession.shared.dataTask(with: urlToUse!) { data, _, error in
@@ -177,7 +235,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
 
             dictWeatherForEvents.removeAll()
             for counter in result.hourly {
-//                dictWeatherForEvents[counter.dt] = counter.temp
                 dictWeatherForEvents[counter.dt] = MultipleValue(temp: counter.temp, main: counter.weather.first!.main)
             }
             
@@ -185,12 +242,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
             
        }
         task.resume()
-        
-        
-        
-        
-        
-        
         
         
         

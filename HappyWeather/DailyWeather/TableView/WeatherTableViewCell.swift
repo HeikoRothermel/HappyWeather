@@ -107,13 +107,13 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         var today = Int()
         today = Int(Date().timeIntervalSince1970) - (Int(getDayForDate(Date()))! + 1)  * 3600
         if timeOfDay - today < (3600 * 24) {
-            self.timeLabel.text = "Heute, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr"
+            self.timeLabel.text = "Heute, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr:"
         } else if timeOfDay - today < (3600 * 48) {
-            self.timeLabel.text = "Morgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr"
+            self.timeLabel.text = "Morgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr:"
         } else if timeOfDay - today < (3600 * 72) {
-            self.timeLabel.text = "Übermorgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr"
+            self.timeLabel.text = "Übermorgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr:"
         } else if timeOfDay - today < (3600 * 48) {
-            self.timeLabel.text = "Überübermorgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr"
+            self.timeLabel.text = "Überübermorgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay)))) Uhr:"
         }
         
         
@@ -171,8 +171,8 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         
         greyBackgroundView.frame = CGRect(x: 20, y: 7.5, width: contentView.frame.size.width - 40, height: contentView.frame.size.height - 15)
-        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 12.5, width: 50, height: 60)
-        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 15, width: 50, height: 60)
+        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 12.5, width: 60, height: 60)
+        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 15, y: 15, width: 60, height: 60)
         timeLabel.frame = CGRect(x: 15, y: 15, width: 200, height: 25)
         textFieldNote.frame = CGRect(x: 15, y: 47.5, width: greyBackgroundView.frame.size.width - 45 - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
 //        testButton.frame = CGRect(x: 110, y: 0, width: 80, height: 30)

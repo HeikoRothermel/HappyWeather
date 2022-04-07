@@ -15,71 +15,9 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZT-LB-Wuo">
-                                <rect key="frame" x="182" y="498" width="50" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="7mh-87-JSA"/>
-                                    <constraint firstAttribute="width" constant="50" id="vPp-Mb-ciF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" image="cloud.fill" catalog="system">
-                                    <color key="titleColor" red="0.96476930380000003" green="0.96454292539999997" blue="0.97255080940000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" scale="large" weight="bold"/>
-                                </state>
-                                <connections>
-                                    <action selector="TestLoc:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OEf-6U-Rgx"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="36°" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sar-Kk-7og">
-                                <rect key="frame" x="182" y="423" width="50" height="50"/>
-                                <color key="backgroundColor" red="0.83974264375896313" green="0.83866650131330311" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="3Ne-u9-1Oq"/>
-                                    <constraint firstAttribute="height" constant="50" id="Vp8-mg-jiO"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EWh-xb-aBj">
-                                <rect key="frame" x="158.5" y="644" width="97" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="76Y-8a-bQK"/>
-                                    <constraint firstAttribute="height" constant="34" id="nc9-y6-3Ds"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="TapTextField:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="OSc-hl-3P9"/>
-                                </connections>
-                            </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sun.max.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="7VX-Ot-hlV">
-                                <rect key="frame" x="177" y="422.5" width="60" height="50.5"/>
-                                <color key="tintColor" red="0.32827726010000002" green="0.65211355689999995" blue="0.58038687710000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="4NJ-wQ-io9"/>
-                                    <constraint firstAttribute="height" constant="50" id="Clu-XP-jUu"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="7VX-Ot-hlV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1gd-07-wb0"/>
-                            <constraint firstItem="Sar-Kk-7og" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="L3T-GV-rZa"/>
-                            <constraint firstItem="EWh-xb-aBj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SiT-al-UEL"/>
-                            <constraint firstItem="7VX-Ot-hlV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="XwQ-Eb-T34"/>
-                            <constraint firstItem="Sar-Kk-7og" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="YSF-wn-Qz3"/>
-                            <constraint firstItem="WZT-LB-Wuo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="a2B-xV-i0d"/>
-                            <constraint firstItem="EWh-xb-aBj" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="600" id="a9P-vT-6B5"/>
-                            <constraint firstItem="WZT-LB-Wuo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="100" id="mrT-Ww-SCV"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="myRemovePanel" destination="WZT-LB-Wuo" id="Fkn-gb-AXY"/>
-                        <outlet property="noteTextField" destination="EWh-xb-aBj" id="PuG-BX-x8n"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -102,8 +40,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cloud.fill" catalog="system" width="128" height="84"/>
-        <image name="sun.max.fill" catalog="system" width="128" height="124"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
