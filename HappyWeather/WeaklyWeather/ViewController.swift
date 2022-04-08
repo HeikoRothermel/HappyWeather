@@ -140,17 +140,17 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         fpc.set(contentViewController: contentVC)
         fpc.addPanel(toParent: self)
         
-        upDataDate()
+        
         
         dailyTableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.identifier)
         dailyTableView.delegate = self
         dailyTableView.dataSource = self
         
-        DispatchQueue.main.async {
-            self.overviewTableViewForCollectionView.reloadData()
-        }
+        overviewTableViewForCollectionView.register(DailyTableViewCell.self, forCellReuseIdentifier: DailyTableViewCell.identifier)
+        overviewTableViewForCollectionView.delegate = self
+        overviewTableViewForCollectionView.dataSource = self
         
-        
+        upDataDate()
     }
     
     func upDataDate() {
@@ -176,11 +176,17 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
                     let entriesDaily = result.daily
                     self.dailyModels.append(contentsOf: entriesDaily)
                     
+            
+            DispatchQueue.main.async {
+                self.overviewTableViewForCollectionView.reloadData()
+                self.dailyTableView.reloadData()
+            }
+            
                     dictWeatherForEvents.removeAll()
                     for counter in result.hourly {
                         dictWeatherForEvents[counter.dt] = MultipleValue(temp: counter.temp, main: counter.weather.first!.main)
                     }
-                    
+            
                }
                 task.resume()
     }
@@ -213,10 +219,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
             alarmButton.isHidden = true
         }
         
-        DispatchQueue.main.async {
-            self.dailyTableView.reloadData()
-        }
-        print(arrayTimes)
+        
         
         upDataDate()
        
@@ -259,6 +262,10 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
             return
         }
         urlToUse = url
+        
+        
+        upDataDate()
+        
     }
     
     
@@ -302,6 +309,10 @@ extension ViewController: UITableViewDataSource {
         return cells
     }
     
+    
+    
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
 
@@ -317,6 +328,9 @@ extension ViewController: UITableViewDataSource {
         
         return cell
     }
+    
+    
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
