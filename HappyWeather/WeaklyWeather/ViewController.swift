@@ -80,21 +80,21 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     
     //    WeeklyView
-        private let overviewTableViewForCollectionView: UITableView = {
-            let tableView = UITableView()
-            tableView.layer.cornerRadius = 25
-            tableView.layer.shadowColor = UIColor.black.cgColor
-            tableView.layer.shadowOpacity = 0.125
-            tableView.layer.shadowOffset = .zero
-            tableView.layer.shadowRadius = 16
-            tableView.backgroundColor = .clear
-            tableView.layer.borderWidth = 3
-            tableView.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
-            return tableView
-        }()
+//        private let overviewTableViewForCollectionView: UITableView = {
+//            let tableView = UITableView()
+//            tableView.layer.cornerRadius = 25
+//            tableView.layer.shadowColor = UIColor.black.cgColor
+//            tableView.layer.shadowOpacity = 0.125
+//            tableView.layer.shadowOffset = .zero
+//            tableView.layer.shadowRadius = 16
+//            tableView.backgroundColor = .clear
+//            tableView.layer.borderWidth = 3
+//            tableView.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+//            return tableView
+//        }()
     
 
-    
+    @IBOutlet var table: UITableView!
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
@@ -117,7 +117,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         overviewDailyNotes.addSubview(alarmButton)
         
         
-        view.addSubview(overviewTableViewForCollectionView)
+//        view.addSubview(overviewTableViewForCollectionView)
         
         alarmButton.addTarget(self, action: #selector(alarmButtonClicked(sender:)), for: .touchUpInside)
         
@@ -141,16 +141,15 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         fpc.addPanel(toParent: self)
         
         
-        
         dailyTableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.identifier)
         dailyTableView.delegate = self
         dailyTableView.dataSource = self
         
-        overviewTableViewForCollectionView.register(DailyTableViewCell.self, forCellReuseIdentifier: DailyTableViewCell.identifier)
-        overviewTableViewForCollectionView.delegate = self
-        overviewTableViewForCollectionView.dataSource = self
+        table.register(XIBDailyTableViewCell.nib(), forCellReuseIdentifier: XIBDailyTableViewCell.identifier)
+        table.delegate = self
+        table.dataSource = self
         
-        upDataDate()
+//        upDataDate()
     }
     
     func upDataDate() {
@@ -170,22 +169,25 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
                                 return
                             }
 
-                let entriesHourly = result.hourly
-                self.hourlyModels.append(contentsOf: entriesHourly)
-                    
+            let entriesHourly = result.hourly
+            self.hourlyModels.append(contentsOf: entriesHourly)
+            self.hourlyModels = result.hourly
+            
+            
                     let entriesDaily = result.daily
                     self.dailyModels.append(contentsOf: entriesDaily)
                     
             
-            DispatchQueue.main.async {
-                self.overviewTableViewForCollectionView.reloadData()
-                self.dailyTableView.reloadData()
-            }
             
                     dictWeatherForEvents.removeAll()
                     for counter in result.hourly {
                         dictWeatherForEvents[counter.dt] = MultipleValue(temp: counter.temp, main: counter.weather.first!.main)
                     }
+            
+            DispatchQueue.main.async {
+                self.table.reloadData()
+                self.dailyTableView.reloadData()
+            }
             
                }
                 task.resume()
@@ -204,7 +206,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         
-        overviewTableViewForCollectionView.frame = CGRect(x: 0, y:  150, width: view.frame.width, height: (view.frame.size.height / 2) - 100)
+//        overviewTableViewForCollectionView.frame = CGRect(x: 0, y:  150, width: view.frame.width, height: (view.frame.size.height / 2) - 100)
           
     }
    
@@ -222,7 +224,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         upDataDate()
-       
+        
                     
                     
     }
@@ -233,6 +235,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupLocation()
+        
     }
     
     
@@ -300,13 +303,17 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var cells = Int()
-        if tableView == overviewTableViewForCollectionView {
+        if tableView == table {
             cells = 1
         } else if tableView == dailyTableView {
             cells = arrayTimes.count
         }
+      return cells
         
-        return cells
+//        if section == 0 {
+//            return 1
+//        }
+//        return arrayTimes.count
     }
     
     
@@ -316,28 +323,41 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
 
-        if tableView == overviewTableViewForCollectionView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: DailyTableViewCell.identifier, for: indexPath) as? DailyTableViewCell
-            cell!.configure(with: entriesHourly)
+        if tableView == table {
+            let cell = tableView.dequeueReusableCell(withIdentifier: XIBDailyTableViewCell.identifier, for: indexPath) as? XIBDailyTableViewCell
+            cell!.configure(with: hourlyModels)
             cell!.selectionStyle = UITableViewCell.SelectionStyle.none
        } else if tableView == dailyTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
             cell!.configure(timeOfDay: indexPath.row)
             cell!.selectionStyle = UITableViewCell.SelectionStyle.none
        }
-        
+
         return cell
+        
+//        if indexPath.section == 0 {
+//
+//            let cell = tableView.dequeueReusableCell(withIdentifier: XIBDailyTableViewCell.identifier, for: indexPath) as? XIBDailyTableViewCell
+//            cell!.configure(with: hourlyModels)
+//            return cell!
+//        }
+//
+//
+//        let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
+//        cell!.configure(timeOfDay: indexPath.row)
+//        cell!.selectionStyle = UITableViewCell.SelectionStyle.none
+//        return cell!
     }
     
     
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+
         var cellheight = Float()
 
-        if tableView == overviewTableViewForCollectionView {
-            cellheight = 100
+        if tableView == table {
+            cellheight = 500
         } else if tableView == dailyTableView {
             cellheight = 100
         }
