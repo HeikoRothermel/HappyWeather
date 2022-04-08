@@ -19,8 +19,8 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
     
     
     private let myTableView: UITableView = {
-        let myTableView = UITableView()
-        return myTableView
+        let tableView = UITableView()
+        return tableView
     }()
     
     private let preview24h: UILabel = {

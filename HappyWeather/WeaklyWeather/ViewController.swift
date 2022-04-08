@@ -93,43 +93,19 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     
     
+    //    WeeklyView
+        private let overviewTableViewForCollectionView: UITableView = {
+            let tableView = UITableView()
+            tableView.layer.cornerRadius = 25
+            tableView.layer.shadowColor = UIColor.black.cgColor
+            tableView.layer.shadowOpacity = 0.125
+            tableView.layer.shadowOffset = .zero
+            tableView.layer.shadowRadius = 16
+            tableView.backgroundColor = .green
+            return tableView
+        }()
     
-    
-//    WeeklyView
-    private let overviewWeeklyWeather: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 25
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.125
-        view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 16
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    private let photoWeatherView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "fotoRain")
-        imageView.layer.cornerRadius = 25
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
-    
-    private let weeklyTempLabel: UILabel = {
-        let label = UILabel()
-        label.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
-        label.backgroundColor = .white
-        label.alpha = 0.5
-        label.text = "15°"
-        label.font = .systemFont(ofSize: 45, weight: .medium)
-        label.textAlignment = .center
-        label.layer.masksToBounds = true
-        label.layer.borderWidth = 2
-        label.layer.borderColor = CGColor(red: 255 / 255, green: 255 / 255, blue: 255 / 255, alpha: 1)
-        label.layer.cornerRadius = 10
-        return label
-    }()
+
     
     
     let locationManager = CLLocationManager()
@@ -153,9 +129,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         overviewDailyNotes.addSubview(alarmButton)
         
         
-        view.addSubview(overviewWeeklyWeather)
-        overviewWeeklyWeather.addSubview(photoWeatherView)
-        overviewWeeklyWeather.addSubview(weeklyTempLabel)
+        view.addSubview(overviewTableViewForCollectionView)
         
         
         alarmButton.addTarget(self, action: #selector(alarmButtonClicked(sender:)), for: .touchUpInside)
@@ -184,7 +158,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         
-        
         dailyTableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.identifier)
         dailyTableView.delegate = self
         dailyTableView.dataSource = self
@@ -205,9 +178,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         
-        overviewWeeklyWeather.frame = CGRect(x: 150, y:  150, width: view.frame.width - 300, height: (view.frame.size.height / 2) - 100)
-        photoWeatherView.frame = CGRect(x: 0, y:  0, width: overviewWeeklyWeather.frame.width , height: overviewWeeklyWeather.frame.size.height - 100)
-        weeklyTempLabel.frame = CGRect(x: overviewWeeklyWeather.frame.width - 125, y: 25, width: 100 , height: 60)
+        overviewTableViewForCollectionView.frame = CGRect(x: 150, y:  150, width: view.frame.width - 300, height: (view.frame.size.height / 2) - 100)
         
         
         
@@ -225,6 +196,9 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         }
         
         dailyTableView.reloadData()
+        
+        
+        print(arrayTimes)
         
         
         let task = URLSession.shared.dataTask(with: urlToUse!) { data, _, error in
@@ -342,20 +316,58 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
 
 extension ViewController: UITableViewDataSource {
     
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 2
+//    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrayTimes.count
+        var cells = Int()
+//
+        if tableView == dailyTableView {
+            cells = arrayTimes.count
+        } else if tableView == overviewTableViewForCollectionView {
+            cells = 1
+        }
+        
+        return cells
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
-        cell!.configure(timeOfDay: indexPath.row)
-        cell!.selectionStyle = UITableViewCell.SelectionStyle.none
-        return cell!
+        let cell = UITableViewCell()
+//
+        if tableView == dailyTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
+            cell!.configure(timeOfDay: indexPath.row)
+            cell!.selectionStyle = UITableViewCell.SelectionStyle.none
+        } else if tableView == overviewTableViewForCollectionView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: DailyTableViewCell.identifier, for: indexPath) as? DailyTableViewCell
+            cell!.configure(with: dailyModels)
+            cell!.selectionStyle = UITableViewCell.SelectionStyle.none
+        }
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        
+        var cellheight = Float()
+//
+        if tableView == dailyTableView {
+            cellheight = 100
+        } else if tableView == overviewTableViewForCollectionView {
+            cellheight = Float(overviewTableViewForCollectionView.frame.size.height)
+        }
+
+        return CGFloat(cellheight)
     }
     
+    
+    
+    
 }
+
+
+
+
+
