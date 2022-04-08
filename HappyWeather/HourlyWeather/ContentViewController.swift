@@ -73,7 +73,7 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         
         myTableView.frame = CGRect(x: 0, y: 75, width: view.frame.width, height: view.frame.height - 75)
         preview24h.frame = CGRect(x: 0, y: 10, width: view.frame.size.width, height: view.frame.size.height - myTableView.frame.size.height - 10)
-        print("klappt")
+//        print("klappt")
     }
     
     

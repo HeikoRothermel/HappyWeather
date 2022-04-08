@@ -19,21 +19,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     var hourlyModels = [Hourly]()
     var dailyModels = [Daily]()
     var currentModels = [Current]()
-    
-    
-    
-//    Header
-//    private let headerHappyWeather: UILabel = {
-//        let label = UILabel()
-//        label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
-//        label.text = "Happy Weather"
-//        label.backgroundColor = .clear
-//        label.font = UIFont(name: "Copperplate", size: 100)
-//        label.adjustsFontSizeToFitWidth = true
-//        label.textAlignment = .center
-//        return label
-//    }()
-    
+    var entriesHourly: [Hourly] = []
     
     
     
@@ -62,7 +48,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     private let dailyInfoLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "Füge neue Ereignisse hinzu, um das Wetter direkt zu sehen..."
+        label.text = "Füge neue Ereignisse hinzu, \n um dein Wetter direkt zu sehen..."
         label.backgroundColor = .clear
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textAlignment = .center
@@ -76,7 +62,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         label.text = "Übersicht deiner Events:"
         label.backgroundColor = .clear
-        label.font = .systemFont(ofSize: 30, weight: .bold)
+        label.font = .systemFont(ofSize: 25, weight: .bold)
         label.textAlignment = .center
         return label
     }()
@@ -101,7 +87,9 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
             tableView.layer.shadowOpacity = 0.125
             tableView.layer.shadowOffset = .zero
             tableView.layer.shadowRadius = 16
-            tableView.backgroundColor = .green
+            tableView.backgroundColor = .clear
+            tableView.layer.borderWidth = 3
+            tableView.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
             return tableView
         }()
     
@@ -131,11 +119,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         view.addSubview(overviewTableViewForCollectionView)
         
-        
         alarmButton.addTarget(self, action: #selector(alarmButtonClicked(sender:)), for: .touchUpInside)
-        
-        
-        
         
         let fpc = FloatingPanelController()
         fpc.delegate = self
@@ -156,17 +140,53 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         fpc.set(contentViewController: contentVC)
         fpc.addPanel(toParent: self)
         
-        
+        upDataDate()
         
         dailyTableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.identifier)
         dailyTableView.delegate = self
         dailyTableView.dataSource = self
         
+        DispatchQueue.main.async {
+            self.overviewTableViewForCollectionView.reloadData()
+        }
+        
+        
+    }
+    
+    func upDataDate() {
+        let task = URLSession.shared.dataTask(with: urlToUse!) { data, _, error in
+                    guard let data = data, error == nil else {
+                        print("something went wrong")
+                        return
+                    }
+                    var json: WeatherResponse?
+                            do {
+                                json = try JSONDecoder().decode(WeatherResponse.self, from: data)
+                            }
+                            catch {
+                                print("error: \(error)")
+                            }
+                            guard let result = json else {
+                                return
+                            }
+
+                let entriesHourly = result.hourly
+                self.hourlyModels.append(contentsOf: entriesHourly)
+                    
+                    let entriesDaily = result.daily
+                    self.dailyModels.append(contentsOf: entriesDaily)
+                    
+                    dictWeatherForEvents.removeAll()
+                    for counter in result.hourly {
+                        dictWeatherForEvents[counter.dt] = MultipleValue(temp: counter.temp, main: counter.weather.first!.main)
+                    }
+                    
+               }
+                task.resume()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        headerHappyWeather.frame = CGRect(x: 50, y: 70, width: view.frame.width - 100, height: 50)
         
         
         
@@ -178,10 +198,8 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         
-        overviewTableViewForCollectionView.frame = CGRect(x: 150, y:  150, width: view.frame.width - 300, height: (view.frame.size.height / 2) - 100)
-        
-        
-        
+        overviewTableViewForCollectionView.frame = CGRect(x: 0, y:  150, width: view.frame.width, height: (view.frame.size.height / 2) - 100)
+          
     }
    
 
@@ -195,60 +213,18 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
             alarmButton.isHidden = true
         }
         
-        dailyTableView.reloadData()
-        
-        
+        DispatchQueue.main.async {
+            self.dailyTableView.reloadData()
+        }
         print(arrayTimes)
         
-        
-        let task = URLSession.shared.dataTask(with: urlToUse!) { data, _, error in
-            guard let data = data, error == nil else {
-                print("something went wrong")
-                return
-            }
-            var json: WeatherResponse?
-                    do {
-                        json = try JSONDecoder().decode(WeatherResponse.self, from: data)
-                    }
-                    catch {
-                        print("error: \(error)")
-                    }
-                    guard let result = json else {
-                        return
-                    }
-
-        let entriesHourly = result.hourly
-        self.hourlyModels.append(contentsOf: entriesHourly)
-            
-            let entriesDaily = result.daily
-            self.dailyModels.append(contentsOf: entriesDaily)
-            
-            
-            
-            
-//        for itm in result.hourly {
-//            print("Value: \(result.timezone) \n \(itm.dt) ,\(itm.weather.first?.main ?? "")")
-//        }
-
-            
-            
-            
-            dictWeatherForEvents.removeAll()
-            for counter in result.hourly {
-                dictWeatherForEvents[counter.dt] = MultipleValue(temp: counter.temp, main: counter.weather.first!.main)
-            }
-            
-            
-            
-            
-             
-            
-       }
-        task.resume()
-        
-        
-        
+        upDataDate()
+       
+                    
+                    
     }
+    
+ 
     
     
     override func viewDidAppear(_ animated: Bool) {
@@ -287,13 +263,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     
     
-    @IBAction func TestLoc(_ sender: UIButton) {
-        print("\(lat) | \(long)")
-    }
-    
-    @IBAction func TapTextField(_ sender: UITextField) {
-//        print("mmmm")
-    }
+
     
         @objc func alarmButtonClicked(sender: UIButton){
             alarmButton.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
@@ -323,11 +293,10 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var cells = Int()
-//
-        if tableView == dailyTableView {
-            cells = arrayTimes.count
-        } else if tableView == overviewTableViewForCollectionView {
+        if tableView == overviewTableViewForCollectionView {
             cells = 1
+        } else if tableView == dailyTableView {
+            cells = arrayTimes.count
         }
         
         return cells
@@ -335,16 +304,16 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-//
-        if tableView == dailyTableView {
+
+        if tableView == overviewTableViewForCollectionView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: DailyTableViewCell.identifier, for: indexPath) as? DailyTableViewCell
+            cell!.configure(with: entriesHourly)
+            cell!.selectionStyle = UITableViewCell.SelectionStyle.none
+       } else if tableView == dailyTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
             cell!.configure(timeOfDay: indexPath.row)
             cell!.selectionStyle = UITableViewCell.SelectionStyle.none
-        } else if tableView == overviewTableViewForCollectionView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: DailyTableViewCell.identifier, for: indexPath) as? DailyTableViewCell
-            cell!.configure(with: dailyModels)
-            cell!.selectionStyle = UITableViewCell.SelectionStyle.none
-        }
+       }
         
         return cell
     }
@@ -352,11 +321,11 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         var cellheight = Float()
-//
-        if tableView == dailyTableView {
+
+        if tableView == overviewTableViewForCollectionView {
             cellheight = 100
-        } else if tableView == overviewTableViewForCollectionView {
-            cellheight = Float(overviewTableViewForCollectionView.frame.size.height)
+        } else if tableView == dailyTableView {
+            cellheight = 100
         }
 
         return CGFloat(cellheight)

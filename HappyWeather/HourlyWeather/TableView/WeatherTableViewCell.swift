@@ -95,7 +95,7 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
 //        testButton.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
         textFieldNote.addTarget(self, action: #selector(fieldClicked(sender:)), for: .editingDidEnd)
         
-        print("klappt2")
+//        print("klappt2")
     }
     
     required init?(coder: NSCoder) {
