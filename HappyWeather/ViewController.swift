@@ -213,14 +213,14 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         
-        overviewDailyNotes.frame = CGRect(x: 35 * CGFloat(factorWidth), y: (view.frame.height / 2) + 20 * CGFloat(factorHeight), width: view.frame.width - 70 * CGFloat(factorWidth), height: (view.frame.size.height / 2) - 135 * CGFloat(factorHeight))
+        overviewDailyNotes.frame = CGRect(x: 35 * CGFloat(factorWidth), y: (view.frame.height / 2) + 60 * CGFloat(factorHeight), width: view.frame.width - 70 * CGFloat(factorWidth), height: (view.frame.size.height / 2) - 170 * CGFloat(factorHeight))
         dailyInfoLabel.frame = CGRect(x: 10 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 20 * CGFloat(factorWidth), height: overviewDailyNotes.frame.height - 70 * CGFloat(factorHeight))
         dailyTableView.frame = dailyInfoLabel.frame
         dailyHeaderLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 30 * CGFloat(factorWidth), height: 35 * CGFloat(factorHeight))
         alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75 * CGFloat(factorWidth), y:  15 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
         
         
-        collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  135 * CGFloat(factorHeight), width: view.frame.size.width, height: 325 * CGFloat(factorHeight))
+        collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  115 * CGFloat(factorHeight), width: view.frame.size.width, height: 380 * CGFloat(factorHeight))
 //        cityCollectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  75 * CGFloat(factorHeight), width: view.frame.size.width, height: 75 * CGFloat(factorHeight))
         
         
@@ -303,8 +303,8 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
     let initialState: FloatingPanelState = .tip
     var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
         return [
-            .full: FloatingPanelLayoutAnchor(absoluteInset: 50.0, edge: .top, referenceGuide: .superview),
-            .tip: FloatingPanelLayoutAnchor(absoluteInset: 75.0, edge: .bottom, referenceGuide: .superview),
+            .full: FloatingPanelLayoutAnchor(absoluteInset: 50.0 * CGFloat(factorHeight), edge: .top, referenceGuide: .superview),
+            .tip: FloatingPanelLayoutAnchor(absoluteInset: 75.0 * CGFloat(factorHeight), edge: .bottom, referenceGuide: .superview),
         ]
     }
 }
@@ -351,7 +351,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         var width = CGFloat()
 
 //        if collectionView == collectionView {
-            height = 250  * CGFloat(factorHeight)
+            height = 380  * CGFloat(factorHeight)
             width = view.frame.size.width
 //        } else if collectionView == cityCollectionView {
 //            height = 50  * CGFloat(factorHeight)

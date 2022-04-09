@@ -30,6 +30,7 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .center
         label.text = "24-Stunden-Vorschau"
+        label.textColor = .white
         return label
     }()
    
@@ -46,6 +47,8 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         
         view.addSubview(myTableView)
         view.addSubview(preview24h)
@@ -73,7 +76,7 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         myTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
         myTableView.frame = CGRect(x: 0, y: 75, width: view.frame.width, height: view.frame.height - 75)
-        preview24h.frame = CGRect(x: 0, y: 10, width: view.frame.size.width, height: view.frame.size.height - myTableView.frame.size.height - 10)
+        preview24h.frame = CGRect(x: 0, y: 10, width: view.frame.size.width, height: view.frame.size.height - myTableView.frame.size.height - 25)
 //        print("klappt")
     }
     
