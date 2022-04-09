@@ -217,15 +217,15 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         
-        overviewDailyNotes.frame = CGRect(x: 35, y: (view.frame.height / 2) + 20, width: view.frame.width - 70, height: (view.frame.size.height / 2) - 135)
-        dailyInfoLabel.frame = CGRect(x: 10, y:  60, width: overviewDailyNotes.frame.width - 20, height: overviewDailyNotes.frame.height - 70)
+        overviewDailyNotes.frame = CGRect(x: 35 * CGFloat(factorWidth), y: (view.frame.height / 2) + 20 * CGFloat(factorHeight), width: view.frame.width - 70 * CGFloat(factorWidth), height: (view.frame.size.height / 2) - 135 * CGFloat(factorHeight))
+        dailyInfoLabel.frame = CGRect(x: 10 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 20 * CGFloat(factorWidth), height: overviewDailyNotes.frame.height - 70 * CGFloat(factorHeight))
         dailyTableView.frame = dailyInfoLabel.frame
-        dailyHeaderLabel.frame = CGRect(x: 15, y:  20, width: overviewDailyNotes.frame.width - 30, height: 35)
-        alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75, y:  15, width: 60, height: 60)
+        dailyHeaderLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 30 * CGFloat(factorWidth), height: 35 * CGFloat(factorHeight))
+        alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75 * CGFloat(factorWidth), y:  15 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
         
         
-        collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  135 * CGFloat(factorHeight), width: view.frame.size.width * CGFloat(factorWidth), height: 325 * CGFloat(factorHeight))
-        cityCollectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  50 * CGFloat(factorHeight), width: view.frame.size.width * CGFloat(factorWidth), height: 75 * CGFloat(factorHeight))
+        collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  135 * CGFloat(factorHeight), width: view.frame.size.width, height: 325 * CGFloat(factorHeight))
+        cityCollectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  50 * CGFloat(factorHeight), width: view.frame.size.width, height: 75 * CGFloat(factorHeight))
         
         
         
@@ -351,7 +351,9 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 250 , height: 250)
+        let height = 250  * CGFloat(factorHeight)
+        let width = 250  * CGFloat(factorWidth)
+        return CGSize(width: width , height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -434,11 +436,17 @@ class CustomCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        viewWeather.frame = CGRect(x: 0, y:  0, width: contentView.frame.size.width - 15 , height: contentView.frame.size.height)
-        imageWeather.frame = CGRect(x: 0, y:  0, width: viewWeather.frame.size.width, height: viewWeather.frame.size.height - 75)
-        labelWeather.frame = CGRect(x: imageWeather.frame.size.width - 100, y:  20, width: 80, height: 40)
-        labelDay.frame = CGRect(x: 10, y:  imageWeather.frame.size.height, width: viewWeather.frame.size.width - 20 , height: viewWeather.frame.size.height - imageWeather.frame.size.height - 20)
+        viewWeather.frame = CGRect(x: 10 * CGFloat(factorWidth), y:  0 * CGFloat(factorHeight), width: 300 , height: contentView.frame.size.height)
+        imageWeather.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  0 * CGFloat(factorHeight), width: viewWeather.frame.size.width, height: viewWeather.frame.size.height - 75 * CGFloat(factorHeight))
+        labelWeather.frame = CGRect(x: imageWeather.frame.size.width - 100 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: 80 * CGFloat(factorWidth), height: 40 * CGFloat(factorHeight))
+        labelDay.frame = CGRect(x: 10 * CGFloat(factorWidth), y:  imageWeather.frame.size.height, width: viewWeather.frame.size.width - 20 * CGFloat(factorWidth) , height: viewWeather.frame.size.height - imageWeather.frame.size.height - 20 * CGFloat(factorHeight))
     }
+    
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        textFieldNote.text = nil
+//    }
+    
     
     func configure(with model: Daily) {
         
@@ -481,6 +489,8 @@ class CustomCell: UICollectionViewCell {
             formatter.dateFormat = "H"
             return formatter.string(from: inputDate)
         }
+    
+    
     
     }
 
