@@ -18,11 +18,9 @@ var factorWidth = Float()
 
 var dictEventsNoted = [Int: String]()
 var arrayTimes = [Int]()
-//var dictWeatherForEvents = [Int: Float]()
 
 
 typealias MultipleValue = (temp: Float, main: String)
 var dictWeatherForEvents = [Int: MultipleValue]()
-//dict2[1] = MultipleValue(firstObject: "Hausaufgaben", secondObject: "Sport")
-//var value = dict2[1]
-//print value?.firstObject
+
+var shownCities = ["Munich", "Berlin", "Hamburg", "+"]

@@ -20,6 +20,7 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
     
     private let myTableView: UITableView = {
         let tableView = UITableView()
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
