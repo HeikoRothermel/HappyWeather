@@ -10,11 +10,14 @@ import FloatingPanel
 import CoreLocation
 
 
+
+struct CustomData {
+    var image: UIImage
+    var title: String
+}
+
+
 class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocationManagerDelegate, UITableViewDelegate {
-    
-
-    
-
     
     var hourlyModels = [Hourly]()
     var dailyModels = [Daily]()
@@ -22,7 +25,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     var entriesHourly: [Hourly] = []
     
     
-    
+    let data = [CustomData(image: #imageLiteral(resourceName: "fotoSun"), title: "Eins"),CustomData(image: #imageLiteral(resourceName: "fotoRain"), title: "Zwei"),CustomData(image: #imageLiteral(resourceName: "fotoCloud"), title: "Drei"),CustomData(image: #imageLiteral(resourceName: "fotoSnow"), title: "Vier")]
     
 // DailyView
     private let overviewDailyNotes: UIView = {
@@ -93,8 +96,17 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
 //            return tableView
 //        }()
     
-
-    @IBOutlet var table: UITableView!
+    private let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collView = UICollectionView(frame: .zero,collectionViewLayout: layout)
+        collView.translatesAutoresizingMaskIntoConstraints = false
+        collView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
+        collView.backgroundColor = .white
+        return collView
+    }()
+    
+    
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
@@ -117,7 +129,9 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         overviewDailyNotes.addSubview(alarmButton)
         
         
-//        view.addSubview(overviewTableViewForCollectionView)
+        view.addSubview(collectionView)
+        
+        
         
         alarmButton.addTarget(self, action: #selector(alarmButtonClicked(sender:)), for: .touchUpInside)
         
@@ -145,11 +159,9 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         dailyTableView.delegate = self
         dailyTableView.dataSource = self
         
-        table.register(XIBDailyTableViewCell.nib(), forCellReuseIdentifier: XIBDailyTableViewCell.identifier)
-        table.delegate = self
-        table.dataSource = self
         
-//        upDataDate()
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
     
     func upDataDate() {
@@ -185,7 +197,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
                     }
             
             DispatchQueue.main.async {
-                self.table.reloadData()
                 self.dailyTableView.reloadData()
             }
             
@@ -203,6 +214,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         dailyTableView.frame = dailyInfoLabel.frame
         dailyHeaderLabel.frame = CGRect(x: 15, y:  20, width: overviewDailyNotes.frame.width - 30, height: 35)
         alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75, y:  15, width: 60, height: 60)
+        collectionView.frame = CGRect(x: 0, y:  60, width: view.frame.size.width, height: 250)
         
         
         
@@ -296,81 +308,96 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
 
 extension ViewController: UITableViewDataSource {
     
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 2
-//    }
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var cells = Int()
-        if tableView == table {
-            cells = 1
-        } else if tableView == dailyTableView {
-            cells = arrayTimes.count
-        }
+        cells = arrayTimes.count
       return cells
         
-//        if section == 0 {
-//            return 1
-//        }
-//        return arrayTimes.count
     }
-    
-    
-    
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        
 
-        if tableView == table {
-            let cell = tableView.dequeueReusableCell(withIdentifier: XIBDailyTableViewCell.identifier, for: indexPath) as? XIBDailyTableViewCell
-            cell!.configure(with: hourlyModels)
-            cell!.selectionStyle = UITableViewCell.SelectionStyle.none
-       } else if tableView == dailyTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
             cell!.configure(timeOfDay: indexPath.row)
             cell!.selectionStyle = UITableViewCell.SelectionStyle.none
-       }
 
-        return cell
-        
-//        if indexPath.section == 0 {
-//
-//            let cell = tableView.dequeueReusableCell(withIdentifier: XIBDailyTableViewCell.identifier, for: indexPath) as? XIBDailyTableViewCell
-//            cell!.configure(with: hourlyModels)
-//            return cell!
-//        }
-//
-//
-//        let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
-//        cell!.configure(timeOfDay: indexPath.row)
-//        cell!.selectionStyle = UITableViewCell.SelectionStyle.none
-//        return cell!
+        return cell!
     }
-    
-    
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
         var cellheight = Float()
-
-        if tableView == table {
-            cellheight = 500
-        } else if tableView == dailyTableView {
+        
             cellheight = 100
-        }
-
         return CGFloat(cellheight)
     }
     
+}
+
+extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 250 , height: 250)
+    }
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return data.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
+        cell.data = self.data[indexPath.row]
+        return cell
+    }
     
 }
 
 
+
+
+class CustomCell: UICollectionViewCell {
+    
+    
+    fileprivate var imageWeather: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 20
+        image.image = #imageLiteral(resourceName: "fotoRain")
+        return image
+        }()
+    
+    var data: CustomData? {
+        didSet {
+            guard let data = data else {return}
+            imageWeather.image = data.image
+        }
+    }
+    
+    override init(frame:CGRect) {
+        super.init(frame: frame)
+        contentView.addSubview(imageWeather)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        
+        imageWeather.frame = CGRect(x: 0, y:  0, width: contentView.frame.size.width, height: 200)
+        
+    }
+    
+    
+    
+}
 
 
 
