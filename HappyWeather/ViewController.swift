@@ -11,10 +11,6 @@ import CoreLocation
 
 
 
-struct CustomData {
-    var image: UIImage
-    var title: String
-}
 
 
 class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocationManagerDelegate, UITableViewDelegate {
@@ -22,10 +18,8 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     var hourlyModels = [Hourly]()
     var dailyModels = [Daily]()
     var currentModels = [Current]()
-    var entriesHourly: [Hourly] = []
+//    var entriesHourly: [Hourly] = []
     
-    
-    let data = [CustomData(image: #imageLiteral(resourceName: "fotoSun"), title: "Eins"),CustomData(image: #imageLiteral(resourceName: "fotoRain"), title: "Zwei"),CustomData(image: #imageLiteral(resourceName: "fotoCloud"), title: "Drei"),CustomData(image: #imageLiteral(resourceName: "fotoSnow"), title: "Vier")]
     
 // DailyView
     private let overviewDailyNotes: UIView = {
@@ -106,7 +100,15 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         return collView
     }()
     
-    
+    private let cityCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collView = UICollectionView(frame: .zero,collectionViewLayout: layout)
+        collView.translatesAutoresizingMaskIntoConstraints = false
+        collView.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
+        collView.backgroundColor = .green
+        return collView
+    }()
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
@@ -117,6 +119,12 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        print("Höhe: \(view.frame.size.height)")
+        print("Breite: \(view.frame.size.width)")
+        
+        factorWidth = Float(view.frame.size.width / 414)
+        factorHeight = Float(view.frame.size.height / 896)
 //        overrideUserInterfaceStyle = .dark
         
         
@@ -130,7 +138,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         view.addSubview(collectionView)
-        
+        view.addSubview(cityCollectionView)
         
         
         alarmButton.addTarget(self, action: #selector(alarmButtonClicked(sender:)), for: .touchUpInside)
@@ -183,7 +191,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
 
             let entriesHourly = result.hourly
             self.hourlyModels.append(contentsOf: entriesHourly)
-            self.hourlyModels = result.hourly
             
             
                     let entriesDaily = result.daily
@@ -198,6 +205,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
             
             DispatchQueue.main.async {
                 self.dailyTableView.reloadData()
+                self.collectionView.reloadData()
             }
             
                }
@@ -209,16 +217,18 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         
-        overviewDailyNotes.frame = CGRect(x: 60, y: (view.frame.height / 2) + 85, width: view.frame.width - 120, height: (view.frame.size.height / 2) - 200)
+        overviewDailyNotes.frame = CGRect(x: 35, y: (view.frame.height / 2) + 20, width: view.frame.width - 70, height: (view.frame.size.height / 2) - 135)
         dailyInfoLabel.frame = CGRect(x: 10, y:  60, width: overviewDailyNotes.frame.width - 20, height: overviewDailyNotes.frame.height - 70)
         dailyTableView.frame = dailyInfoLabel.frame
         dailyHeaderLabel.frame = CGRect(x: 15, y:  20, width: overviewDailyNotes.frame.width - 30, height: 35)
         alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75, y:  15, width: 60, height: 60)
-        collectionView.frame = CGRect(x: 0, y:  60, width: view.frame.size.width, height: 250)
+        
+        
+        collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  135 * CGFloat(factorHeight), width: view.frame.size.width * CGFloat(factorWidth), height: 325 * CGFloat(factorHeight))
+        cityCollectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  50 * CGFloat(factorHeight), width: view.frame.size.width * CGFloat(factorWidth), height: 75 * CGFloat(factorHeight))
         
         
         
-//        overviewTableViewForCollectionView.frame = CGRect(x: 0, y:  150, width: view.frame.width, height: (view.frame.size.height / 2) - 100)
           
     }
    
@@ -247,7 +257,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupLocation()
-        
+        upDataDate()
     }
     
     
@@ -279,7 +289,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         urlToUse = url
         
         
-        upDataDate()
         
     }
     
@@ -337,6 +346,8 @@ extension ViewController: UITableViewDataSource {
     
 }
 
+
+
 extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -344,15 +355,15 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
+        return dailyModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
-        cell.data = self.data[indexPath.row]
+//        cell.data = self.data[indexPath.row]
+        cell.configure(with: dailyModels[indexPath.row])
         return cell
     }
-    
 }
 
 
@@ -360,27 +371,60 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
 
 class CustomCell: UICollectionViewCell {
     
+    private let viewWeather: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 25
+//        view.layer.borderWidth = 3
+//        view.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.125
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 16
+        view.backgroundColor = .white
+        return view
+    }()
     
-    fileprivate var imageWeather: UIImageView = {
+    private var imageWeather: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.layer.cornerRadius = 20
-        image.image = #imageLiteral(resourceName: "fotoRain")
         return image
         }()
     
-    var data: CustomData? {
-        didSet {
-            guard let data = data else {return}
-            imageWeather.image = data.image
-        }
-    }
+    private let labelWeather: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.backgroundColor = .white
+        label.alpha = 0.5
+        label.font = .systemFont(ofSize: 20, weight: .medium)
+        label.textAlignment = .center
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 15
+        return label
+    }()
+    
+    private let labelDay: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.backgroundColor = .white
+        label.font = .systemFont(ofSize: 20, weight: .medium)
+        label.textAlignment = .left
+        label.clipsToBounds = true
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    
+    private var timeOfDay = Int()
     
     override init(frame:CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(imageWeather)
+        contentView.addSubview(viewWeather)
+        viewWeather.addSubview(imageWeather)
+        viewWeather.addSubview(labelDay)
+        imageWeather.addSubview(labelWeather)
     }
     
     required init?(coder: NSCoder) {
@@ -390,12 +434,65 @@ class CustomCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        viewWeather.frame = CGRect(x: 0, y:  0, width: contentView.frame.size.width - 15 , height: contentView.frame.size.height)
+        imageWeather.frame = CGRect(x: 0, y:  0, width: viewWeather.frame.size.width, height: viewWeather.frame.size.height - 75)
+        labelWeather.frame = CGRect(x: imageWeather.frame.size.width - 100, y:  20, width: 80, height: 40)
+        labelDay.frame = CGRect(x: 10, y:  imageWeather.frame.size.height, width: viewWeather.frame.size.width - 20 , height: viewWeather.frame.size.height - imageWeather.frame.size.height - 20)
+    }
+    
+    func configure(with model: Daily) {
         
-        imageWeather.frame = CGRect(x: 0, y:  0, width: contentView.frame.size.width, height: 200)
+        self.timeOfDay = model.dt
+        var today = Int()
+        today = Int(Date().timeIntervalSince1970) - (Int(getHourForDate(Date()))! + 1)  * 3600
+        if timeOfDay - today < (3600 * 24) {
+            self.labelDay.text = "Heute"
+        } else if timeOfDay - today < (3600 * 48) {
+            self.labelDay.text = "Morgen"
+        } else if timeOfDay - today < (3600 * 72) {
+            self.labelDay.text = "Übermorgen"
+        } else {
+            self.labelDay.text = "\(getDateForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay))))"
+        }
+        
+        labelWeather.text = "\(Int(model.temp.max))°"
+        imageWeather.image = UIImage(systemName: "cloud.fill")
+        
+        let icon  = model.weather.first?.main.lowercased()  ?? ""
+        if icon.contains("cloud") {
+            self.imageWeather.image = UIImage(named: "fotoCloud")
+        } else if icon.contains("rain") {
+            self.imageWeather.image = UIImage(named: "fotoRain")
+        } else if icon.contains("snow") {
+            self.imageWeather.image = UIImage(named: "fotoSnow")
+        } else {
+            self.imageWeather.image = UIImage(named: "fotoSun")
+        }
         
     }
     
+    func getHourForDate(_ date: Date?) -> String {
+        
+        guard let inputDate = date else {
+            return ""
+        }
+        
+        let formatter = DateFormatter()
+            formatter.dateFormat = "H"
+            return formatter.string(from: inputDate)
+        }
     
+    }
+
+func getDateForDate(_ date: Date?) -> String {
+    
+    guard let inputDate = date else {
+        return ""
+    }
+    
+    let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, dd.MM.yyyy"
+        return formatter.string(from: inputDate)
     
 }
 

@@ -98,7 +98,6 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
                     }
         
         let entries = result.hourly
-        
         self.hourlyModels.append(contentsOf: entries)
 //        for itm in result.hourly {
 //            print("Value: \(result.timezone) \n \(itm.dt) ,\(itm.weather.first?.main ?? "")")
