@@ -22,15 +22,12 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     var hourlyModels = [Hourly]()
     var dailyModels = [Daily]()
     var currentModels = [Current]()
-//    var entriesHourly: [Hourly] = []
     
     
 // DailyView
     private let overviewDailyNotes: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
-//        view.layer.borderWidth = 3
-//        view.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.125
         view.layer.shadowOffset = .zero
@@ -96,14 +93,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     
     
-//    private let cityCollectionView: UICollectionView = {
-//        let layout = UICollectionViewFlowLayout()
-//        layout.scrollDirection = .horizontal
-//        let collView = UICollectionView(frame: .zero,collectionViewLayout: layout)
-//        collView.translatesAutoresizingMaskIntoConstraints = false
-//        collView.backgroundColor = .green
-//        return collView
-//    }()
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
@@ -114,23 +103,13 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//                let loadVC = ContentViewController()
-//                self.present(loadVC, animated: true, completion: nil)
-//                let vc = UIStoryboard(name: "ContentViewController", bundle: nil).instantiateViewController(withIdentifier: "FloatingPanelControler_content")
-//                present(vc, animated: true, completion: nil)
-        
-        
-        
-        print("Höhe: \(view.frame.size.height)")
-        print("Breite: \(view.frame.size.width)")
+//        overrideUserInterfaceStyle = .dark
         
         factorWidth = Float(view.frame.size.width / 414)
         factorHeight = Float(view.frame.size.height / 896)
-//        overrideUserInterfaceStyle = .dark
         
         
         dailyTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-//        view.addSubview(headerHappyWeather)
         view.addSubview(overviewDailyNotes)
         overviewDailyNotes.addSubview(dailyHeaderLabel)
         overviewDailyNotes.addSubview(dailyTableView)
@@ -168,16 +147,10 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         dailyTableView.dataSource = self
         
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
-//        collectionView.register(UINib.init(nibName: "CustomCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CustomCollectionViewCell")
         collectionView.delegate = self
         collectionView.dataSource = self
         
-//        cityCollectionView.register(CityCollectionViewCell.self, forCellWithReuseIdentifier: CityCollectionViewCell.identifier)
-////        cityCollectionView.register(UINib.init(nibName: "CityCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CityCollectionViewCell")
-//        cityCollectionView.delegate = self
-//        cityCollectionView.dataSource = self
-        
-        
+  
 
     }
     
@@ -215,7 +188,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
             DispatchQueue.main.async {
                 self.dailyTableView.reloadData()
                 self.collectionView.reloadData()
-//                self.cityCollectionView.reloadData()
             }
             
                }
@@ -235,7 +207,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  115 * CGFloat(factorHeight), width: view.frame.size.width, height: 380 * CGFloat(factorHeight))
-//        cityCollectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  75 * CGFloat(factorHeight), width: view.frame.size.width, height: 75 * CGFloat(factorHeight))
         
         
     }
@@ -307,6 +278,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
 
     
     @objc func alarmButtonClicked(sender: UIButton){
+        
         alarmButton.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
     
     }
@@ -334,28 +306,27 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var cells = Int()
         cells = arrayTimes.count
-      return cells
+        return cells
         
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-
-            let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
-            cell!.configure(timeOfDay: indexPath.row)
-            cell!.selectionStyle = UITableViewCell.SelectionStyle.none
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
+        cell!.configure(timeOfDay: indexPath.row)
+        cell!.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell!
+        
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
         var cellheight = Float()
-        
-            cellheight = 100
+        cellheight = 100
         return CGFloat(cellheight)
+        
     }
     
 }
@@ -368,48 +339,25 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         
         var height = CGFloat()
         var width = CGFloat()
-
-//        if collectionView == collectionView {
-            height = 380  * CGFloat(factorHeight)
-            width = view.frame.size.width
-//        } else if collectionView == cityCollectionView {
-//            height = 50  * CGFloat(factorHeight)
-//            width = 250  * CGFloat(factorWidth)
-//        }
+        height = 380  * CGFloat(factorHeight)
+        width = view.frame.size.width
         return CGSize(width: width , height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         var number = Int()
-        
-//        if collectionView == collectionView {
-            number = dailyModels.count
-//        } else if collectionView == cityCollectionView {
-//            number = shownCities.count
-//        }
+        number = dailyModels.count
         return number
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-//        let cell = UICollectionViewCell()
-//        if collectionView == collectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
-    //        cell.data = self.data[indexPath.row]
-            cell.configure(with: dailyModels[indexPath.row])
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
+        cell.configure(with: dailyModels[indexPath.row])
         cell.delegate = self
         cell.parentViewController = self
-            return cell
-//        } else if collectionView == cityCollectionView {
-//
-//            let cell = cityCollectionView.dequeueReusableCell(withReuseIdentifier: CityCollectionViewCell.identifier, for: indexPath) as! CityCollectionViewCell
-//    //        cell.data = self.data[indexPath.row]
-//            cell.configure(cities: shownCities[indexPath.row])
-//        }
-//
-//
-//        return cell
+        return cell
     }
 }
 

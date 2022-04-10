@@ -42,27 +42,78 @@ struct Current: Codable {
 
 }
 
+
+
+
+
 struct Daily: Codable {
     let dt: Int
-    let clouds: Int
-    let wind_gust: Float
-    let pop: Float
-    let uvi: Float
-    struct Temp: Codable {
 
+    let sunrise: Int
+    let sunset: Int
+    let moonrise: Int
+    let moonset: Int
+    let moon_phase: Float
+    struct Temp: Codable {
+        let day: Float
+        let min: Float
+        let max: Float
+        let night: Float
         let eve: Float
         let morn: Float
-        let max: Float
-        let min: Float
+
 
     }
     let temp: Temp
 
+//    struct FeelsLike: Codable {
+//        let day: Float
+//        let night: Float
+//        let eve: Float
+//        let morn: Float
+//    }
+//    let feels_like: [FeelsLike]
+
+    let pressure:Int
+    let humidity: Int
+    let dew_point: Float
+    let wind_speed: Float
+    let wind_deg: Int
+    let wind_gust: Float
     struct Weather: Codable {
-
+        let id: Int
         let main: String
-
+        let description: String
+        let icon: String
     }
     let weather: [Weather]
 
+    let clouds: Int
+    let pop: Float
+//    let rain: Int
+    let uvi: Float
 }
+//struct Daily: Codable {
+//    let dt: Int
+//    let clouds: Int
+//    let wind_gust: Float
+//    let pop: Float
+//    let uvi: Float
+//    struct Temp: Codable {
+//
+//        let eve: Float
+//        let morn: Float
+//        let max: Float
+//        let min: Float
+//
+//    }
+//    let temp: Temp
+//
+//    struct Weather: Codable {
+//
+//        let main: String
+//
+//    }
+//    let weather: [Weather]
+//
+//}

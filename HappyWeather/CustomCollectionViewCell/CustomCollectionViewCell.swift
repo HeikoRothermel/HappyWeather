@@ -20,14 +20,16 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "CustomCollectionViewCell"
     
-//    static func nib() -> UINib {
-//               return UINib(nibName: "CustomCollectionViewCell", bundle: nil)
-//           }
+//    typealias dailyMultipleValue = (sunrise: Int, sunset: Int, moonrise: Int, moonset: Int, moon_phase: Float, day: Float, min: Float, max: Float, night: Float, eve: Float, morn: Float, pressure:Int, humidity: Int, dew_point: Float, wind_speed: Float, wind_deg: Int, wind_gust: Float, id: Int, main: String, description: String, icon: String, clouds: Int, pop: Float, uvi: Float)
+    typealias dailyMultipleValue = (main: String, description: String)
+    var dictDailyWeather = [Int: dailyMultipleValue]()
+    
+    
+    
+    
     private let viewWeather: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
-//        view.layer.borderWidth = 3
-//        view.layer.borderColor = CGColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.125
         view.layer.shadowOffset = .zero
@@ -108,7 +110,6 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
         buttonDay.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
         
-        buttonDay.addTarget(self, action: #selector(gotoNewController), for: .touchUpInside)
         
     }
     
@@ -126,21 +127,13 @@ class CustomCollectionViewCell: UICollectionViewCell {
         labelDay.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  imageWeather.frame.size.height, width: viewWeather.frame.size.width - 30 * CGFloat(factorWidth) , height: viewWeather.frame.size.height - imageWeather.frame.size.height - 20 * CGFloat(factorHeight))
         buttonDay.frame = CGRect(x: 0, y:  0, width: contentView.frame.size.width, height: contentView.frame.size.height)
         
-        viewStackView.frame = CGRect(x: 125 * CGFloat(factorWidth), y:   imageWeather.frame.size.height + labelDay.frame.size.height + 5 * CGFloat(factorHeight), width: viewWeather.frame.size.width - 250 * CGFloat(factorWidth) , height: 6.5 * CGFloat(factorHeight))
+        viewStackView.frame = CGRect(x: 125 * CGFloat(factorWidth), y:   imageWeather.frame.size.height + labelDay.frame.size.height + 3 * CGFloat(factorHeight), width: viewWeather.frame.size.width - 250 * CGFloat(factorWidth) , height: 6.5 * CGFloat(factorHeight))
         dailyStackView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  0 * CGFloat(factorHeight), width: viewStackView.frame.size.width , height: viewStackView.frame.size.height)
         dailyStackView.spacing = 5 * CGFloat(factorWidth)
     }
     
-    @objc func buttonClicked(sender: UIButton){
-        delegate?.didTapButton(with: String(timeOfDay))
-        
-
-    }
+ 
     
-    @objc func gotoNewController() {
-            let newViewController = DetailViewController()
-        parentViewController!.present(newViewController, animated: true, completion: nil)
-        }
 
     
     func configure(with model: Daily) {
@@ -176,6 +169,20 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
         let intPoint = Int(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay))))! - Int(getDayForDate(Date()))! + 1
         addPointsToStackView(coloredPoint: intPoint)
+        
+        dictDailyWeather = [timeOfDay: ("\(model.weather.first!.main)", "\(model.weather.first!.description)")]
+    }
+    
+    @objc func buttonClicked(sender: UIButton){
+        delegate?.didTapButton(with: String(timeOfDay))
+        
+        let detailController = DetailViewController()
+        detailController.test = "\(timeOfDay)"
+        detailController.test2 = "\(dictDailyWeather[timeOfDay]?.description ?? "")"
+        
+        parentViewController!.present(detailController, animated: true, completion: nil)
+        
+        print(dictDailyWeather[timeOfDay]?.description ?? "")
     }
     
     func getHourForDate(_ date: Date?) -> String {

@@ -33,7 +33,7 @@ class NoteTableViewCell: UITableViewCell {
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = .systemFont(ofSize: 17, weight: .bold)
         label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         return label
     }()
@@ -102,11 +102,11 @@ class NoteTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        greyBackgroundView.frame = CGRect(x: 15, y: 10, width: contentView.frame.size.width - 30, height: contentView.frame.size.height - 15)
-        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 60 - 15, y: 17.5, width: 60, height: 60)
-        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 60 - 15, y: 15, width: 60, height: 60)
-        timeLabel.frame = CGRect(x: 15, y: 12.5, width: 200, height: 25)
-        noteLabel.frame = CGRect(x: 15, y: 45, width: greyBackgroundView.frame.size.width - 45 - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
+        greyBackgroundView.frame = CGRect(x: 15 * CGFloat(factorWidth), y: 10 * CGFloat(factorHeight), width: contentView.frame.size.width - 30 * CGFloat(factorWidth), height: contentView.frame.size.height - 15 * CGFloat(factorHeight))
+        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 75 * CGFloat(factorWidth), y: 17.5 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
+        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 75 * CGFloat(factorWidth), y: 15 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
+        timeLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y: 12.5 * CGFloat(factorHeight), width: 200 * CGFloat(factorWidth), height: 25 * CGFloat(factorHeight))
+        noteLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y: 45 * CGFloat(factorHeight), width: greyBackgroundView.frame.size.width - 45 * CGFloat(factorWidth) - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
         
     }
     
