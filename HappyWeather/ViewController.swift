@@ -114,6 +114,12 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//                let loadVC = ContentViewController()
+//                self.present(loadVC, animated: true, completion: nil)
+//                let vc = UIStoryboard(name: "ContentViewController", bundle: nil).instantiateViewController(withIdentifier: "FloatingPanelControler_content")
+//                present(vc, animated: true, completion: nil)
+        
+        
         
         print("Höhe: \(view.frame.size.height)")
         print("Breite: \(view.frame.size.width)")
@@ -170,6 +176,9 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
 ////        cityCollectionView.register(UINib.init(nibName: "CityCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CityCollectionViewCell")
 //        cityCollectionView.delegate = self
 //        cityCollectionView.dataSource = self
+        
+        
+
     }
     
     func upDataDate() {
@@ -390,6 +399,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
     //        cell.data = self.data[indexPath.row]
             cell.configure(with: dailyModels[indexPath.row])
         cell.delegate = self
+        cell.parentViewController = self
             return cell
 //        } else if collectionView == cityCollectionView {
 //

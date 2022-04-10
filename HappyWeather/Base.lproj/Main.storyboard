@@ -23,6 +23,21 @@
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="94.419642857142847"/>
         </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="CKJ-tX-HNP">
+            <objects>
+                <viewController storyboardIdentifier="DetailViewController" id="2Fo-Xc-HAu" customClass="DetailViewController" customModule="HappyWeather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="q72-Jb-L8W">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="cQG-rC-IOZ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fez-US-7Th" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="132" y="784"/>
+        </scene>
         <!--Content View Controller-->
         <scene sceneID="edB-Zb-blo">
             <objects>

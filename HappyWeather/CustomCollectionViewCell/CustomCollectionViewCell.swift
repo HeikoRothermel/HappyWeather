@@ -14,6 +14,8 @@ protocol CustomCollectionViewCellDelegate: AnyObject {
 
 class CustomCollectionViewCell: UICollectionViewCell {
     
+    var parentViewController: UIViewController? = nil
+    
     weak var delegate: CustomCollectionViewCellDelegate?
     
     static let identifier = "CustomCollectionViewCell"
@@ -47,7 +49,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .black
         label.backgroundColor = .white
-        label.alpha = 0.5
+        label.alpha = 0.7
         label.font = .systemFont(ofSize: 20, weight: .medium)
         label.textAlignment = .center
         label.clipsToBounds = true
@@ -106,7 +108,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
         buttonDay.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
         
-        
+        buttonDay.addTarget(self, action: #selector(gotoNewController), for: .touchUpInside)
         
     }
     
@@ -131,10 +133,15 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
     @objc func buttonClicked(sender: UIButton){
         delegate?.didTapButton(with: String(timeOfDay))
+        
+
     }
     
-    
-    
+    @objc func gotoNewController() {
+            let newViewController = DetailViewController()
+        parentViewController!.present(newViewController, animated: true, completion: nil)
+        }
+
     
     func configure(with model: Daily) {
         

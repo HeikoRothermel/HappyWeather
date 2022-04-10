@@ -16,7 +16,7 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
 //    func didTapButton(with title: String) {
 //    }
     
-    
+//    static let identifier = "FloatingPanelControler_content"
     
     private let myTableView: UITableView = {
         let tableView = UITableView()
