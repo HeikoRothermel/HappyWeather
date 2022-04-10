@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CustomCollectionViewCellDelegate: AnyObject {
-        func didTapButton(with title: String)
+    func didTapButton(with title: String)
 }
 
 
@@ -72,8 +72,6 @@ class CustomCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
-    
-    
     private let viewStackView: UIView = {
         let view = UIView()
         return view
@@ -81,11 +79,12 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
     private let dailyStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.spacing = 5
         stackView.distribution = .fillEqually
         stackView.axis = .horizontal
         return stackView
     }()
+    
+    
     
     
     
@@ -102,9 +101,13 @@ class CustomCollectionViewCell: UICollectionViewCell {
         viewWeather.addSubview(viewStackView)
         viewStackView.addSubview(dailyStackView)
         
-        addPointsToStackView()
+        
+        
         
         buttonDay.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
+        
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -120,14 +123,16 @@ class CustomCollectionViewCell: UICollectionViewCell {
         labelWeather.frame = CGRect(x: imageWeather.frame.size.width - 100 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: 80 * CGFloat(factorWidth), height: 50 * CGFloat(factorHeight))
         labelDay.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  imageWeather.frame.size.height, width: viewWeather.frame.size.width - 30 * CGFloat(factorWidth) , height: viewWeather.frame.size.height - imageWeather.frame.size.height - 20 * CGFloat(factorHeight))
         buttonDay.frame = CGRect(x: 0, y:  0, width: contentView.frame.size.width, height: contentView.frame.size.height)
-        viewStackView.frame = CGRect(x: 125 * CGFloat(factorWidth), y:  labelDay.frame.size.height + imageWeather.frame.size.height, width: viewWeather.frame.size.width - 250 * CGFloat(factorWidth) , height: 6.5 * CGFloat(factorHeight))
-        dailyStackView.frame = CGRect(x: 0, y:  0, width: viewStackView.frame.size.width , height: viewStackView.frame.size.height)
+        
+        viewStackView.frame = CGRect(x: 125 * CGFloat(factorWidth), y:   imageWeather.frame.size.height + labelDay.frame.size.height + 5 * CGFloat(factorHeight), width: viewWeather.frame.size.width - 250 * CGFloat(factorWidth) , height: 6.5 * CGFloat(factorHeight))
+        dailyStackView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  0 * CGFloat(factorHeight), width: viewStackView.frame.size.width , height: viewStackView.frame.size.height)
+        dailyStackView.spacing = 5 * CGFloat(factorWidth)
     }
     
     @objc func buttonClicked(sender: UIButton){
         delegate?.didTapButton(with: String(timeOfDay))
-        print("\(getDateForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay))))")
     }
+    
     
     
     
@@ -160,6 +165,10 @@ class CustomCollectionViewCell: UICollectionViewCell {
             self.imageWeather.image = UIImage(named: "fotoSun")
         }
         
+        
+        
+        let intPoint = Int(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay))))! - Int(getDayForDate(Date()))! + 1
+        addPointsToStackView(coloredPoint: intPoint)
     }
     
     func getHourForDate(_ date: Date?) -> String {
@@ -185,18 +194,38 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func addPointsToStackView() {
+    func getDayForDate(_ date: Date?) -> String {
+        
+        guard let inputDate = date else {
+            return ""
+        }
+        
+        let formatter = DateFormatter()
+            formatter.dateFormat = "DDD"
+            return formatter.string(from: inputDate)
+        
+    }
+    
+    
+    func addPointsToStackView(coloredPoint: Int) {
+        
+        
+        while let v = dailyStackView.arrangedSubviews.first {
+            dailyStackView.removeArrangedSubview(v)
+            v.removeFromSuperview()
+        }
+        
         let numberOfPoints = 8
         for count in 1...numberOfPoints {
             let points = StackUIButton()
-            if count == 1 {
+            if count == coloredPoint {
                 points.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+            } else {
+                points.tintColor = UIColor(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 1)
             }
             dailyStackView.addArrangedSubview(points)
-            
         }
     }
-    
     
 }
 

@@ -23,7 +23,7 @@ class StackUIButton: UIButton {
         setTitleColor(.black, for: .normal)
         setImage(UIImage(systemName: "circle.fill"), for: .normal)
         tintColor = UIColor(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 1)
-        contentMode = .scaleToFill
+        contentMode = .scaleAspectFit
     }
     
     

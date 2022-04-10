@@ -13,11 +13,11 @@ import CoreLocation
 
 
 
-class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocationManagerDelegate, UITableViewDelegate, UICollectionViewDelegate, CustomCollectionViewCellDelegate {
+class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocationManagerDelegate, UITableViewDelegate, UICollectionViewDelegate, CustomCollectionViewCellDelegate, UIScrollViewDelegate {
     
     func didTapButton(with title: String) {
-        
     }
+    
     
     var hourlyModels = [Hourly]()
     var dailyModels = [Daily]()
@@ -133,7 +133,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         view.addSubview(collectionView)
-//        view.addSubview(cityCollectionView)
         
         
         alarmButton.addTarget(self, action: #selector(alarmButtonClicked(sender:)), for: .touchUpInside)
@@ -232,11 +231,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
     }
    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if collectionView == collectionView {
-
-        }
-    }
+    
     
     func floatingPanelWillBeginDragging(_ vc: FloatingPanelController) {
         if arrayTimes.count > 0 {
@@ -293,13 +288,21 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if collectionView == collectionView {
+            collectionView.reloadData()
+        }
+    }
     
     
 
     
-        @objc func alarmButtonClicked(sender: UIButton){
-            alarmButton.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
-        }
+    @objc func alarmButtonClicked(sender: UIButton){
+        alarmButton.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+    
+    }
+    
+   
     
     
     
