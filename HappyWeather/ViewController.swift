@@ -13,7 +13,11 @@ import CoreLocation
 
 
 
-class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocationManagerDelegate, UITableViewDelegate, UICollectionViewDelegate {
+class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocationManagerDelegate, UITableViewDelegate, UICollectionViewDelegate, CustomCollectionViewCellDelegate {
+    
+    func didTapButton(with title: String) {
+        
+    }
     
     var hourlyModels = [Hourly]()
     var dailyModels = [Daily]()
@@ -89,6 +93,8 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         collView.showsHorizontalScrollIndicator = false
         return collView
     }()
+    
+    
     
 //    private let cityCollectionView: UICollectionView = {
 //        let layout = UICollectionViewFlowLayout()
@@ -228,7 +234,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if collectionView == collectionView {
-            print("yes")
+
         }
     }
     
@@ -380,6 +386,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
     //        cell.data = self.data[indexPath.row]
             cell.configure(with: dailyModels[indexPath.row])
+        cell.delegate = self
             return cell
 //        } else if collectionView == cityCollectionView {
 //

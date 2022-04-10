@@ -7,8 +7,14 @@
 
 import UIKit
 
+protocol CustomCollectionViewCellDelegate: AnyObject {
+        func didTapButton(with title: String)
+}
+
 
 class CustomCollectionViewCell: UICollectionViewCell {
+    
+    weak var delegate: CustomCollectionViewCellDelegate?
     
     static let identifier = "CustomCollectionViewCell"
     
@@ -60,21 +66,27 @@ class CustomCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-//    private let buttonDay: UIButton = {
-//        let button = UIButton()
-//        label.textColor = .black
-//        label.backgroundColor = .white
-//        label.font = .systemFont(ofSize: 20, weight: .medium)
-//        label.textAlignment = .left
-//        label.clipsToBounds = true
-//        label.backgroundColor = .clear
-//        return label
-//    }()
+    private let buttonDay: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        return button
+    }()
     
-//    private let stackViewWeather: UIStackView = {
-//        let stack = UIStackView()
-//        return stack
-//    }
+    
+    
+    private let viewStackView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    private let dailyStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = 5
+        stackView.distribution = .fillEqually
+        stackView.axis = .horizontal
+        return stackView
+    }()
+    
     
     
     private var timeOfDay = Int()
@@ -85,6 +97,14 @@ class CustomCollectionViewCell: UICollectionViewCell {
         viewWeather.addSubview(imageWeather)
         viewWeather.addSubview(labelDay)
         imageWeather.addSubview(labelWeather)
+        contentView.addSubview(buttonDay)
+        
+        viewWeather.addSubview(viewStackView)
+        viewStackView.addSubview(dailyStackView)
+        
+        addPointsToStackView()
+        
+        buttonDay.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -98,7 +118,15 @@ class CustomCollectionViewCell: UICollectionViewCell {
         viewWeather.frame = CGRect(x: (contentView.frame.size.width - 344 * CGFloat(factorWidth)) / 2, y:  25 * CGFloat(factorHeight), width: 340 * CGFloat(factorWidth), height: contentView.frame.size.height - 50 * CGFloat(factorHeight))
         imageWeather.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  0 * CGFloat(factorHeight), width: viewWeather.frame.size.width, height: viewWeather.frame.size.height - 75 * CGFloat(factorHeight))
         labelWeather.frame = CGRect(x: imageWeather.frame.size.width - 100 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: 80 * CGFloat(factorWidth), height: 50 * CGFloat(factorHeight))
-        labelDay.frame = CGRect(x: 10 * CGFloat(factorWidth), y:  imageWeather.frame.size.height, width: viewWeather.frame.size.width - 20 * CGFloat(factorWidth) , height: viewWeather.frame.size.height - imageWeather.frame.size.height - 20 * CGFloat(factorHeight))
+        labelDay.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  imageWeather.frame.size.height, width: viewWeather.frame.size.width - 30 * CGFloat(factorWidth) , height: viewWeather.frame.size.height - imageWeather.frame.size.height - 20 * CGFloat(factorHeight))
+        buttonDay.frame = CGRect(x: 0, y:  0, width: contentView.frame.size.width, height: contentView.frame.size.height)
+        viewStackView.frame = CGRect(x: 125 * CGFloat(factorWidth), y:  labelDay.frame.size.height + imageWeather.frame.size.height, width: viewWeather.frame.size.width - 250 * CGFloat(factorWidth) , height: 6.5 * CGFloat(factorHeight))
+        dailyStackView.frame = CGRect(x: 0, y:  0, width: viewStackView.frame.size.width , height: viewStackView.frame.size.height)
+    }
+    
+    @objc func buttonClicked(sender: UIButton){
+        delegate?.didTapButton(with: String(timeOfDay))
+        print("\(getDateForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay))))")
     }
     
     
@@ -157,7 +185,17 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
     }
     
-    
+    func addPointsToStackView() {
+        let numberOfPoints = 8
+        for count in 1...numberOfPoints {
+            let points = StackUIButton()
+            if count == 1 {
+                points.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+            }
+            dailyStackView.addArrangedSubview(points)
+            
+        }
+    }
     
     
 }

@@ -12,8 +12,6 @@ protocol WeatherTableViewCellDelegate: AnyObject {
     func didUseTF(with text: String)
 }
 
-
-
 class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     weak var delegate: WeatherTableViewCellDelegate?
