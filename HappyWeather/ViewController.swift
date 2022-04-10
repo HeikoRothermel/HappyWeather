@@ -23,7 +23,9 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     var dailyModels = [Daily]()
     var currentModels = [Current]()
     
+    var cities = ["","Mein Standort", "Berlin", "Hamburg", "🔍"]
     
+
 // DailyView
     private let overviewDailyNotes: UIView = {
         let view = UIView()
@@ -47,7 +49,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     private let dailyInfoLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "Füge neue Ereignisse hinzu, \n um dein Wetter direkt zu sehen..."
+        label.text = "Füge deine Ereignisse hinzu :)"
         label.backgroundColor = .clear
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textAlignment = .center
@@ -92,7 +94,19 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     }()
     
     
+    private let citiesStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.distribution = .fillEqually
+        stackView.axis = .horizontal
+        stackView.spacing = 5 * CGFloat(factorWidth)
+        return stackView
+    }()
     
+    private let citiesScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsHorizontalScrollIndicator = false
+        return scrollView
+    }()
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
@@ -116,11 +130,15 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         overviewDailyNotes.addSubview(dailyInfoLabel)
         overviewDailyNotes.addSubview(alarmButton)
         
+        view.addSubview(citiesScrollView)
+        citiesScrollView.addSubview(citiesStackView)
         
         view.addSubview(collectionView)
         
         
         alarmButton.addTarget(self, action: #selector(alarmButtonClicked(sender:)), for: .touchUpInside)
+        
+        addCitiesToStackView(coloredCity: 2)
         
         let fpc = FloatingPanelController()
         fpc.delegate = self
@@ -149,9 +167,29 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-  
-
+        
+        
+        overviewDailyNotes.frame = CGRect(x: 35 * CGFloat(factorWidth), y: (view.frame.height / 2) + 60 * CGFloat(factorHeight), width: view.frame.width - 70 * CGFloat(factorWidth), height: (view.frame.size.height / 2) - 170 * CGFloat(factorHeight))
+        dailyInfoLabel.frame = CGRect(x: 10 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 20 * CGFloat(factorWidth), height: overviewDailyNotes.frame.height - 70 * CGFloat(factorHeight))
+        dailyTableView.frame = dailyInfoLabel.frame
+        dailyHeaderLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 30 * CGFloat(factorWidth), height: 35 * CGFloat(factorHeight))
+        alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75 * CGFloat(factorWidth), y:  15 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
+        
+        collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  115 * CGFloat(factorHeight), width: view.frame.size.width, height: 380 * CGFloat(factorHeight))
+        
+        citiesScrollView.frame = CGRect(x: 35 * CGFloat(factorWidth), y:  55 * CGFloat(factorHeight), width: view.frame.size.width - 70 * CGFloat(factorWidth) , height: 75 * CGFloat(factorHeight))
+        
+        citiesStackView.translatesAutoresizingMaskIntoConstraints = false
+        citiesStackView.topAnchor.constraint(equalTo: citiesScrollView.topAnchor).isActive = true
+        citiesStackView.leadingAnchor.constraint(equalTo: citiesScrollView.leadingAnchor).isActive = true
+        citiesStackView.trailingAnchor.constraint(equalTo: citiesScrollView.trailingAnchor).isActive = true
+        citiesStackView.heightAnchor.constraint(equalTo: citiesScrollView.heightAnchor).isActive = true
+        
     }
     
     func upDataDate() {
@@ -194,38 +232,18 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
                 task.resume()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        
-        
-        overviewDailyNotes.frame = CGRect(x: 35 * CGFloat(factorWidth), y: (view.frame.height / 2) + 60 * CGFloat(factorHeight), width: view.frame.width - 70 * CGFloat(factorWidth), height: (view.frame.size.height / 2) - 170 * CGFloat(factorHeight))
-        dailyInfoLabel.frame = CGRect(x: 10 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 20 * CGFloat(factorWidth), height: overviewDailyNotes.frame.height - 70 * CGFloat(factorHeight))
-        dailyTableView.frame = dailyInfoLabel.frame
-        dailyHeaderLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 30 * CGFloat(factorWidth), height: 35 * CGFloat(factorHeight))
-        alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75 * CGFloat(factorWidth), y:  15 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
-        
-        
-        collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  115 * CGFloat(factorHeight), width: view.frame.size.width, height: 380 * CGFloat(factorHeight))
-        
-        
-    }
-   
-    
-    
     func floatingPanelWillBeginDragging(_ vc: FloatingPanelController) {
         if arrayTimes.count > 0 {
             dailyInfoLabel.isHidden = true
-            alarmButton.isHidden = false
+//            alarmButton.isHidden = false
         } else {
             dailyInfoLabel.isHidden = false
-            alarmButton.isHidden = true
+//            alarmButton.isHidden = true
         }
         
         view.endEditing(true)
         
         upDataDate()
-                 
     }
     
  
@@ -284,8 +302,29 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     }
     
    
-    
-    
+    func addCitiesToStackView(coloredCity: Int) {
+        
+        
+        while let oldCities = citiesStackView.arrangedSubviews.first {
+            citiesStackView.removeArrangedSubview(oldCities)
+            oldCities.removeFromSuperview()
+        }
+        
+        let numberOfCities = cities.count
+        for count in 1...numberOfCities {
+            
+            let citiesToShow = CitiesButton()
+            citiesToShow.setTitle("\(cities[count - 1])", for: .normal)
+            if count == coloredCity {
+                citiesToShow.setTitleColor(UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1), for: .normal)
+                citiesToShow.titleLabel!.font = UIFont.boldSystemFont(ofSize: 17)
+            } else {
+                citiesToShow.setTitleColor(UIColor(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 1), for: .normal)
+                citiesToShow.titleLabel!.font = UIFont.systemFont(ofSize: 15)
+            }
+            citiesStackView.addArrangedSubview(citiesToShow)
+        }
+    }
     
 }
     

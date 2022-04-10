@@ -88,7 +88,6 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         greyBackgroundView.addSubview(iconImageView)
         greyBackgroundView.addSubview(highTempLabel)
         greyBackgroundView.addSubview(textFieldNote)
-//        greyBackgroundView.addSubview(testButton)
         
 //        testButton.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
         textFieldNote.addTarget(self, action: #selector(fieldClicked(sender:)), for: .editingDidEnd)
@@ -105,7 +104,6 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     func configure(with model: Hourly) {
         
         self.timeOfDay = model.dt
-//        testButton.setTitle("hello", for: .normal)
         
         
         self.highTempLabel.text = "\(Int(model.temp))°"
@@ -176,11 +174,11 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         super.layoutSubviews()
         
         
-        greyBackgroundView.frame = CGRect(x: 20, y: 10, width: contentView.frame.size.width - 40, height: contentView.frame.size.height - 20)
-        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 25, y: 10, width: 60, height: 60)
-        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 50 - 25, y: 12.5, width: 60, height: 60)
-        timeLabel.frame = CGRect(x: 20, y: 12.5, width: 200, height: 25)
-        textFieldNote.frame = CGRect(x: 20, y: 45, width: greyBackgroundView.frame.size.width - 60 - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
+        greyBackgroundView.frame = CGRect(x: 20 * CGFloat(factorWidth), y: 10 * CGFloat(factorHeight), width: contentView.frame.size.width - 40 * CGFloat(factorWidth), height: contentView.frame.size.height - 20 * CGFloat(factorHeight))
+        iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 75 * CGFloat(factorWidth), y: 10 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
+        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 75 * CGFloat(factorWidth), y: 12.5 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
+        timeLabel.frame = CGRect(x: 20 * CGFloat(factorWidth), y: 12.5 * CGFloat(factorHeight), width: 200 * CGFloat(factorWidth), height: 25 * CGFloat(factorHeight))
+        textFieldNote.frame = CGRect(x: 20 * CGFloat(factorWidth), y: 45 * CGFloat(factorHeight), width: greyBackgroundView.frame.size.width - 60 * CGFloat(factorWidth) - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
 //        testButton.frame = CGRect(x: 110, y: 0, width: 80, height: 30)
     }
     

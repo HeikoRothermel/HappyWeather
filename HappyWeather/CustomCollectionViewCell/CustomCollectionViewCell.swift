@@ -224,9 +224,9 @@ class CustomCollectionViewCell: UICollectionViewCell {
     func addPointsToStackView(coloredPoint: Int) {
         
         
-        while let v = dailyStackView.arrangedSubviews.first {
-            dailyStackView.removeArrangedSubview(v)
-            v.removeFromSuperview()
+        while let oldPoints = dailyStackView.arrangedSubviews.first {
+            dailyStackView.removeArrangedSubview(oldPoints)
+            oldPoints.removeFromSuperview()
         }
         
         let numberOfPoints = 8

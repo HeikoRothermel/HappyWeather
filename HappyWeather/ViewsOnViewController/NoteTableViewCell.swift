@@ -12,7 +12,6 @@ class NoteTableViewCell: UITableViewCell {
     
     private let greyBackgroundView: UIView = {
         let view = UIView()
-//        view.backgroundColor = UIColor(red: 242 / 255, green: 242 / 255, blue: 247 / 255, alpha: 1)
         view.backgroundColor = .white
         view.layer.cornerRadius = 20
         view.layer.shadowColor = UIColor.black.cgColor
