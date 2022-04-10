@@ -113,7 +113,9 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         task.resume()
     }
     
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        view.endEditing(true)
+    }
 
 }
 

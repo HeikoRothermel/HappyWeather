@@ -60,7 +60,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         label.text = "Übersicht deiner Events:"
         label.backgroundColor = .clear
-        label.font = .systemFont(ofSize: 25, weight: .bold)
+        label.font = .systemFont(ofSize: 22, weight: .bold)
         label.textAlignment = .center
         return label
     }()
@@ -224,11 +224,13 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
 //        cityCollectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  75 * CGFloat(factorHeight), width: view.frame.size.width, height: 75 * CGFloat(factorHeight))
         
         
-        
-          
     }
    
-
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if collectionView == collectionView {
+            print("yes")
+        }
+    }
     
     func floatingPanelWillBeginDragging(_ vc: FloatingPanelController) {
         if arrayTimes.count > 0 {
@@ -239,12 +241,10 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
             alarmButton.isHidden = true
         }
         
-        
+        view.endEditing(true)
         
         upDataDate()
-        
-                    
-                    
+                 
     }
     
  
@@ -294,6 +294,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         @objc func alarmButtonClicked(sender: UIButton){
             alarmButton.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         }
+    
     
     
 }
