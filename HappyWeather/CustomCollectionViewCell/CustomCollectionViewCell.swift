@@ -20,8 +20,8 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "CustomCollectionViewCell"
     
-//    typealias dailyMultipleValue = (sunrise: Int, sunset: Int, moonrise: Int, moonset: Int, moon_phase: Float, day: Float, min: Float, max: Float, night: Float, eve: Float, morn: Float, pressure:Int, humidity: Int, dew_point: Float, wind_speed: Float, wind_deg: Int, wind_gust: Float, id: Int, main: String, description: String, icon: String, clouds: Int, pop: Float, uvi: Float)
-    typealias dailyMultipleValue = (main: String, description: String)
+    typealias dailyMultipleValue = (max: Float, pressure:Int, humidity: Int, wind_speed: Float,  main: String, description: String)
+//    typealias dailyMultipleValue = (main: String, description: String)
     var dictDailyWeather = [Int: dailyMultipleValue]()
     
     
@@ -55,14 +55,13 @@ class CustomCollectionViewCell: UICollectionViewCell {
         label.font = .systemFont(ofSize: 28, weight: .medium)
         label.textAlignment = .center
         label.clipsToBounds = true
-        label.layer.cornerRadius = 10
+        label.layer.cornerRadius = 15
         return label
     }()
     
     private let labelDay: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.backgroundColor = .white
         label.font = .systemFont(ofSize: 20, weight: .medium)
         label.textAlignment = .left
         label.clipsToBounds = true
@@ -165,12 +164,12 @@ class CustomCollectionViewCell: UICollectionViewCell {
         labelWeather.text = "\(Int(model.temp.max))°"
         imageWeather.image = UIImage(systemName: "cloud.fill")
         
-        let icon  = model.weather.first?.main.lowercased()  ?? ""
-        if icon.contains("cloud") {
+        let image  = model.weather.first?.main.lowercased()  ?? ""
+        if image.contains("cloud") {
             self.imageWeather.image = UIImage(named: "fotoCloud")
-        } else if icon.contains("rain") {
+        } else if image.contains("rain") {
             self.imageWeather.image = UIImage(named: "fotoRain")
-        } else if icon.contains("snow") {
+        } else if image.contains("snow") {
             self.imageWeather.image = UIImage(named: "fotoSnow")
         } else {
             self.imageWeather.image = UIImage(named: "fotoSun")
@@ -181,15 +180,23 @@ class CustomCollectionViewCell: UICollectionViewCell {
         let intPoint = Int(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay))))! - Int(getDayForDate(Date()))! + 1
         addPointsToStackView(coloredPoint: intPoint)
         
-        dictDailyWeather = [timeOfDay: ("\(model.weather.first!.main)", "\(model.weather.first!.description)")]
+        
+//        dictDailyWeather = [timeOfDay: ("\(model.weather.first!.main)", "\(model.weather.first!.description)")]
+        dictDailyWeather = [timeOfDay: (model.temp.max, model.pressure, model.humidity, model.wind_speed, "\(model.weather.first!.main)", "\(model.weather.first!.description)")]
     }
     
     @objc func buttonClicked(sender: UIButton){
         delegate?.didTapButton(with: String(timeOfDay))
         
         let detailController = DetailViewController()
-        detailController.test = "\(timeOfDay)"
-        detailController.test2 = "\(dictDailyWeather[timeOfDay]?.description ?? "")"
+        
+        detailController.dt = timeOfDay
+        detailController.max = dictDailyWeather[timeOfDay]?.max ?? 0.0
+        detailController.pressure = dictDailyWeather[timeOfDay]?.pressure ?? 0
+        detailController.humidity = dictDailyWeather[timeOfDay]?.humidity ?? 0
+        detailController.wind_speed = dictDailyWeather[timeOfDay]?.wind_speed ?? 0.0
+        detailController.main = "\(dictDailyWeather[timeOfDay]?.main ?? "")"
+        detailController._description = "\(dictDailyWeather[timeOfDay]?.description ?? "")"
         
         parentViewController!.present(detailController, animated: true, completion: nil)
         
