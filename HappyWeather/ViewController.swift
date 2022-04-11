@@ -139,32 +139,27 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
 
-//        let defaults = UserDefaults.standard
-//        arrayTimes = defaults.array(forKey: "SavedArray")  as? [Int] ?? [Int]()
-//        print(arrayTimes)
-////        arrayTimes = []
-//
-//        let defaults2 = UserDefaults.standard
-//        dictWeatherForEvents = defaults2.object(forKey: "SavedArray2")  as? [Int: MultipleValue] ?? [Int: MultipleValue]()
-//        print(dictWeatherForEvents)
-//
-//        let defaults3 = UserDefaults.standard
-//        dictEventsNoted = defaults3.object(forKey: "SavedArray3")  as? [Int: String] ?? [Int: String]()
-//        print(dictEventsNoted)
+        let defaults = UserDefaults.standard
+        arrayTimes = defaults.array(forKey: "saveArray")  as? [Int] ?? [Int]()
+        print(arrayTimes)
 
-        
-//        arrayTimes += [1649700000]
-//        dictEventsNoted[1649700000] = "hello"
-//        dictWeatherForEvents[1649700000] = (temp: 12.5, main: "clouds")
-        
+        let defaults4 = UserDefaults.standard
+        dictForSavings = defaults4.object(forKey: "saveDict")  as? [String: String] ?? [String: String]()
+        print(dictForSavings)
         
         
-//        let defaults4 = UserDefaults.standard
-//        dictForSavings = defaults4.object(forKey: "dictSaving")  as? [String: MultipleForSavings] ?? [String: MultipleForSavings]()
-//        print(dictForSavings)
-                
         
         
+        
+        for count in arrayTimes {
+            let main = dictForSavings["\(count)"]!.components(separatedBy: "-")[1]
+            let temp = Float((dictForSavings["\(count)"]?.components(separatedBy: "-")[2] ?? "0.0"))
+            let info = dictForSavings["\(count)"]!.components(separatedBy: "-")[0]
+            
+            
+            dictEventsNoted[count] = "\(info)"
+            dictWeatherForEvents[count] = (temp: Float(temp!), main: main )
+        }
         
 //        overrideUserInterfaceStyle = .dark
         

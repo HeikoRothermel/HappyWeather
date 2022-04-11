@@ -164,8 +164,11 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
             arrayTimes += [timeOfDay]
             arrayTimes.sort()
             
-//            let defaults = UserDefaults.standard
-//            defaults.set(arrayTimes, forKey: "SavedArray")
+            dictForSavings["\(timeOfDay)"] = "\(dictEventsNoted[timeOfDay] ?? "")-\(dictWeatherForEvents[timeOfDay]?.main ?? "")-\(dictWeatherForEvents[timeOfDay]?.temp ?? 0.0)"
+            
+            
+            let defaults = UserDefaults.standard
+            defaults.set(arrayTimes, forKey: "saveArray")
 //
 //            let defaults2 = UserDefaults.standard
 //            defaults2.set(dictWeatherForEvents, forKey: "SavedArray2")
@@ -178,20 +181,16 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
             
             
             
-            
-            
-//            dictForSavings["0123456789"] = ["adsf","wer","xcv"]
-            
-            dictForSavings["0123456789"]?.info = "info"
-            dictForSavings["0123456789"]?.temp = "7"
-            dictForSavings["0123456789"]?.main = "main"
+      
             print(dictForSavings)
             
-//            UserDefaults.standard.set(dictForSavings, forKey: "dictSaving")
-//                let result = UserDefaults.standard.value(forKey: "dictSaving")
-//                print(result!)
-//
+
             
+            UserDefaults.standard.set(dictForSavings, forKey: "saveDict")
+                let result = UserDefaults.standard.value(forKey: "saveDict")
+                print(result!)
+
+
             
             
             

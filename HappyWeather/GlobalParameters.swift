@@ -29,5 +29,16 @@ var shownCities = ["Munich", "Berlin", "Hamburg", "+"]
 
 
 
-typealias MultipleForSavings = (main: String, temp: String, info: String)
-var dictForSavings = [String: MultipleForSavings]()
+
+
+var arrayTemp = [Float]()
+var arrayMain = [String]()
+var arrayInfo = [String]()
+
+var savingArray = [[]]
+
+
+
+var dictForSavings = [String: String]()
+
+
