@@ -151,7 +151,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
             self.labelDay.text = "\(getDateForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay))))"
         }
         
-        labelWeather.text = "\(Int(model.temp.max))°"
+        labelWeather.text = "\(model.temp.max)°"
         imageWeather.image = UIImage(systemName: "cloud.fill")
         
         let icon  = model.weather.first?.main.lowercased()  ?? ""
@@ -242,9 +242,3 @@ class CustomCollectionViewCell: UICollectionViewCell {
     }
     
 }
-
-
-
-
-
-

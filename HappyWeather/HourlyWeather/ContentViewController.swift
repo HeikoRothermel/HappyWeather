@@ -42,9 +42,6 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
     
     var hourlyModels = [Hourly]()
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,17 +55,12 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         myTableView.dataSource = self
     }
     
-    
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.requestWeatherForLocation()
         }
     }
-    
-    
-    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -77,12 +69,7 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         
         myTableView.frame = CGRect(x: 0, y: 75 * CGFloat(factorHeight), width: view.frame.width, height: view.frame.height - 75 * CGFloat(factorHeight))
         preview24h.frame = CGRect(x: 0, y: 10 * CGFloat(factorHeight), width: view.frame.size.width, height: view.frame.size.height - myTableView.frame.size.height - 25 * CGFloat(factorHeight))
-//        print("klappt")
     }
-    
-    
-    
-    
     
     func requestWeatherForLocation() {
         let task = URLSession.shared.dataTask(with: urlToUse!) { data, _, error in
@@ -125,7 +112,6 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
 
 extension ContentViewController: UITableViewDataSource {
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return min(hourlyModels.count, 24)
     }
@@ -139,19 +125,7 @@ extension ContentViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 100 * CGFloat(factorHeight)
     }
     
-    
-    
-    
 }
-
-
-
-
-
-
-
-
-

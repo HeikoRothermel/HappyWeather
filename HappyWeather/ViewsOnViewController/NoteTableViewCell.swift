@@ -87,6 +87,9 @@ class NoteTableViewCell: UITableViewCell {
         iconImageView.image = UIImage(systemName: "cloud.fill")
         
         let icon = dictWeatherForEvents[arrayTimes[timeOfDay]]!.main.lowercased()
+        print(highTempLabel.text!)
+        print(dictWeatherForEvents[arrayTimes[timeOfDay]]!)
+        
         if icon.contains("cloud") {
             self.iconImageView.image = UIImage(systemName: "cloud.fill")
         } else if icon.contains("rain") {
@@ -96,6 +99,7 @@ class NoteTableViewCell: UITableViewCell {
         } else {
             self.iconImageView.image = UIImage(systemName: "sun.max.fill")
         }
+        
     }
     
     override func layoutSubviews() {
@@ -118,4 +122,5 @@ class NoteTableViewCell: UITableViewCell {
             formatter.dateFormat = "H"
             return formatter.string(from: inputDate)
         }
+    
 }

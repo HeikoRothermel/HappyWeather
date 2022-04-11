@@ -76,6 +76,8 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        
+        
         textFieldNote.delegate = self
         
         // To let Constraints-Issue of keyboard disappear
@@ -104,7 +106,6 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     func configure(with model: Hourly) {
         
         self.timeOfDay = model.dt
-        
         
         self.highTempLabel.text = "\(Int(model.temp))°"
         
@@ -150,14 +151,59 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     
     @objc func fieldClicked(sender: UITextField){
+        
         delegate?.didUseTF(with: String(timeOfDay))
+        
         if let index = arrayTimes.firstIndex(of: timeOfDay) {
             arrayTimes.remove(at: index)
         }
+        
         if self.textFieldNote.text != "" {
+            
             dictEventsNoted[timeOfDay] = self.textFieldNote.text ?? ""
             arrayTimes += [timeOfDay]
             arrayTimes.sort()
+            
+//            let defaults = UserDefaults.standard
+//            defaults.set(arrayTimes, forKey: "SavedArray")
+//
+//            let defaults2 = UserDefaults.standard
+//            defaults2.set(dictWeatherForEvents, forKey: "SavedArray2")
+//
+//            let defaults3 = UserDefaults.standard
+//            defaults3.set(dictEventsNoted, forKey: "SavedArray3")
+//
+            
+            
+            
+            
+            
+            
+            
+//            dictForSavings["0123456789"] = ["adsf","wer","xcv"]
+            
+            dictForSavings["0123456789"]?.info = "info"
+            dictForSavings["0123456789"]?.temp = "7"
+            dictForSavings["0123456789"]?.main = "main"
+            print(dictForSavings)
+            
+//            UserDefaults.standard.set(dictForSavings, forKey: "dictSaving")
+//                let result = UserDefaults.standard.value(forKey: "dictSaving")
+//                print(result!)
+//
+            
+            
+            
+            
+            
+            
+//            UserDefaults.standard.set(dictEventsNoted, forKey: "dict")
+//                let result = UserDefaults.standard.value(forKey: "dict")
+//                print(result!)
+            
+//            UserDefaults.standard.set(dictWeatherForEvents, forKey: "dict")
+//                let result2 = UserDefaults.standard.value(forKey: "dict")
+//                print(result2!)
         }
     }
 

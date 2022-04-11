@@ -26,6 +26,22 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     var cities = ["","Mein Standort", "Berlin", "Hamburg", "🔍"]
     
 
+    
+    private let buttonActualization: UIButton = {
+        let button = UIButton()
+        button.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        button.setImage(UIImage(systemName: "arrow.2.circlepath.circle.fill"), for: .normal)
+        button.isHidden = false
+        button.layer.cornerRadius = 15
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.125
+        button.layer.shadowOffset = .zero
+        button.layer.shadowRadius = 16
+        button.backgroundColor = .white
+        return button
+    }()
+    
+    
 // DailyView
     private let overviewDailyNotes: UIView = {
         let view = UIView()
@@ -43,6 +59,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         let tableView = UITableView()
         tableView.clipsToBounds = true
         tableView.showsVerticalScrollIndicator = false
+        tableView.layer.cornerRadius = 25
         return tableView
     }()
     
@@ -54,6 +71,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textAlignment = .center
         label.clipsToBounds = true
+        label.layer.cornerRadius = 25
         return label
     }()
     
@@ -117,6 +135,37 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserDefaults.resetStandardUserDefaults()
+        
+        
+
+//        let defaults = UserDefaults.standard
+//        arrayTimes = defaults.array(forKey: "SavedArray")  as? [Int] ?? [Int]()
+//        print(arrayTimes)
+////        arrayTimes = []
+//
+//        let defaults2 = UserDefaults.standard
+//        dictWeatherForEvents = defaults2.object(forKey: "SavedArray2")  as? [Int: MultipleValue] ?? [Int: MultipleValue]()
+//        print(dictWeatherForEvents)
+//
+//        let defaults3 = UserDefaults.standard
+//        dictEventsNoted = defaults3.object(forKey: "SavedArray3")  as? [Int: String] ?? [Int: String]()
+//        print(dictEventsNoted)
+
+        
+//        arrayTimes += [1649700000]
+//        dictEventsNoted[1649700000] = "hello"
+//        dictWeatherForEvents[1649700000] = (temp: 12.5, main: "clouds")
+        
+        
+        
+//        let defaults4 = UserDefaults.standard
+//        dictForSavings = defaults4.object(forKey: "dictSaving")  as? [String: MultipleForSavings] ?? [String: MultipleForSavings]()
+//        print(dictForSavings)
+                
+        
+        
+        
 //        overrideUserInterfaceStyle = .dark
         
         factorWidth = Float(view.frame.size.width / 414)
@@ -135,8 +184,11 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         view.addSubview(collectionView)
         
+        view.addSubview(buttonActualization)
         
         alarmButton.addTarget(self, action: #selector(alarmButtonClicked(sender:)), for: .touchUpInside)
+        buttonActualization.addTarget(self, action: #selector(actualizeData(sender:)), for: .touchUpInside)
+        
         
         addCitiesToStackView(coloredCity: 2)
         
@@ -175,12 +227,14 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         
         overviewDailyNotes.frame = CGRect(x: 35 * CGFloat(factorWidth), y: (view.frame.height / 2) + 60 * CGFloat(factorHeight), width: view.frame.width - 70 * CGFloat(factorWidth), height: (view.frame.size.height / 2) - 170 * CGFloat(factorHeight))
-        dailyInfoLabel.frame = CGRect(x: 10 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 20 * CGFloat(factorWidth), height: overviewDailyNotes.frame.height - 70 * CGFloat(factorHeight))
+        dailyInfoLabel.frame = CGRect(x: 5 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 10 * CGFloat(factorWidth), height: overviewDailyNotes.frame.height - 70 * CGFloat(factorHeight))
         dailyTableView.frame = dailyInfoLabel.frame
         dailyHeaderLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 30 * CGFloat(factorWidth), height: 35 * CGFloat(factorHeight))
         alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75 * CGFloat(factorWidth), y:  15 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
         
         collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  115 * CGFloat(factorHeight), width: view.frame.size.width, height: 380 * CGFloat(factorHeight))
+        
+        buttonActualization.frame = CGRect(x: 50 * CGFloat(factorWidth), y:  50 * CGFloat(factorHeight), width: 50 * CGFloat(factorWidth), height: 50 * CGFloat(factorHeight))
         
         citiesScrollView.frame = CGRect(x: 35 * CGFloat(factorWidth), y:  55 * CGFloat(factorHeight), width: view.frame.size.width - 70 * CGFloat(factorWidth) , height: 75 * CGFloat(factorHeight))
         
@@ -227,6 +281,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
                 self.dailyTableView.reloadData()
                 self.collectionView.reloadData()
             }
+            print(json?.current.temp ?? "")
             
                }
                 task.resume()
@@ -271,6 +326,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     }
     
     func requestWeatherForLocation() {
+        
         guard let currentLocation = currentLocation else {
             return
         }
@@ -282,8 +338,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         }
         urlToUse = url
         
-        
-        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -292,13 +346,17 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         }
     }
     
-    
-
-    
     @objc func alarmButtonClicked(sender: UIButton){
         
         alarmButton.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
     
+    }
+    
+    @objc func actualizeData(sender: UIButton) {
+        
+        setupLocation()
+        upDataDate()
+        
     }
     
    
@@ -329,6 +387,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
 }
     
 class MyFloatingPanelLayout: FloatingPanelLayout {
+    
     let position: FloatingPanelPosition = .bottom
     let initialState: FloatingPanelState = .tip
     var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
@@ -337,12 +396,14 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
             .tip: FloatingPanelLayoutAnchor(absoluteInset: 75.0 * CGFloat(factorHeight), edge: .bottom, referenceGuide: .superview),
         ]
     }
+    
 }
 
 
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         var cells = Int()
         cells = arrayTimes.count
         return cells
@@ -363,7 +424,7 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
         var cellheight = Float()
-        cellheight = 100
+        cellheight = Float(100 * CGFloat(factorHeight))
         return CGFloat(cellheight)
         
     }
@@ -381,6 +442,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         height = 380  * CGFloat(factorHeight)
         width = view.frame.size.width
         return CGSize(width: width , height: height)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -388,6 +450,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         var number = Int()
         number = dailyModels.count
         return number
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -397,7 +460,9 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         cell.delegate = self
         cell.parentViewController = self
         return cell
+        
     }
+    
 }
 
 

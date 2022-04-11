@@ -24,3 +24,10 @@ typealias MultipleValue = (temp: Float, main: String)
 var dictWeatherForEvents = [Int: MultipleValue]()
 
 var shownCities = ["Munich", "Berlin", "Hamburg", "+"]
+
+
+
+
+
+typealias MultipleForSavings = (main: String, temp: String, info: String)
+var dictForSavings = [String: MultipleForSavings]()
