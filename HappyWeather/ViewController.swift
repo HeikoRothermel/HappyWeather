@@ -66,7 +66,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     private let dailyInfoLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "Füge deine Ereignisse hinzu :)"
+        label.text = "Nutze die 24-Stunden-Vorschau um Ereignisse hinzuzufügen :)"
         label.backgroundColor = .clear
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textAlignment = .center
@@ -86,13 +86,13 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         return label
     }()
     
-    private let alarmButton: UIButton = {
-        let button = UIButton()
-        button.tintColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
-        button.setImage(UIImage(systemName: "alarm"), for: .normal)
-        button.isHidden = true
-        return button
-    }()
+//    private let alarmButton: UIButton = {
+//        let button = UIButton()
+//        button.tintColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
+//        button.setImage(UIImage(systemName: "alarm"), for: .normal)
+//        button.isHidden = true
+//        return button
+//    }()
     
     
     
@@ -142,24 +142,41 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         let defaults = UserDefaults.standard
         arrayTimes = defaults.array(forKey: "saveArray")  as? [Int] ?? [Int]()
         print(arrayTimes)
+//        arrayTimes.removeAll()
 
         let defaults4 = UserDefaults.standard
         dictForSavings = defaults4.object(forKey: "saveDict")  as? [String: String] ?? [String: String]()
         print(dictForSavings)
-        
-        
-        
-        
+//        dictForSavings.removeAll()
         
         for count in arrayTimes {
-            let main = dictForSavings["\(count)"]!.components(separatedBy: "-")[1]
-            let temp = Float((dictForSavings["\(count)"]?.components(separatedBy: "-")[2] ?? "0.0"))
-            let info = dictForSavings["\(count)"]!.components(separatedBy: "-")[0]
             
+            if Int(Date().timeIntervalSince1970) < (count + 3600) {
+                
+                let main = dictForSavings["\(count)"]!.components(separatedBy: "-")[1]
+                let temp = Float((dictForSavings["\(count)"]?.components(separatedBy: "-")[2] ?? "0.0"))
+                let info = dictForSavings["\(count)"]!.components(separatedBy: "-")[0]
             
-            dictEventsNoted[count] = "\(info)"
-            dictWeatherForEvents[count] = (temp: Float(temp!), main: main )
+                dictEventsNoted[count] = "\(info)"
+                dictWeatherForEvents[count] = (temp: Float(temp!), main: main )
+                
+            } else {
+                
+                if let index = arrayTimes.firstIndex(of: count) {
+                    arrayTimes.remove(at: index)
+                }
+                
+            }
+            
         }
+        
+        
+        if arrayTimes.count > 0 {
+            dailyInfoLabel.isHidden = true
+        } else {
+            dailyInfoLabel.isHidden = false
+        }
+        
         
 //        overrideUserInterfaceStyle = .dark
         
@@ -172,7 +189,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         overviewDailyNotes.addSubview(dailyHeaderLabel)
         overviewDailyNotes.addSubview(dailyTableView)
         overviewDailyNotes.addSubview(dailyInfoLabel)
-        overviewDailyNotes.addSubview(alarmButton)
+//        overviewDailyNotes.addSubview(alarmButton)
         
         view.addSubview(citiesScrollView)
         citiesScrollView.addSubview(citiesStackView)
@@ -181,7 +198,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         view.addSubview(buttonActualization)
         
-        alarmButton.addTarget(self, action: #selector(alarmButtonClicked(sender:)), for: .touchUpInside)
+//        alarmButton.addTarget(self, action: #selector(alarmButtonClicked(sender:)), for: .touchUpInside)
         buttonActualization.addTarget(self, action: #selector(actualizeData(sender:)), for: .touchUpInside)
         
         
@@ -225,7 +242,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         dailyInfoLabel.frame = CGRect(x: 5 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 10 * CGFloat(factorWidth), height: overviewDailyNotes.frame.height - 70 * CGFloat(factorHeight))
         dailyTableView.frame = dailyInfoLabel.frame
         dailyHeaderLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 30 * CGFloat(factorWidth), height: 35 * CGFloat(factorHeight))
-        alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75 * CGFloat(factorWidth), y:  15 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
+//        alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75 * CGFloat(factorWidth), y:  15 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
         
         collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  115 * CGFloat(factorHeight), width: view.frame.size.width, height: 380 * CGFloat(factorHeight))
         
@@ -285,10 +302,8 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     func floatingPanelWillBeginDragging(_ vc: FloatingPanelController) {
         if arrayTimes.count > 0 {
             dailyInfoLabel.isHidden = true
-//            alarmButton.isHidden = false
         } else {
             dailyInfoLabel.isHidden = false
-//            alarmButton.isHidden = true
         }
         
         view.endEditing(true)
@@ -341,11 +356,11 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         }
     }
     
-    @objc func alarmButtonClicked(sender: UIButton){
-        
-        alarmButton.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
-    
-    }
+//    @objc func alarmButtonClicked(sender: UIButton){
+//
+//        alarmButton.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+//
+//    }
     
     @objc func actualizeData(sender: UIButton) {
         

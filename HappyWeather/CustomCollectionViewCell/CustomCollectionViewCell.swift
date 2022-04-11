@@ -51,8 +51,8 @@ class CustomCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .black
         label.backgroundColor = .white
-        label.alpha = 0.7
-        label.font = .systemFont(ofSize: 20, weight: .medium)
+        label.alpha = 0.6
+        label.font = .systemFont(ofSize: 28, weight: .medium)
         label.textAlignment = .center
         label.clipsToBounds = true
         label.layer.cornerRadius = 10
@@ -67,6 +67,16 @@ class CustomCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .left
         label.clipsToBounds = true
         label.backgroundColor = .clear
+        return label
+    }()
+    
+    private let labelDescription: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 118 / 255, green: 113 / 255, blue: 115 / 255, alpha: 1)
+        label.backgroundColor = .white
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textAlignment = .left
+        label.clipsToBounds = true
         return label
     }()
     
@@ -104,7 +114,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
         viewWeather.addSubview(viewStackView)
         viewStackView.addSubview(dailyStackView)
-        
+        viewWeather.addSubview(labelDescription)
         
         
         
@@ -122,12 +132,13 @@ class CustomCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         
         viewWeather.frame = CGRect(x: (contentView.frame.size.width - 344 * CGFloat(factorWidth)) / 2, y:  25 * CGFloat(factorHeight), width: 340 * CGFloat(factorWidth), height: contentView.frame.size.height - 50 * CGFloat(factorHeight))
-        imageWeather.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  0 * CGFloat(factorHeight), width: viewWeather.frame.size.width, height: viewWeather.frame.size.height - 75 * CGFloat(factorHeight))
-        labelWeather.frame = CGRect(x: imageWeather.frame.size.width - 100 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: 80 * CGFloat(factorWidth), height: 50 * CGFloat(factorHeight))
-        labelDay.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  imageWeather.frame.size.height, width: viewWeather.frame.size.width - 30 * CGFloat(factorWidth) , height: viewWeather.frame.size.height - imageWeather.frame.size.height - 20 * CGFloat(factorHeight))
+        imageWeather.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  0 * CGFloat(factorHeight), width: viewWeather.frame.size.width, height: viewWeather.frame.size.height - 90 * CGFloat(factorHeight))
+        labelWeather.frame = CGRect(x: imageWeather.frame.size.width - 130 * CGFloat(factorWidth), y: imageWeather.frame.size.height - 90 * CGFloat(factorHeight), width: 110 * CGFloat(factorWidth), height: 70 * CGFloat(factorHeight))
+        labelDay.frame = CGRect(x: 20 * CGFloat(factorWidth), y:  imageWeather.frame.size.height + 2 * CGFloat(factorHeight), width: viewWeather.frame.size.width - 50 * CGFloat(factorWidth) , height: 38 * CGFloat(factorHeight))
+        labelDescription.frame = CGRect(x: 20 * CGFloat(factorWidth), y:  imageWeather.frame.size.height + labelDay.frame.size.height, width: viewWeather.frame.size.width - 50 * CGFloat(factorWidth) , height: 20 * CGFloat(factorHeight))
         buttonDay.frame = CGRect(x: 0, y:  0, width: contentView.frame.size.width, height: contentView.frame.size.height)
         
-        viewStackView.frame = CGRect(x: 125 * CGFloat(factorWidth), y:   imageWeather.frame.size.height + labelDay.frame.size.height + 3 * CGFloat(factorHeight), width: viewWeather.frame.size.width - 250 * CGFloat(factorWidth) , height: 6.5 * CGFloat(factorHeight))
+        viewStackView.frame = CGRect(x: 125 * CGFloat(factorWidth), y:   imageWeather.frame.size.height + labelDay.frame.size.height + labelDescription.frame.size.height + 12 * CGFloat(factorHeight), width: viewWeather.frame.size.width - 250 * CGFloat(factorWidth) , height: 6.5 * CGFloat(factorHeight))
         dailyStackView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  0 * CGFloat(factorHeight), width: viewStackView.frame.size.width , height: viewStackView.frame.size.height)
         dailyStackView.spacing = 5 * CGFloat(factorWidth)
     }
@@ -151,7 +162,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
             self.labelDay.text = "\(getDateForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay))))"
         }
         
-        labelWeather.text = "\(model.temp.max)°"
+        labelWeather.text = "\(Int(model.temp.max))°"
         imageWeather.image = UIImage(systemName: "cloud.fill")
         
         let icon  = model.weather.first?.main.lowercased()  ?? ""
@@ -165,7 +176,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
             self.imageWeather.image = UIImage(named: "fotoSun")
         }
         
-        
+        labelDescription.text = model.weather.first?.description
         
         let intPoint = Int(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay))))! - Int(getDayForDate(Date()))! + 1
         addPointsToStackView(coloredPoint: intPoint)
@@ -182,7 +193,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
         parentViewController!.present(detailController, animated: true, completion: nil)
         
-        print(dictDailyWeather[timeOfDay]?.description ?? "")
+        
     }
     
     func getHourForDate(_ date: Date?) -> String {

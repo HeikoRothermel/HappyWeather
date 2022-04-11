@@ -169,40 +169,10 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
             
             let defaults = UserDefaults.standard
             defaults.set(arrayTimes, forKey: "saveArray")
-//
-//            let defaults2 = UserDefaults.standard
-//            defaults2.set(dictWeatherForEvents, forKey: "SavedArray2")
-//
-//            let defaults3 = UserDefaults.standard
-//            defaults3.set(dictEventsNoted, forKey: "SavedArray3")
-//
-            
-            
-            
-            
-            
-      
-            print(dictForSavings)
-            
-
             
             UserDefaults.standard.set(dictForSavings, forKey: "saveDict")
-                let result = UserDefaults.standard.value(forKey: "saveDict")
-                print(result!)
+            let result = UserDefaults.standard.value(forKey: "saveDict")
 
-
-            
-            
-            
-            
-            
-//            UserDefaults.standard.set(dictEventsNoted, forKey: "dict")
-//                let result = UserDefaults.standard.value(forKey: "dict")
-//                print(result!)
-            
-//            UserDefaults.standard.set(dictWeatherForEvents, forKey: "dict")
-//                let result2 = UserDefaults.standard.value(forKey: "dict")
-//                print(result2!)
         }
     }
 

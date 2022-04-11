@@ -33,14 +33,15 @@ class NoteTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.font = .systemFont(ofSize: 17, weight: .bold)
-        label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        label.textColor = UIColor(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 1)
         return label
     }()
     
     private let noteLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .systemFont(ofSize: 17, weight: .medium)
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textColor = UIColor(red: 118 / 255, green: 113 / 255, blue: 115 / 255, alpha: 1)
         return label
     }()
     
