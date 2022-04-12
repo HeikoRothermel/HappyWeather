@@ -85,13 +85,13 @@
 			path = TableViewCell;
 			sourceTree = "<group>";
 		};
-		E876925928061CC800484BA6 /* DailyWeather */ = {
+		E876925928061CC800484BA6 /* Daily Weather 5 Days */ = {
 			isa = PBXGroup;
 			children = (
 				E876925A28061D0700484BA6 /* CustomCollectionViewCell.swift */,
 				E876925E28061D2B00484BA6 /* Button */,
 			);
-			path = DailyWeather;
+			path = "Daily Weather 5 Days";
 			sourceTree = "<group>";
 		};
 		E876925E28061D2B00484BA6 /* Button */ = {
@@ -124,10 +124,10 @@
 			isa = PBXGroup;
 			children = (
 				E87DA5A727F8E3D9004BB7AA /* ViewController.swift */,
-				E876925928061CC800484BA6 /* DailyWeather */,
-				E8B612F628017EB200EBE04C /* NotesTableViewCell */,
-				E8E0E4BF27F9BA2B007206C8 /* 24-Stunden-Vorschau */,
-				E8B612FF280357B500EBE04C /* DetailedOverviewDailyWeather */,
+				E876925928061CC800484BA6 /* Daily Weather 5 Days */,
+				E8E0E4BF27F9BA2B007206C8 /* 24-Hours-Preview */,
+				E8B612F628017EB200EBE04C /* Notes */,
+				E8B612FF280357B500EBE04C /* Detailed Weather Daily */,
 				E87DA5A927F8E3D9004BB7AA /* Main.storyboard */,
 				E87DA5A327F8E3D9004BB7AA /* AppDelegate.swift */,
 				E87DA5A527F8E3D9004BB7AA /* SceneDelegate.swift */,
@@ -140,30 +140,30 @@
 			path = HappyWeather;
 			sourceTree = "<group>";
 		};
-		E8B612F628017EB200EBE04C /* NotesTableViewCell */ = {
+		E8B612F628017EB200EBE04C /* Notes */ = {
 			isa = PBXGroup;
 			children = (
 				E8B612F428017E8F00EBE04C /* NoteTableViewCell.swift */,
 			);
-			path = NotesTableViewCell;
+			path = Notes;
 			sourceTree = "<group>";
 		};
-		E8B612FF280357B500EBE04C /* DetailedOverviewDailyWeather */ = {
+		E8B612FF280357B500EBE04C /* Detailed Weather Daily */ = {
 			isa = PBXGroup;
 			children = (
 				E8B61300280357DA00EBE04C /* DetailViewController.swift */,
 				E846A9862805FF66003F3995 /* TableViewCell */,
 			);
-			path = DetailedOverviewDailyWeather;
+			path = "Detailed Weather Daily";
 			sourceTree = "<group>";
 		};
-		E8E0E4BF27F9BA2B007206C8 /* 24-Stunden-Vorschau */ = {
+		E8E0E4BF27F9BA2B007206C8 /* 24-Hours-Preview */ = {
 			isa = PBXGroup;
 			children = (
 				E8E0E4BD27F9B7E9007206C8 /* ContentViewController.swift */,
 				E8E0E4C127F9C1A4007206C8 /* TableViewCell */,
 			);
-			path = "24-Stunden-Vorschau";
+			path = "24-Hours-Preview";
 			sourceTree = "<group>";
 		};
 		E8E0E4C127F9C1A4007206C8 /* TableViewCell */ = {

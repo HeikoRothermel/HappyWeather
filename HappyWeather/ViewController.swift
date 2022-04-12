@@ -10,9 +10,6 @@ import FloatingPanel
 import CoreLocation
 
 
-
-
-
 class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocationManagerDelegate, UITableViewDelegate, UICollectionViewDelegate, CustomCollectionViewCellDelegate, UIScrollViewDelegate {
     
     func didTapButton(with title: String) {
@@ -21,20 +18,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     var hourlyModels = [Hourly]()
     var dailyModels = [Daily]()
-//    var currentModels = [Current]()
-    
-    
-    
-//    private let notesView: UIView = {
-//        let view = UIView()
-//        view.layer.cornerRadius = 25
-//        view.layer.shadowColor = UIColor.label.cgColor
-//        view.layer.shadowOpacity = 0.20
-//        view.layer.shadowOffset = .zero
-//        view.layer.shadowRadius = 16
-//        view.backgroundColor = .systemBackground
-//        return view
-//    }()
     
     
     // CollectionView for daily Information -> Folder: DetailedOverviewDailyWeather
@@ -72,7 +55,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         let view = UIView()
         view.layer.cornerRadius = 25
         view.layer.shadowColor = UIColor.label.cgColor
-        view.layer.shadowOpacity = 0.20
+        view.layer.shadowOpacity = 0.25
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 16
         view.backgroundColor = .systemBackground
@@ -112,7 +95,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     }()
     
     
-
+    
     // Equipment for Localoization
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
@@ -216,7 +199,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-    
+        
     }
     //get Latitude and Longitude: II
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -358,7 +341,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         }
     }
     
-
+    
     
     
 }
@@ -394,32 +377,32 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
 
 // Extension to prepare TableView for Notes/Events
 extension ViewController: UITableViewDataSource {
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         var cells = Int()
         cells = arrayTimes.count
         return cells
-
+        
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
         cell!.configure(timeOfDay: indexPath.row)
         cell!.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell!
-
+        
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
+        
         var cellheight = Float()
         cellheight = Float(100 * CGFloat(factorHeight))
         return CGFloat(cellheight)
-
+        
     }
-
+    
 }
 
 

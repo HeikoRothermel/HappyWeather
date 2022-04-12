@@ -25,7 +25,7 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 20
         view.layer.shadowColor = UIColor.label.cgColor
-        view.layer.shadowOpacity = 0.15
+        view.layer.shadowOpacity = 0.20
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 10
         return view
@@ -35,7 +35,7 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     private let highTempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = .systemFont(ofSize: 14, weight: .bold)
         label.textAlignment = .center
         return label
     }()
@@ -60,6 +60,10 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         let textField = UITextField()
         textField.placeholder = "Notizen"
         textField.borderStyle = UITextField.BorderStyle.roundedRect
+        textField.layer.borderWidth = 0.25
+        textField.layer.borderColor = UIColor.lightGray.cgColor
+        textField.layer.cornerRadius = 5
+        
         return textField
     }()
     

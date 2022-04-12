@@ -53,12 +53,11 @@ class DetailViewController: UIViewController, UITableViewDelegate {
     // Beschreibung
     private let detailDescription: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .medium)
         label.textAlignment = .left
         label.clipsToBounds = true
         label.textColor = .secondaryLabel
         label.backgroundColor = .clear
-        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.font = .systemFont(ofSize: 17, weight: .medium)
         return label
     }()
     
@@ -77,10 +76,6 @@ class DetailViewController: UIViewController, UITableViewDelegate {
     private let detailViewTurquoise: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
-        view.layer.shadowColor = UIColor.label.cgColor
-        view.layer.shadowOpacity = 0.15
-        view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 16
         view.backgroundColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         return view
     }()

@@ -18,7 +18,7 @@ class NoteTableViewCell: UITableViewCell {
         view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 20
         view.layer.shadowColor = UIColor.label.cgColor
-        view.layer.shadowOpacity = 0.15
+        view.layer.shadowOpacity = 0.22
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 10
         return view
@@ -28,7 +28,7 @@ class NoteTableViewCell: UITableViewCell {
     private let highTempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = .systemFont(ofSize: 14, weight: .bold)
         label.textAlignment = .center
         return label
     }()
@@ -117,7 +117,7 @@ class NoteTableViewCell: UITableViewCell {
         
         greyBackgroundView.frame = CGRect(x: 15 * CGFloat(factorWidth), y: 10 * CGFloat(factorHeight), width: contentView.frame.size.width - 30 * CGFloat(factorWidth), height: contentView.frame.size.height - 15 * CGFloat(factorHeight))
         iconImageView.frame = CGRect(x: greyBackgroundView.frame.size.width - 75 * CGFloat(factorWidth), y: 17.5 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
-        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 75 * CGFloat(factorWidth), y: 15 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
+        highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 75 * CGFloat(factorWidth), y: 17.5 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
         timeLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y: 12.5 * CGFloat(factorHeight), width: 200 * CGFloat(factorWidth), height: 25 * CGFloat(factorHeight))
         noteLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y: 45 * CGFloat(factorHeight), width: greyBackgroundView.frame.size.width - 45 * CGFloat(factorWidth) - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
         

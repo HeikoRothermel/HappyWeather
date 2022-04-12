@@ -33,7 +33,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         let view = UIView()
         view.layer.cornerRadius = 25
         view.layer.shadowColor = UIColor.label.cgColor
-        view.layer.shadowOpacity = 0.20
+        view.layer.shadowOpacity = 0.25
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 16
         view.backgroundColor = .systemBackground
