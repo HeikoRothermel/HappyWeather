@@ -31,13 +31,12 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         let button = UIButton()
         button.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         button.setImage(UIImage(systemName: "arrow.2.circlepath.circle.fill"), for: .normal)
-        button.isHidden = false
         button.layer.cornerRadius = 15
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.125
+        button.layer.shadowColor = UIColor.label.cgColor
+        button.layer.shadowOpacity = 0.3
         button.layer.shadowOffset = .zero
         button.layer.shadowRadius = 16
-        button.backgroundColor = .white
+        button.backgroundColor = .systemBackground
         return button
     }()
     
@@ -46,11 +45,11 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     private let overviewDailyNotes: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.125
+        view.layer.shadowColor = UIColor.label.cgColor
+        view.layer.shadowOpacity = 0.20
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 16
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         return view
     }()
     
@@ -60,12 +59,13 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         tableView.clipsToBounds = true
         tableView.showsVerticalScrollIndicator = false
         tableView.layer.cornerRadius = 25
+        tableView.backgroundColor = .clear
         return tableView
     }()
     
     private let dailyInfoLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .label
         label.text = "Nutze die 24-Stunden-Vorschau um Ereignisse hinzuzufügen :)"
         label.numberOfLines = 0
         label.backgroundColor = .clear
@@ -115,7 +115,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     private let citiesLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .label
         label.backgroundColor = .clear
         label.text = "Mein Standort"
         label.font = .systemFont(ofSize: 19, weight: .bold)
@@ -135,7 +135,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         UserDefaults.resetStandardUserDefaults()
         
-        
+        view.backgroundColor = .systemBackground
 
         let defaults = UserDefaults.standard
         arrayTimes = defaults.array(forKey: "saveArray")  as? [Int] ?? [Int]()
@@ -340,6 +340,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         }
         urlToUse = url
         
+        getCityForLocation()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -359,13 +360,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         setupLocation()
         upDataDate()
         
-        getCityForLocation()
-//        let city = getCityForLocation()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//            self.citiesLabel.text = "Mein Standort - \(city)"
-////            print(self.citiesLabel.text ?? "")
-//        }
-//        print(getCityForLocation())
+
     }
     
     func getCityForLocation() {

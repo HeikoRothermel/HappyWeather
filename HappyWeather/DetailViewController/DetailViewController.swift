@@ -19,8 +19,8 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.layer.cornerRadius = 30
-        image.layer.shadowColor = UIColor.black.cgColor
-        image.layer.shadowOpacity = 0.125
+        image.layer.shadowColor = UIColor.label.cgColor
+        image.layer.shadowOpacity = 0.15
         image.layer.shadowOffset = .zero
         image.layer.shadowRadius = 16
         return image
@@ -44,11 +44,11 @@ class DetailViewController: UIViewController, UITableViewDelegate {
     private let detailViewWhite: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.125
+        view.layer.shadowColor = UIColor.label.cgColor
+        view.layer.shadowOpacity = 0.15
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 16
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         return view
     }()
     
@@ -57,7 +57,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         label.font = .systemFont(ofSize: 20, weight: .medium)
         label.textAlignment = .left
         label.clipsToBounds = true
-        label.textColor = UIColor(red: 118 / 255, green: 113 / 255, blue: 115 / 255, alpha: 1)
+        label.textColor = .secondaryLabel
         label.backgroundColor = .clear
         label.font = .systemFont(ofSize: 14, weight: .medium)
         return label
@@ -65,7 +65,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
     
     private let detailTop: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .label
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .left
         label.clipsToBounds = true
@@ -76,8 +76,8 @@ class DetailViewController: UIViewController, UITableViewDelegate {
     private let detailViewTurquoise: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.125
+        view.layer.shadowColor = UIColor.label.cgColor
+        view.layer.shadowOpacity = 0.15
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 16
         view.backgroundColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
@@ -121,7 +121,8 @@ class DetailViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
+        
         view.addSubview(detailImage)
         detailImage.addSubview(detailTemp)
         

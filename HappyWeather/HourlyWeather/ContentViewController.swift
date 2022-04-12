@@ -21,6 +21,7 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
     private let myTableView: UITableView = {
         let tableView = UITableView()
         tableView.showsVerticalScrollIndicator = false
+        tableView.backgroundColor = .systemBackground
         return tableView
     }()
     
@@ -33,12 +34,12 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         label.textColor = .white
         return label
     }()
-   
-    private let backgroundImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = UIColor(red: 246 / 255, green: 246 / 255, blue: 248 / 255, alpha: 1)
-        return imageView
-    }()
+//   
+//    private let backgroundImageView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.backgroundColor = UIColor(red: 246 / 255, green: 246 / 255, blue: 248 / 255, alpha: 1)
+//        return imageView
+//    }()
     
     var hourlyModels = [Hourly]()
     

@@ -30,11 +30,11 @@ class CustomCollectionViewCell: UICollectionViewCell {
     private let viewWeather: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.125
+        view.layer.shadowColor = UIColor.label.cgColor
+        view.layer.shadowOpacity = 0.20
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 16
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         return view
     }()
     
@@ -61,7 +61,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
     private let labelDay: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .label
         label.font = .systemFont(ofSize: 20, weight: .medium)
         label.textAlignment = .left
         label.clipsToBounds = true
@@ -71,8 +71,8 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
     private let labelDescription: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 118 / 255, green: 113 / 255, blue: 115 / 255, alpha: 1)
-        label.backgroundColor = .white
+        label.textColor = .secondaryLabel
+        label.backgroundColor = .clear
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.textAlignment = .left
         label.clipsToBounds = true
@@ -87,6 +87,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
     private let viewStackView: UIView = {
         let view = UIView()
+        view.backgroundColor = .clear
         return view
     }()
     
@@ -94,6 +95,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.axis = .horizontal
+        stackView.backgroundColor = .clear
         return stackView
     }()
     
@@ -253,7 +255,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
             if count == coloredPoint {
                 points.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
             } else {
-                points.tintColor = UIColor(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 1)
+                points.tintColor = .label
             }
             dailyStackView.addArrangedSubview(points)
         }

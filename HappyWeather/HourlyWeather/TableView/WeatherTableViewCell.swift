@@ -20,10 +20,10 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     private let greyBackgroundView: UIView = {
         let view = UIView()
 //        view.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 20
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.1
+        view.layer.shadowColor = UIColor.label.cgColor
+        view.layer.shadowOpacity = 0.15
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 10
         return view
@@ -39,7 +39,7 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     private let timeLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .label
         label.font = .systemFont(ofSize: 17, weight: .bold)
         return label
     }()

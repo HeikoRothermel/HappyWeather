@@ -13,10 +13,10 @@ class NoteTableViewCell: UITableViewCell {
     
     private let greyBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 20
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.1
+        view.layer.shadowColor = UIColor.label.cgColor
+        view.layer.shadowOpacity = 0.15
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 10
         return view
@@ -32,15 +32,14 @@ class NoteTableViewCell: UITableViewCell {
     
     private let timeLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .label
         label.font = .systemFont(ofSize: 17, weight: .bold)
-        label.textColor = UIColor(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 1)
         return label
     }()
     
     private let noteLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .secondaryLabel
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.textColor = UIColor(red: 118 / 255, green: 113 / 255, blue: 115 / 255, alpha: 1)
         return label
