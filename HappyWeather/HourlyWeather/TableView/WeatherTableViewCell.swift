@@ -8,7 +8,6 @@
 import UIKit
 
 protocol WeatherTableViewCellDelegate: AnyObject {
-//    func didTapButton(with title: String)
     func didUseTF(with text: String)
 }
 
@@ -19,7 +18,6 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     private let greyBackgroundView: UIView = {
         let view = UIView()
-//        view.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
         view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 20
         view.layer.shadowColor = UIColor.label.cgColor
@@ -57,19 +55,13 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         return textField
     }()
     
-//    private let testButton: UIButton = {
-//        let testButton = UIButton()
-//        testButton.backgroundColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
-//        testButton.isUserInteractionEnabled = true
-//        return testButton
-//    }()
     
     
     
     
     static let identifier = "WeatherTableViewCell"
     
-
+    
     
     
     
@@ -80,7 +72,6 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         textFieldNote.delegate = self
         
-        // To let Constraints-Issue of keyboard disappear
         let item = textFieldNote.inputAssistantItem
         item.leadingBarButtonGroups = []
         item.trailingBarButtonGroups = []
@@ -91,10 +82,8 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         greyBackgroundView.addSubview(highTempLabel)
         greyBackgroundView.addSubview(textFieldNote)
         
-//        testButton.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
         textFieldNote.addTarget(self, action: #selector(fieldClicked(sender:)), for: .editingDidEnd)
         
-//        print("klappt2")
     }
     
     required init?(coder: NSCoder) {
@@ -148,7 +137,7 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         super.prepareForReuse()
         textFieldNote.text = nil
     }
-
+    
     
     @objc func fieldClicked(sender: UITextField){
         
@@ -166,23 +155,15 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
             
             dictForSavings["\(timeOfDay)"] = "\(dictEventsNoted[timeOfDay] ?? "")-\(dictWeatherForEvents[timeOfDay]?.main ?? "")-\(dictWeatherForEvents[timeOfDay]?.temp ?? 0.0)"
             
-            
             let defaults = UserDefaults.standard
             defaults.set(arrayTimes, forKey: "saveArray")
             
             UserDefaults.standard.set(dictForSavings, forKey: "saveDict")
             let result = UserDefaults.standard.value(forKey: "saveDict")
-
+            
         }
     }
-
     
-//    @objc func buttonClicked(sender: UIButton){
-//        delegate?.didTapButton(with: title)
-//        print(title)
-//    }
-    
-
     
     
     override func layoutSubviews() {
@@ -194,18 +175,18 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
         highTempLabel.frame = CGRect(x: greyBackgroundView.frame.size.width - 75 * CGFloat(factorWidth), y: 12.5 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
         timeLabel.frame = CGRect(x: 20 * CGFloat(factorWidth), y: 12.5 * CGFloat(factorHeight), width: 200 * CGFloat(factorWidth), height: 25 * CGFloat(factorHeight))
         textFieldNote.frame = CGRect(x: 20 * CGFloat(factorWidth), y: 45 * CGFloat(factorHeight), width: greyBackgroundView.frame.size.width - 60 * CGFloat(factorWidth) - iconImageView.frame.size.width, height: timeLabel.frame.size.height)
-//        testButton.frame = CGRect(x: 110, y: 0, width: 80, height: 30)
     }
     
     func getDayForDate(_ date: Date?) -> String {
-            guard let inputDate = date else {
-                return ""
-            }
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "H"
-            return formatter.string(from: inputDate)
+        
+        guard let inputDate = date else {
+            return ""
         }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "H"
+        return formatter.string(from: inputDate)
+    }
+    
 }
 
 

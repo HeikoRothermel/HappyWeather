@@ -13,10 +13,6 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
     func didUseTF(with text: String) {
     }
     
-//    func didTapButton(with title: String) {
-//    }
-    
-//    static let identifier = "FloatingPanelControler_content"
     
     private let myTableView: UITableView = {
         let tableView = UITableView()
@@ -34,12 +30,7 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
         label.textColor = .white
         return label
     }()
-//   
-//    private let backgroundImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.backgroundColor = UIColor(red: 246 / 255, green: 246 / 255, blue: 248 / 255, alpha: 1)
-//        return imageView
-//    }()
+    
     
     var hourlyModels = [Hourly]()
     
@@ -79,32 +70,29 @@ class ContentViewController: UIViewController, UITableViewDelegate, WeatherTable
                 return
             }
             var json: WeatherResponse?
-                    do {
-                        json = try JSONDecoder().decode(WeatherResponse.self, from: data)
-                    }
-                    catch {
-                        print("error: \(error)")
-                    }
-                    guard let result = json else {
-                        return
-                    }
-        
-        let entries = result.hourly
-        self.hourlyModels.append(contentsOf: entries)
-//        for itm in result.hourly {
-//            print("Value: \(result.timezone) \n \(itm.dt) ,\(itm.weather.first?.main ?? "")")
-//        }
-        DispatchQueue.main.async {
-            self.myTableView.reloadData()
+            do {
+                json = try JSONDecoder().decode(WeatherResponse.self, from: data)
+            }
+            catch {
+                print("error: \(error)")
+            }
+            guard let result = json else {
+                return
+            }
+            
+            let entries = result.hourly
+            self.hourlyModels.append(contentsOf: entries)
+            DispatchQueue.main.async {
+                self.myTableView.reloadData()
+            }
         }
-       }
         task.resume()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         view.endEditing(true)
     }
-
+    
 }
 
 

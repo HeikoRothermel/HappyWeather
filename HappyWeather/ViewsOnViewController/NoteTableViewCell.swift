@@ -60,13 +60,13 @@ class NoteTableViewCell: UITableViewCell {
         greyBackgroundView.addSubview(iconImageView)
         greyBackgroundView.addSubview(highTempLabel)
         greyBackgroundView.addSubview(noteLabel)
-       
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     
     func configure(timeOfDay: Int) {
         
@@ -115,13 +115,13 @@ class NoteTableViewCell: UITableViewCell {
     }
     
     func getDayForDate(_ date: Date?) -> String {
-            guard let inputDate = date else {
-                return ""
-            }
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "H"
-            return formatter.string(from: inputDate)
+        guard let inputDate = date else {
+            return ""
         }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "H"
+        return formatter.string(from: inputDate)
+    }
     
 }

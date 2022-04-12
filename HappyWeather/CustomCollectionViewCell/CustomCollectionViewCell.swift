@@ -21,7 +21,6 @@ class CustomCollectionViewCell: UICollectionViewCell {
     static let identifier = "CustomCollectionViewCell"
     
     typealias dailyMultipleValue = (max: Float, pressure:Int, humidity: Int, wind_speed: Float,  main: String, description: String)
-//    typealias dailyMultipleValue = (main: String, description: String)
     var dictDailyWeather = [Int: dailyMultipleValue]()
     
     
@@ -45,7 +44,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         image.clipsToBounds = true
         image.layer.cornerRadius = 20
         return image
-        }()
+    }()
     
     private let labelWeather: UILabel = {
         let label = UILabel()
@@ -144,9 +143,9 @@ class CustomCollectionViewCell: UICollectionViewCell {
         dailyStackView.spacing = 5 * CGFloat(factorWidth)
     }
     
- 
     
-
+    
+    
     
     func configure(with model: Daily) {
         
@@ -183,7 +182,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         addPointsToStackView(coloredPoint: intPoint)
         
         
-//        dictDailyWeather = [timeOfDay: ("\(model.weather.first!.main)", "\(model.weather.first!.description)")]
+        //        dictDailyWeather = [timeOfDay: ("\(model.weather.first!.main)", "\(model.weather.first!.description)")]
         dictDailyWeather = [timeOfDay: (model.temp.max, model.pressure, model.humidity, model.wind_speed, "\(model.weather.first!.main)", "\(model.weather.first!.description)")]
     }
     
@@ -212,9 +211,9 @@ class CustomCollectionViewCell: UICollectionViewCell {
         }
         
         let formatter = DateFormatter()
-            formatter.dateFormat = "H"
-            return formatter.string(from: inputDate)
-        }
+        formatter.dateFormat = "H"
+        return formatter.string(from: inputDate)
+    }
     
     func getDateForDate(_ date: Date?) -> String {
         
@@ -223,8 +222,8 @@ class CustomCollectionViewCell: UICollectionViewCell {
         }
         
         let formatter = DateFormatter()
-            formatter.dateFormat = "EEEE, dd.MM.yyyy"
-            return formatter.string(from: inputDate)
+        formatter.dateFormat = "EEEE, dd.MM.yyyy"
+        return formatter.string(from: inputDate)
         
     }
     
@@ -235,8 +234,8 @@ class CustomCollectionViewCell: UICollectionViewCell {
         }
         
         let formatter = DateFormatter()
-            formatter.dateFormat = "DDD"
-            return formatter.string(from: inputDate)
+        formatter.dateFormat = "DDD"
+        return formatter.string(from: inputDate)
         
     }
     

@@ -8,7 +8,7 @@
 import UIKit
 
 class StackUIButton: UIButton {
-
+    
     override init(frame:CGRect) {
         super.init(frame: frame)
         setupButton()

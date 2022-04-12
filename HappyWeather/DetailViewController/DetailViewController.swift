@@ -11,7 +11,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
     
     
     
-
+    
     
     private var detailImage: UIImageView = {
         let image = UIImageView()
@@ -24,7 +24,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         image.layer.shadowOffset = .zero
         image.layer.shadowRadius = 16
         return image
-        }()
+    }()
     
     private let detailTemp: UILabel = {
         let label = UILabel()
@@ -105,7 +105,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
     
     
     
-        
+    
     var pressure = Int()
     var humidity = Int()
     var wind_speed = Float()
@@ -158,7 +158,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         detailTableView.reloadData()
     }
     
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -179,7 +179,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
 }
 
 extension DetailViewController: UITableViewDataSource {
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrayDetails.count
     }
@@ -190,7 +190,7 @@ extension DetailViewController: UITableViewDataSource {
         return height
         
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailTableViewCell.identifier, for: indexPath) as! DetailTableViewCell
         cell.configure(with: arrayDetails[indexPath.row], and: arrayDetails2[indexPath.row])

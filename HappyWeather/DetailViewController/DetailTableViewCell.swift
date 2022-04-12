@@ -8,7 +8,7 @@
 import UIKit
 
 class DetailTableViewCell: UITableViewCell {
-
+    
     static let identifier = "DetailTableViewCell"
     
     private let detailHeader: UILabel = {
@@ -30,34 +30,23 @@ class DetailTableViewCell: UITableViewCell {
     
     
     
-    
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//
-//    }
-
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         contentView.backgroundColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
         contentView.addSubview(detailHeader)
         contentView.addSubview(detailLabel)
-       
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//    }
     
     func configure(with arrayDetails: String, and arrayDetail2: Int) {
         
-    
+        
         detailHeader.text = arrayDetails
         
         if arrayDetails == "Feuchtigkeit:" {
@@ -106,17 +95,14 @@ class DetailTableViewCell: UITableViewCell {
         }
         
         
-        
-        
-        print(arrayDetails)
-        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        detailHeader.frame = CGRect(x: 25 * CGFloat(factorWidth), y: 15 * CGFloat(factorHeight), width: contentView.frame.size.width - 50 * CGFloat(factorWidth), height: (contentView.frame.size.height / 2) - 20 * CGFloat(factorHeight))
         
+        detailHeader.frame = CGRect(x: 25 * CGFloat(factorWidth), y: 15 * CGFloat(factorHeight), width: contentView.frame.size.width - 50 * CGFloat(factorWidth), height: (contentView.frame.size.height / 2) - 20 * CGFloat(factorHeight))
         detailLabel.frame = CGRect(x: 25 * CGFloat(factorWidth), y: 20 * CGFloat(factorHeight) + detailHeader.frame.size.height, width: contentView.frame.size.width - 50 * CGFloat(factorWidth), height: (contentView.frame.size.height / 2) - 20 * CGFloat(factorHeight))
+        
     }
     
 }
