@@ -2,11 +2,12 @@
 //  stackUIButton.swift
 //  HappyWeather
 //
-//  Created by Heiko Rothermel on 4/10/22.
+//  Created by Heiko Rothermel on 4/12/22.
 //
 
 import UIKit
 
+//Used in DailyWeather
 class StackUIButton: UIButton {
     
     override init(frame:CGRect) {
@@ -20,6 +21,8 @@ class StackUIButton: UIButton {
     }
     
     func setupButton() {
+        
+        // characteristics of button: ScrollViewPoints
         setTitleColor(.black, for: .normal)
         setImage(UIImage(systemName: "circle.fill"), for: .normal)
         tintColor = .label
@@ -28,3 +31,4 @@ class StackUIButton: UIButton {
     
     
 }
+

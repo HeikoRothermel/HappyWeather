@@ -7,6 +7,7 @@
 
 import UIKit
 
+//function needed for collectionview reasons: to connect button to image
 protocol CustomCollectionViewCellDelegate: AnyObject {
     func didTapButton(with title: String)
 }
@@ -14,18 +15,20 @@ protocol CustomCollectionViewCellDelegate: AnyObject {
 
 class CustomCollectionViewCell: UICollectionViewCell {
     
-    var parentViewController: UIViewController? = nil
     
+    var parentViewController: UIViewController? = nil
     weak var delegate: CustomCollectionViewCellDelegate?
     
     static let identifier = "CustomCollectionViewCell"
     
+    
+    // dictionary for saving from data -> needed for DetailedOverviewDailyWeather
     typealias dailyMultipleValue = (max: Float, pressure:Int, humidity: Int, wind_speed: Float,  main: String, description: String)
     var dictDailyWeather = [Int: dailyMultipleValue]()
     
     
     
-    
+    //View with all different Images/Labels/StackViews
     private let viewWeather: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
@@ -37,6 +40,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    //Image
     private var imageWeather: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +50,8 @@ class CustomCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    private let labelWeather: UILabel = {
+    //Temperature
+    private let labelTemperature: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.backgroundColor = .white
@@ -58,6 +63,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    //Label for Day/Date
     private let labelDay: UILabel = {
         let label = UILabel()
         label.textColor = .label
@@ -68,6 +74,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    //Label for more detailed description of weather
     private let labelDescription: UILabel = {
         let label = UILabel()
         label.textColor = .secondaryLabel
@@ -78,18 +85,21 @@ class CustomCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // button to be pressed to get to  -> DetailedOverviewDailyWeather
     private let buttonDay: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
         return button
     }()
     
+    //StackView for Scrolling Points
     private let viewStackView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         return view
     }()
     
+    //Scrolling Points
     private let dailyStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -99,17 +109,17 @@ class CustomCollectionViewCell: UICollectionViewCell {
     }()
     
     
-    
-    
-    
     private var timeOfDay = Int()
+    
     
     override init(frame:CGRect) {
         super.init(frame: frame)
+        
+        // add different Views/Lavels/Images/StackViews/Buttons View
         contentView.addSubview(viewWeather)
         viewWeather.addSubview(imageWeather)
         viewWeather.addSubview(labelDay)
-        imageWeather.addSubview(labelWeather)
+        imageWeather.addSubview(labelTemperature)
         contentView.addSubview(buttonDay)
         
         viewWeather.addSubview(viewStackView)
@@ -117,7 +127,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         viewWeather.addSubview(labelDescription)
         
         
-        
+        //Function for button -> DetailedOverviewDailyWeather
         buttonDay.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
         
         
@@ -128,28 +138,30 @@ class CustomCollectionViewCell: UICollectionViewCell {
     }
     
     
+    //constraints
     override func layoutSubviews() {
         super.layoutSubviews()
         
         viewWeather.frame = CGRect(x: (contentView.frame.size.width - 344 * CGFloat(factorWidth)) / 2, y:  25 * CGFloat(factorHeight), width: 340 * CGFloat(factorWidth), height: contentView.frame.size.height - 50 * CGFloat(factorHeight))
         imageWeather.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  0 * CGFloat(factorHeight), width: viewWeather.frame.size.width, height: viewWeather.frame.size.height - 90 * CGFloat(factorHeight))
-        labelWeather.frame = CGRect(x: imageWeather.frame.size.width - 130 * CGFloat(factorWidth), y: imageWeather.frame.size.height - 90 * CGFloat(factorHeight), width: 110 * CGFloat(factorWidth), height: 70 * CGFloat(factorHeight))
+        labelTemperature.frame = CGRect(x: imageWeather.frame.size.width - 130 * CGFloat(factorWidth), y: imageWeather.frame.size.height - 90 * CGFloat(factorHeight), width: 110 * CGFloat(factorWidth), height: 70 * CGFloat(factorHeight))
         labelDay.frame = CGRect(x: 20 * CGFloat(factorWidth), y:  imageWeather.frame.size.height + 2 * CGFloat(factorHeight), width: viewWeather.frame.size.width - 50 * CGFloat(factorWidth) , height: 38 * CGFloat(factorHeight))
         labelDescription.frame = CGRect(x: 20 * CGFloat(factorWidth), y:  imageWeather.frame.size.height + labelDay.frame.size.height, width: viewWeather.frame.size.width - 50 * CGFloat(factorWidth) , height: 20 * CGFloat(factorHeight))
         buttonDay.frame = CGRect(x: 0, y:  0, width: contentView.frame.size.width, height: contentView.frame.size.height)
         
-        viewStackView.frame = CGRect(x: 125 * CGFloat(factorWidth), y:   imageWeather.frame.size.height + labelDay.frame.size.height + labelDescription.frame.size.height + 12 * CGFloat(factorHeight), width: viewWeather.frame.size.width - 250 * CGFloat(factorWidth) , height: 6.5 * CGFloat(factorHeight))
+        viewStackView.frame = CGRect(x: 130 * CGFloat(factorWidth), y:   imageWeather.frame.size.height + labelDay.frame.size.height + labelDescription.frame.size.height + 12 * CGFloat(factorHeight), width: viewWeather.frame.size.width - 260 * CGFloat(factorWidth) , height: 6.5 * CGFloat(factorHeight))
         dailyStackView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  0 * CGFloat(factorHeight), width: viewStackView.frame.size.width , height: viewStackView.frame.size.height)
-        dailyStackView.spacing = 5 * CGFloat(factorWidth)
+        dailyStackView.spacing = 12 * CGFloat(factorWidth)
     }
-    
-    
     
     
     
     func configure(with model: Daily) {
         
+        //get value for time to recognize cell
         self.timeOfDay = model.dt
+        
+        // set time/day
         var today = Int()
         today = Int(Date().timeIntervalSince1970) - (Int(getHourForDate(Date()))! + 1)  * 3600
         if timeOfDay - today < (3600 * 24) {
@@ -162,9 +174,11 @@ class CustomCollectionViewCell: UICollectionViewCell {
             self.labelDay.text = "\(getDateForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay))))"
         }
         
-        labelWeather.text = "\(Int(model.temp.max))°"
+        // set temperature
+        labelTemperature.text = "\(Int(model.temp.max))°"
         imageWeather.image = UIImage(systemName: "cloud.fill")
         
+        // set Photo related to "main"
         let image  = model.weather.first?.main.lowercased()  ?? ""
         if image.contains("cloud") {
             self.imageWeather.image = UIImage(named: "fotoCloud")
@@ -176,19 +190,23 @@ class CustomCollectionViewCell: UICollectionViewCell {
             self.imageWeather.image = UIImage(named: "fotoSun")
         }
         
+        // set detailed Weather information below day label
         labelDescription.text = model.weather.first?.description
         
+        //coloring the ScrollView points
         let intPoint = Int(getDayForDate(Date(timeIntervalSince1970: TimeInterval(timeOfDay))))! - Int(getDayForDate(Date()))! + 1
         addPointsToStackView(coloredPoint: intPoint)
         
-        
-        //        dictDailyWeather = [timeOfDay: ("\(model.weather.first!.main)", "\(model.weather.first!.description)")]
+        // prepare data for -> DetailedOverviewDailyWeather
         dictDailyWeather = [timeOfDay: (model.temp.max, model.pressure, model.humidity, model.wind_speed, "\(model.weather.first!.main)", "\(model.weather.first!.description)")]
     }
     
+    
+    //function when transparent button is clicked
     @objc func buttonClicked(sender: UIButton){
         delegate?.didTapButton(with: String(timeOfDay))
         
+        //adding data to -> DetailedOverviewDailyWeather
         let detailController = DetailViewController()
         
         detailController.dt = timeOfDay
@@ -201,9 +219,9 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
         parentViewController!.present(detailController, animated: true, completion: nil)
         
-        
     }
     
+    // getting Hours out of dt
     func getHourForDate(_ date: Date?) -> String {
         
         guard let inputDate = date else {
@@ -215,6 +233,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         return formatter.string(from: inputDate)
     }
     
+    //getting Date out of dt
     func getDateForDate(_ date: Date?) -> String {
         
         guard let inputDate = date else {
@@ -227,6 +246,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
     }
     
+    // getting Day out of dt
     func getDayForDate(_ date: Date?) -> String {
         
         guard let inputDate = date else {
@@ -239,7 +259,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
     }
     
-    
+    // function to set color the ScrollView points
     func addPointsToStackView(coloredPoint: Int) {
         
         

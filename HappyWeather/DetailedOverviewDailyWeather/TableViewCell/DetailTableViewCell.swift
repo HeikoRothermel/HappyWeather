@@ -11,6 +11,8 @@ class DetailTableViewCell: UITableViewCell {
     
     static let identifier = "DetailTableViewCell"
     
+    
+    //header
     private let detailHeader: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -19,7 +21,7 @@ class DetailTableViewCell: UITableViewCell {
         return label
     }()
     
-    
+    //detail
     private let detailLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .medium)
@@ -33,7 +35,10 @@ class DetailTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        //add background color
         contentView.backgroundColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
+        
+        // add Label to cell
         contentView.addSubview(detailHeader)
         contentView.addSubview(detailLabel)
         
@@ -46,9 +51,11 @@ class DetailTableViewCell: UITableViewCell {
     
     func configure(with arrayDetails: String, and arrayDetail2: Int) {
         
-        
+        // get header data
         detailHeader.text = arrayDetails
         
+        
+        //get data for detail label
         if arrayDetails == "Feuchtigkeit:" {
             switch arrayDetail2 {
             case 1..<40:
@@ -97,6 +104,8 @@ class DetailTableViewCell: UITableViewCell {
         
     }
     
+    
+    //constraints
     override func layoutSubviews() {
         super.layoutSubviews()
         

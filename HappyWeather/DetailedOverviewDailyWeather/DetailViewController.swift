@@ -10,9 +10,8 @@ import UIKit
 class DetailViewController: UIViewController, UITableViewDelegate {
     
     
-    
-    
-    
+    //View with all different Images/Labels/TableView
+    //Large Image
     private var detailImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -26,6 +25,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         return image
     }()
     
+    //Temperature
     private let detailTemp: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -38,9 +38,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         return label
     }()
     
-    
-    
-    
+    //View for Description and top Details
     private let detailViewWhite: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
@@ -52,6 +50,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         return view
     }()
     
+    // Beschreibung
     private let detailDescription: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .medium)
@@ -63,6 +62,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         return label
     }()
     
+    //Details
     private let detailTop: UILabel = {
         let label = UILabel()
         label.textColor = .label
@@ -73,6 +73,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         return label
     }()
     
+    //TurquoiseView that includes the TableView
     private let detailViewTurquoise: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
@@ -84,15 +85,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         return view
     }()
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    //TableView
     private let detailTableView: UITableView = {
         let tableView = UITableView()
         tableView.clipsToBounds = true
@@ -105,17 +98,21 @@ class DetailViewController: UIViewController, UITableViewDelegate {
     
     
     
-    
-    var pressure = Int()
-    var humidity = Int()
-    var wind_speed = Float()
-    var arrayDetails = ["Feuchtigkeit:","Windgeschwindigkeit:","Luftdruck:"]
-    var arrayDetails2 = [Int]()
-    
+    //variable needed to fill labels/images
     var dt: Int = Int()
     var max = Float()
     var main = String()
     var _description = String()
+    
+    //arrays as input for tableView
+    var arrayDetails = ["Feuchtigkeit:","Windgeschwindigkeit:","Luftdruck:"]
+    var arrayDetails2 = [Int]()
+    
+    //variable needed to fill arrayDetails2
+    var pressure = Int()
+    var humidity = Int()
+    var wind_speed = Float()
+    
     
     
     override func viewDidLoad() {
@@ -123,20 +120,26 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         
         view.backgroundColor = .systemBackground
         
+        
+        // adding label/views/images/tableViews to view
         view.addSubview(detailImage)
         detailImage.addSubview(detailTemp)
-        
         view.addSubview(detailViewWhite)
         detailViewWhite.addSubview(detailViewTurquoise)
         detailViewWhite.addSubview(detailTop)
         detailViewWhite.addSubview(detailDescription)
-        
         detailViewTurquoise.addSubview(detailTableView)
         
-        detailTop.text = "Top Details"
+        //setting header
+        detailTop.text = "Details"
+        
+        //setting description
         detailDescription.text = _description
+        
+        //setting temperature
         detailTemp.text = "\(Int(max))°"
         
+        //setting Immage
         let image = main.lowercased()
         if image.contains("cloud") {
             self.detailImage.image = UIImage(named: "fotoCloud")
@@ -148,36 +151,45 @@ class DetailViewController: UIViewController, UITableViewDelegate {
             self.detailImage.image = UIImage(named: "fotoSun")
         }
         
+        //creating inputs for array to be shown in TableView
         arrayDetails2 = [humidity,Int(wind_speed),pressure]
         
+        //preparing for Usage of TableView
         detailTableView.register(DetailTableViewCell.self, forCellReuseIdentifier: DetailTableViewCell.identifier)
         detailTableView.delegate = self
         detailTableView.dataSource = self
         
-        
+        //loading of data for TableView
         detailTableView.reloadData()
     }
     
     
+    //constraints
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        
+        //constraints of image and temperature label
         detailImage.frame = CGRect(x: 0 * CGFloat(factorWidth), y: -20 * CGFloat(factorHeight), width: view.frame.size.width, height: view.frame.size.height / 2)
         detailTemp.frame = CGRect(x: detailImage.frame.size.width - 150 * CGFloat(factorWidth), y: detailImage.frame.size.height - 100 * CGFloat(factorHeight), width: 125 * CGFloat(factorWidth), height: 75 * CGFloat(factorHeight))
         
-        
+        //constraints views with text
         detailViewWhite.frame = CGRect(x: 35 * CGFloat(factorWidth), y: (view.frame.size.height / 2) + 15 * CGFloat(factorHeight), width: view.frame.size.width - 70  * CGFloat(factorWidth), height: (view.frame.size.height / 2) - 70 * CGFloat(factorHeight))
         detailTop.frame = CGRect(x: 25 * CGFloat(factorWidth), y: 15 * CGFloat(factorHeight), width: detailViewWhite.frame.size.width - 50  * CGFloat(factorWidth), height: 40 * CGFloat(factorHeight))
         detailDescription.frame = CGRect(x: 25 * CGFloat(factorWidth), y: detailTop.frame.size.height + 15 * CGFloat(factorHeight), width: detailViewWhite.frame.size.width - 50  * CGFloat(factorWidth), height: 25 * CGFloat(factorHeight))
         detailViewTurquoise.frame = CGRect(x: 0 * CGFloat(factorWidth), y: 100 * CGFloat(factorHeight), width: detailViewWhite.frame.size.width , height: detailViewWhite.frame.size.height - 100 * CGFloat(factorHeight))
         
-        
+        //constraints TableView
         detailTableView.frame = CGRect(x: 0 * CGFloat(factorWidth), y: 0 * CGFloat(factorHeight), width: detailViewTurquoise.frame.size.width , height: detailViewTurquoise.frame.size.height )
     }
     
 }
 
+
+
+
+
+
+//extension for tableView -> DetailTableViewCell
 extension DetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

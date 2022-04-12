@@ -11,6 +11,8 @@ class NoteTableViewCell: UITableViewCell {
     
     static let identifier = "NoteTableViewCell"
     
+    
+    // creating label/image
     private let greyBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -22,6 +24,7 @@ class NoteTableViewCell: UITableViewCell {
         return view
     }()
     
+    //temperature
     private let highTempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -30,6 +33,7 @@ class NoteTableViewCell: UITableViewCell {
         return label
     }()
     
+    //time
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
@@ -37,6 +41,7 @@ class NoteTableViewCell: UITableViewCell {
         return label
     }()
     
+    //note coming from 24-Stunden-Vorschau
     private let noteLabel: UILabel = {
         let label = UILabel()
         label.textColor = .secondaryLabel
@@ -45,6 +50,7 @@ class NoteTableViewCell: UITableViewCell {
         return label
     }()
     
+    //image
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
@@ -55,6 +61,7 @@ class NoteTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        //adding elements to view
         contentView.addSubview(greyBackgroundView)
         greyBackgroundView.addSubview(timeLabel)
         greyBackgroundView.addSubview(iconImageView)
@@ -70,6 +77,7 @@ class NoteTableViewCell: UITableViewCell {
     
     func configure(timeOfDay: Int) {
         
+        //setting of time
         var today = Int()
         today = Int(Date().timeIntervalSince1970) - (Int(getDayForDate(Date()))! + 1)  * 3600
         if arrayTimes[timeOfDay] - today < (3600 * 24) {
@@ -82,13 +90,15 @@ class NoteTableViewCell: UITableViewCell {
             self.timeLabel.text = "Überübermorgen, \(getDayForDate(Date(timeIntervalSince1970: TimeInterval(arrayTimes[timeOfDay])))) Uhr:"
         }
         
+        //setting of note
         noteLabel.text = "\(dictEventsNoted[arrayTimes[timeOfDay]] ?? "Nichts")"
         
+        // setting of temperature
         highTempLabel.text = "\(Int(dictWeatherForEvents[arrayTimes[timeOfDay]]?.temp ?? 0))°"
+        
+        //setting of image
         iconImageView.image = UIImage(systemName: "cloud.fill")
-        
         let icon = dictWeatherForEvents[arrayTimes[timeOfDay]]!.main.lowercased()
-        
         if icon.contains("cloud") {
             self.iconImageView.image = UIImage(systemName: "cloud.fill")
         } else if icon.contains("rain") {
@@ -101,6 +111,7 @@ class NoteTableViewCell: UITableViewCell {
         
     }
     
+    //constraints
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -112,7 +123,9 @@ class NoteTableViewCell: UITableViewCell {
         
     }
     
+    //getting the time of Day
     func getDayForDate(_ date: Date?) -> String {
+        
         guard let inputDate = date else {
             return ""
         }
@@ -120,6 +133,7 @@ class NoteTableViewCell: UITableViewCell {
         let formatter = DateFormatter()
         formatter.dateFormat = "H"
         return formatter.string(from: inputDate)
+        
     }
     
 }
