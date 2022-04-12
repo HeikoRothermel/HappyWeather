@@ -22,8 +22,8 @@ class DetailTableViewCell: UITableViewCell {
     
     private let detailLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.textColor = UIColor(red: 211 / 255, green: 211 / 255, blue: 215 / 255, alpha: 1)
+        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.textColor = UIColor(red: 221 / 255, green: 221 / 255, blue: 225 / 255, alpha: 1)
         label.backgroundColor =  .clear
         return label
     }()
@@ -116,7 +116,7 @@ class DetailTableViewCell: UITableViewCell {
         super.layoutSubviews()
         detailHeader.frame = CGRect(x: 25 * CGFloat(factorWidth), y: 15 * CGFloat(factorHeight), width: contentView.frame.size.width - 50 * CGFloat(factorWidth), height: (contentView.frame.size.height / 2) - 20 * CGFloat(factorHeight))
         
-        detailLabel.frame = CGRect(x: 25 * CGFloat(factorWidth), y: 15 * CGFloat(factorHeight) + detailHeader.frame.size.height, width: contentView.frame.size.width - 50 * CGFloat(factorWidth), height: (contentView.frame.size.height / 2) - 20 * CGFloat(factorHeight))
+        detailLabel.frame = CGRect(x: 25 * CGFloat(factorWidth), y: 20 * CGFloat(factorHeight) + detailHeader.frame.size.height, width: contentView.frame.size.width - 50 * CGFloat(factorWidth), height: (contentView.frame.size.height / 2) - 20 * CGFloat(factorHeight))
     }
     
 }

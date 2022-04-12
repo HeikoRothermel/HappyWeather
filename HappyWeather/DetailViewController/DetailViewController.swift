@@ -30,7 +30,7 @@ class DetailViewController: UIViewController, UITableViewDelegate {
         let label = UILabel()
         label.textColor = .black
         label.backgroundColor = .white
-        label.alpha = 0.6
+        label.alpha = 0.7
         label.font = .systemFont(ofSize: 28, weight: .medium)
         label.textAlignment = .center
         label.clipsToBounds = true

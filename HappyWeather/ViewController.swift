@@ -67,6 +67,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         let label = UILabel()
         label.textColor = .black
         label.text = "Nutze die 24-Stunden-Vorschau um Ereignisse hinzuzufügen :)"
+        label.numberOfLines = 0
         label.backgroundColor = .clear
         label.font = .systemFont(ofSize: 15, weight: .medium)
         label.textAlignment = .center
@@ -112,19 +113,16 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     }()
     
     
-    private let citiesStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.distribution = .fillEqually
-        stackView.axis = .horizontal
-        stackView.spacing = 5 * CGFloat(factorWidth)
-        return stackView
+    private let citiesLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.backgroundColor = .clear
+        label.text = "Mein Standort"
+        label.font = .systemFont(ofSize: 19, weight: .bold)
+        return label
     }()
     
-    private let citiesScrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.showsHorizontalScrollIndicator = false
-        return scrollView
-    }()
+    
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
@@ -191,8 +189,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         overviewDailyNotes.addSubview(dailyInfoLabel)
 //        overviewDailyNotes.addSubview(alarmButton)
         
-        view.addSubview(citiesScrollView)
-        citiesScrollView.addSubview(citiesStackView)
+        view.addSubview(citiesLabel)
         
         view.addSubview(collectionView)
         
@@ -202,7 +199,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         buttonActualization.addTarget(self, action: #selector(actualizeData(sender:)), for: .touchUpInside)
         
         
-        addCitiesToStackView(coloredCity: 2)
         
         let fpc = FloatingPanelController()
         fpc.delegate = self
@@ -246,15 +242,11 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
         collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  115 * CGFloat(factorHeight), width: view.frame.size.width, height: 380 * CGFloat(factorHeight))
         
-        buttonActualization.frame = CGRect(x: 50 * CGFloat(factorWidth), y:  50 * CGFloat(factorHeight), width: 50 * CGFloat(factorWidth), height: 50 * CGFloat(factorHeight))
+        buttonActualization.frame = CGRect(x: view.frame.size.width - 85 * CGFloat(factorWidth), y:  50 * CGFloat(factorHeight), width: 50 * CGFloat(factorWidth), height: 50 * CGFloat(factorHeight))
         
-        citiesScrollView.frame = CGRect(x: 35 * CGFloat(factorWidth), y:  55 * CGFloat(factorHeight), width: view.frame.size.width - 70 * CGFloat(factorWidth) , height: 75 * CGFloat(factorHeight))
+        citiesLabel.frame = CGRect(x: 35 * CGFloat(factorWidth), y:  50 * CGFloat(factorHeight), width: view.frame.size.width - 125 * CGFloat(factorWidth) , height: 50 * CGFloat(factorHeight))
         
-        citiesStackView.translatesAutoresizingMaskIntoConstraints = false
-        citiesStackView.topAnchor.constraint(equalTo: citiesScrollView.topAnchor).isActive = true
-        citiesStackView.leadingAnchor.constraint(equalTo: citiesScrollView.leadingAnchor).isActive = true
-        citiesStackView.trailingAnchor.constraint(equalTo: citiesScrollView.trailingAnchor).isActive = true
-        citiesStackView.heightAnchor.constraint(equalTo: citiesScrollView.heightAnchor).isActive = true
+        
         
     }
     
@@ -367,33 +359,32 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         setupLocation()
         upDataDate()
         
+        getCityForLocation()
+//        let city = getCityForLocation()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//            self.citiesLabel.text = "Mein Standort - \(city)"
+////            print(self.citiesLabel.text ?? "")
+//        }
+//        print(getCityForLocation())
     }
     
-   
-    func addCitiesToStackView(coloredCity: Int) {
+    func getCityForLocation() {
         
-        
-        while let oldCities = citiesStackView.arrangedSubviews.first {
-            citiesStackView.removeArrangedSubview(oldCities)
-            oldCities.removeFromSuperview()
-        }
-        
-        let numberOfCities = cities.count
-        for count in 1...numberOfCities {
-            
-            let citiesToShow = CitiesButton()
-            citiesToShow.setTitle("\(cities[count - 1])", for: .normal)
-            if count == coloredCity {
-                citiesToShow.setTitleColor(UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1), for: .normal)
-                citiesToShow.titleLabel!.font = UIFont.boldSystemFont(ofSize: 17)
-            } else {
-                citiesToShow.setTitleColor(UIColor(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 1), for: .normal)
-                citiesToShow.titleLabel!.font = UIFont.systemFont(ofSize: 15)
+        let geoCoder = CLGeocoder()
+        let location = CLLocation(latitude: lat, longitude:  long)
+
+        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, _) -> Void in
+
+            placemarks?.forEach { (placemark) in
+                if let city = placemark.locality {
+                    self.citiesLabel.text = "Mein Standort - \(city)"
+                    
+                }
+                
             }
-            citiesStackView.addArrangedSubview(citiesToShow)
-        }
+        })
     }
-    
+   
 }
     
 class MyFloatingPanelLayout: FloatingPanelLayout {
