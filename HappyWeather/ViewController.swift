@@ -43,7 +43,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         label.textColor = .label
         label.backgroundColor = .clear
         label.text = "Mein Standort"
-        label.font = .systemFont(ofSize: 23, weight: .bold)
+        label.font = .systemFont(ofSize: 22, weight: .bold)
         return label
     }()
     
@@ -179,7 +179,7 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         super.viewDidLayoutSubviews()
         
         //Adding constraints for Label for Location
-        citiesLabel.frame = CGRect(x: 35 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: view.frame.size.width - 125 * CGFloat(factorWidth) , height: 50 * CGFloat(factorHeight))
+        citiesLabel.frame = CGRect(x: 35 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: view.frame.size.width - 70 * CGFloat(factorWidth) , height: 50 * CGFloat(factorHeight))
         //Adding constraints for CollectionView for daily Information
         collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  115 * CGFloat(factorHeight), width: view.frame.size.width, height: 380 * CGFloat(factorHeight))
         //Adding constraints for View for Notes/Events
