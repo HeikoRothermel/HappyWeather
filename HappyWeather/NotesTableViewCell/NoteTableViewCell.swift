@@ -88,8 +88,6 @@ class NoteTableViewCell: UITableViewCell {
         iconImageView.image = UIImage(systemName: "cloud.fill")
         
         let icon = dictWeatherForEvents[arrayTimes[timeOfDay]]!.main.lowercased()
-        print(highTempLabel.text!)
-        print(dictWeatherForEvents[arrayTimes[timeOfDay]]!)
         
         if icon.contains("cloud") {
             self.iconImageView.image = UIImage(systemName: "cloud.fill")

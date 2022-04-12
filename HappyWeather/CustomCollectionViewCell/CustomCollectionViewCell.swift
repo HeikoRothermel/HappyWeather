@@ -248,7 +248,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
             oldPoints.removeFromSuperview()
         }
         
-        let numberOfPoints = 8
+        let numberOfPoints = 5
         for count in 1...numberOfPoints {
             let points = StackUIButton()
             if count == coloredPoint {

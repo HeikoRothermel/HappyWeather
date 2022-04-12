@@ -53,6 +53,8 @@ class NotesView: UIView, UITableViewDelegate {
         setup()
         
         
+       
+        
         dailyTableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.identifier)
         dailyTableView.delegate = self
         dailyTableView.dataSource = self
@@ -74,13 +76,15 @@ class NotesView: UIView, UITableViewDelegate {
     
     private func setup() {
         
+        addSubview(dailyInfoLabel)
+        addSubview(dailyHeaderLabel)
+        addSubview(dailyTableView)
         
         print("3")
     }
     override func layoutSubviews() {
         super.layoutSubviews()
         print("4")
-        
         
         
         dailyInfoLabel.frame = CGRect(x: 5 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: 344  * CGFloat(factorWidth) - 10 * CGFloat(factorWidth), height: 278 * CGFloat(factorHeight) - 70 * CGFloat(factorHeight))

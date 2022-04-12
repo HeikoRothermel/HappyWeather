@@ -21,23 +21,53 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     
     var hourlyModels = [Hourly]()
     var dailyModels = [Daily]()
-    var currentModels = [Current]()
+//    var currentModels = [Current]()
     
     
-    private let notesView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 25
-        view.layer.shadowColor = UIColor.label.cgColor
-        view.layer.shadowOpacity = 0.20
-        view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 16
-        view.backgroundColor = .systemBackground
-        return view
+    
+//    private let notesView: UIView = {
+//        let view = UIView()
+//        view.layer.cornerRadius = 25
+//        view.layer.shadowColor = UIColor.label.cgColor
+//        view.layer.shadowOpacity = 0.20
+//        view.layer.shadowOffset = .zero
+//        view.layer.shadowRadius = 16
+//        view.backgroundColor = .systemBackground
+//        return view
+//    }()
+    
+    
+    // CollectionView for daily Information -> Folder: DetailedOverviewDailyWeather
+    private let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        let collView = UICollectionView(frame: .zero,collectionViewLayout: layout)
+        collView.translatesAutoresizingMaskIntoConstraints = false
+        collView.backgroundColor = .clear
+        collView.isPagingEnabled = true
+        collView.showsHorizontalScrollIndicator = false
+        return collView
     }()
     
     
     
-    // DailyView
+    
+    // Label to show the current location
+    private let citiesLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .label
+        label.backgroundColor = .clear
+        label.text = "Mein Standort"
+        label.font = .systemFont(ofSize: 23, weight: .bold)
+        return label
+    }()
+    
+    
+    
+    
+    // Objects for Notes/Events -> Folder: NotesTableViewCell
     private let overviewDailyNotes: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 25
@@ -48,7 +78,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         view.backgroundColor = .systemBackground
         return view
     }()
-    
     
     private let dailyTableView: UITableView = {
         let tableView = UITableView()
@@ -72,7 +101,6 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         return label
     }()
     
-    
     private let dailyHeaderLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(red: 84 / 255, green: 166 / 255, blue: 148 / 255, alpha: 1)
@@ -84,105 +112,203 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
     }()
     
     
-    
-    
-    
-    
-    private let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        let collView = UICollectionView(frame: .zero,collectionViewLayout: layout)
-        collView.translatesAutoresizingMaskIntoConstraints = false
-        collView.backgroundColor = .clear
-        collView.isPagingEnabled = true
-        collView.showsHorizontalScrollIndicator = false
-        return collView
-    }()
-    
-    
-    private let citiesLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.backgroundColor = .clear
-        label.text = "Mein Standort"
-        label.font = .systemFont(ofSize: 23, weight: .bold)
-        return label
-    }()
-    
-    
-    
+
+    // Equipment for Localoization
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
     
-    
+    //FloatingViewController -> Folder 24-Stunden-Vorschau
     var fpc: FloatingPanelController!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UserDefaults.resetStandardUserDefaults()
-        
-        view.backgroundColor = .systemBackground
-        
+        //Getting data from the previous session
         let defaults = UserDefaults.standard
         arrayTimes = defaults.array(forKey: "saveArray")  as? [Int] ?? [Int]()
         print(arrayTimes)
-                arrayTimes.removeAll()
         
         let defaults4 = UserDefaults.standard
         dictForSavings = defaults4.object(forKey: "saveDict")  as? [String: String] ?? [String: String]()
         print(dictForSavings)
-                dictForSavings.removeAll()
         
         for count in arrayTimes {
-            
             if Int(Date().timeIntervalSince1970) < (count + 3600) {
-                
                 let main = dictForSavings["\(count)"]!.components(separatedBy: "-")[1]
                 let temp = Float((dictForSavings["\(count)"]?.components(separatedBy: "-")[2] ?? "0.0"))
                 let info = dictForSavings["\(count)"]!.components(separatedBy: "-")[0]
-                
                 dictEventsNoted[count] = "\(info)"
                 dictWeatherForEvents[count] = (temp: Float(temp!), main: main )
-                
             } else {
-                
                 if let index = arrayTimes.firstIndex(of: count) {
                     arrayTimes.remove(at: index)
                 }
-                
+                dictForSavings.removeValue(forKey: "\(count)")
             }
-            
         }
+        checkIfNotesExist()
         
         
-        checkIfNotesExit()
-        
-        
-        
+        //Definition of factors to have proper constraints for all phone sizes
         factorWidth = Float(view.frame.size.width / 414)
         factorHeight = Float(view.frame.size.height / 896)
         
         
-        dailyTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-//        view.addSubview(overviewDailyNotes)
+        //Adding the Label for Location
+        view.addSubview(citiesLabel)
+        //Adding the CollectionView for daily Information
+        view.addSubview(collectionView)
+        //Adding the View for Notes/Events
+        view.addSubview(overviewDailyNotes)
         overviewDailyNotes.addSubview(dailyHeaderLabel)
         overviewDailyNotes.addSubview(dailyTableView)
         overviewDailyNotes.addSubview(dailyInfoLabel)
-        
-        view.addSubview(citiesLabel)
-        
-        view.addSubview(collectionView)
+        // FloatingPanel prepared and loaded
+        loadingFloatingPanel()
         
         
-        view.addSubview(notesView)
-        let view = NotesView()
-        notesView.addSubview(view)
+        //Preparation of CollectionView for daily information...
+        dailyTableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.identifier)
+        dailyTableView.delegate = self
+        dailyTableView.dataSource = self
+        // ... and TableView for Notes/Events
+        collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
+    }
+    
+    
+    // start functions
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
+        view.backgroundColor = .systemBackground
+        setupLocation()
+        updateData()
         
+    }
+    
+    
+    //Constraints
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        //Adding constraints for Label for Location
+        citiesLabel.frame = CGRect(x: 35 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: view.frame.size.width - 125 * CGFloat(factorWidth) , height: 50 * CGFloat(factorHeight))
+        //Adding constraints for CollectionView for daily Information
+        collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  115 * CGFloat(factorHeight), width: view.frame.size.width, height: 380 * CGFloat(factorHeight))
+        //Adding constraints for View for Notes/Events
+        overviewDailyNotes.frame = CGRect(x: 35 * CGFloat(factorWidth), y: (view.frame.height / 2) + 60 * CGFloat(factorHeight), width: view.frame.width - 70 * CGFloat(factorWidth), height: (view.frame.size.height / 2) - 170 * CGFloat(factorHeight))
+        dailyInfoLabel.frame = CGRect(x: 5 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 10 * CGFloat(factorWidth), height: overviewDailyNotes.frame.height - 70 * CGFloat(factorHeight))
+        dailyTableView.frame = dailyInfoLabel.frame
+        dailyHeaderLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 30 * CGFloat(factorWidth), height: 35 * CGFloat(factorHeight))
+        
+        //Style for Table View without seperator
+        dailyTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+    }
+    
+    
+    //get Latitude and Longitude: I
+    func setupLocation() {
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    
+    }
+    //get Latitude and Longitude: II
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        if !locations.isEmpty, currentLocation == nil {
+            currentLocation = locations.first
+            locationManager.stopUpdatingLocation()
+            getLongAndLat()
+        }
+        
+    }
+    //get Latitude and Longitude: III
+    func getLongAndLat() {
+        
+        guard let currentLocation = currentLocation else {
+            return
+        }
+        long = currentLocation.coordinate.longitude
+        lat = currentLocation.coordinate.latitude
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(long)&units=metric&lang=de&appid=7e5da986d80232efd714c8abf2a1db1b") else {
+            return
+        }
+        urlToUse = url
+        
+        getCityForLocation()
+        
+    }
+    
+    
+    // get name of the City
+    func getCityForLocation() {
+        
+        let geoCoder = CLGeocoder()
+        let location = CLLocation(latitude: lat, longitude:  long)
+        
+        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, _) -> Void in
+            
+            placemarks?.forEach { (placemark) in
+                if let city = placemark.locality {
+                    self.citiesLabel.text = "Mein Standort - \(city)"
+                    
+                }
+                
+            }
+        })
+    }
+    
+    
+    // Function to get data from OpenWeather
+    func updateData() {
+        
+        let task = URLSession.shared.dataTask(with: urlToUse!) { data, _, error in
+            guard let data = data, error == nil else {
+                print("something went wrong")
+                return
+            }
+            
+            var json: WeatherResponse?
+            do {
+                json = try JSONDecoder().decode(WeatherResponse.self, from: data)
+            }
+            catch {
+                print("error: \(error)")
+            }
+            guard let result = json else {
+                return
+            }
+            
+            let entriesHourly = result.hourly
+            self.hourlyModels.append(contentsOf: entriesHourly)
+            
+            let entriesDaily = result.daily
+            self.dailyModels.append(contentsOf: entriesDaily)
+            
+            dictWeatherForEvents.removeAll()
+            for counter in result.hourly {
+                dictWeatherForEvents[counter.dt] = MultipleValue(temp: counter.temp, main: counter.weather.first!.main)
+            }
+            
+            DispatchQueue.main.async {
+                self.dailyTableView.reloadData()
+                self.collectionView.reloadData()
+            }
+            
+        }
+        task.resume()
+        
+    }
+    
+    
+    // FloatingPanel prepared and loaded
+    func loadingFloatingPanel() {
         
         let fpc = FloatingPanelController()
         fpc.delegate = self
@@ -203,91 +329,18 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         fpc.set(contentViewController: contentVC)
         fpc.addPanel(toParent: self)
         
-        
-//        dailyTableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.identifier)
-//        dailyTableView.delegate = self
-//        dailyTableView.dataSource = self
-        
-        collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        
-        
-        overviewDailyNotes.frame = CGRect(x: 35 * CGFloat(factorWidth), y: (view.frame.height / 2) + 60 * CGFloat(factorHeight), width: view.frame.width - 70 * CGFloat(factorWidth), height: (view.frame.size.height / 2) - 170 * CGFloat(factorHeight))
-        dailyInfoLabel.frame = CGRect(x: 5 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 10 * CGFloat(factorWidth), height: overviewDailyNotes.frame.height - 70 * CGFloat(factorHeight))
-        dailyTableView.frame = dailyInfoLabel.frame
-        dailyHeaderLabel.frame = CGRect(x: 15 * CGFloat(factorWidth), y:  20 * CGFloat(factorHeight), width: overviewDailyNotes.frame.width - 30 * CGFloat(factorWidth), height: 35 * CGFloat(factorHeight))
-        //        alarmButton.frame = CGRect(x: overviewDailyNotes.frame.size.width -  75 * CGFloat(factorWidth), y:  15 * CGFloat(factorHeight), width: 60 * CGFloat(factorWidth), height: 60 * CGFloat(factorHeight))
-        
-        collectionView.frame = CGRect(x: 0 * CGFloat(factorWidth), y:  115 * CGFloat(factorHeight), width: view.frame.size.width, height: 380 * CGFloat(factorHeight))
-        
-//        buttonActualization.frame = CGRect(x: view.frame.size.width - 85 * CGFloat(factorWidth), y:  50 * CGFloat(factorHeight), width: 50 * CGFloat(factorWidth), height: 50 * CGFloat(factorHeight))
-        
-        citiesLabel.frame = CGRect(x: 35 * CGFloat(factorWidth), y:  60 * CGFloat(factorHeight), width: view.frame.size.width - 125 * CGFloat(factorWidth) , height: 50 * CGFloat(factorHeight))
-        
-        notesView.frame = CGRect(x: 35 * CGFloat(factorWidth), y: (view.frame.height / 2) + 60 * CGFloat(factorHeight), width: view.frame.width - 70 * CGFloat(factorWidth), height: (view.frame.size.height / 2) - 170 * CGFloat(factorHeight))
-        
-    }
-    
-    func upDataDate() {
-        let task = URLSession.shared.dataTask(with: urlToUse!) { data, _, error in
-            guard let data = data, error == nil else {
-                print("something went wrong")
-                return
-            }
-            var json: WeatherResponse?
-            do {
-                json = try JSONDecoder().decode(WeatherResponse.self, from: data)
-            }
-            catch {
-                print("error: \(error)")
-            }
-            guard let result = json else {
-                return
-            }
-            
-            let entriesHourly = result.hourly
-            self.hourlyModels.append(contentsOf: entriesHourly)
-            
-            
-            let entriesDaily = result.daily
-            self.dailyModels.append(contentsOf: entriesDaily)
-            
-            
-            
-            dictWeatherForEvents.removeAll()
-            for counter in result.hourly {
-                dictWeatherForEvents[counter.dt] = MultipleValue(temp: counter.temp, main: counter.weather.first!.main)
-            }
-            
-            DispatchQueue.main.async {
-                self.dailyTableView.reloadData()
-                self.collectionView.reloadData()
-            }
-            print(json?.current.temp ?? "")
-            
-        }
-        task.resume()
-    }
-    
+    // Function to update after moving FloatingPanel
     func floatingPanelWillBeginDragging(_ vc: FloatingPanelController) {
         
-        NotesView().checkIfNotesExit()
-        
-//        checkIfNotesExit()
         view.endEditing(true)
-//        upDataDate()
+        checkIfNotesExist()
+        updateData()
         
     }
     
-    func checkIfNotesExit() {
+    // Testing if a time was saved in the Array for Notes
+    func checkIfNotesExist() {
         
         if arrayTimes.count > 0 {
             dailyInfoLabel.isHidden = true
@@ -297,78 +350,21 @@ class ViewController: UIViewController, FloatingPanelControllerDelegate, CLLocat
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setupLocation()
-        upDataDate()
-    }
     
-    
-    // Location
-    func setupLocation() {
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if !locations.isEmpty, currentLocation == nil {
-            currentLocation = locations.first
-            locationManager.stopUpdatingLocation()
-            requestWeatherForLocation()
-        }
-    }
-    
-    func requestWeatherForLocation() {
-        
-        guard let currentLocation = currentLocation else {
-            return
-        }
-        long = currentLocation.coordinate.longitude
-        lat = currentLocation.coordinate.latitude
-        print("\(lat) | \(long)")
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(long)&units=metric&lang=de&appid=7e5da986d80232efd714c8abf2a1db1b") else {
-            return
-        }
-        urlToUse = url
-        
-        getCityForLocation()
-    }
-    
+    // Reload data after Scrolling the CollectionView
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if collectionView == collectionView {
             collectionView.reloadData()
         }
     }
     
+
     
-    @objc func actualizeData(sender: UIButton) {
-        
-        setupLocation()
-        upDataDate()
-        
-        
-    }
-    
-    func getCityForLocation() {
-        
-        let geoCoder = CLGeocoder()
-        let location = CLLocation(latitude: lat, longitude:  long)
-        
-        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, _) -> Void in
-            
-            placemarks?.forEach { (placemark) in
-                if let city = placemark.locality {
-                    self.citiesLabel.text = "Mein Standort - \(city)"
-                    
-                }
-                
-            }
-        })
-    }
     
 }
 
+
+// Layout of Floating Panel
 class MyFloatingPanelLayout: FloatingPanelLayout {
     
     let position: FloatingPanelPosition = .bottom
@@ -383,41 +379,54 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
 }
 
 
-//extension ViewController: UITableViewDataSource {
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//
-//        var cells = Int()
-//        cells = arrayTimes.count
-//        return cells
-//
-//    }
-//
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
-//        cell!.configure(timeOfDay: indexPath.row)
-//        cell!.selectionStyle = UITableViewCell.SelectionStyle.none
-//        return cell!
-//
-//    }
-//
-//
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//
-//        var cellheight = Float()
-//        cellheight = Float(100 * CGFloat(factorHeight))
-//        return CGFloat(cellheight)
-//
-//    }
-//
-//}
 
 
 
+
+
+
+
+
+
+
+
+
+
+// Extension to prepare TableView for Notes/Events
+extension ViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        var cells = Int()
+        cells = arrayTimes.count
+        return cells
+
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.identifier, for: indexPath) as? NoteTableViewCell
+        cell!.configure(timeOfDay: indexPath.row)
+        cell!.selectionStyle = UITableViewCell.SelectionStyle.none
+        return cell!
+
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+        var cellheight = Float()
+        cellheight = Float(100 * CGFloat(factorHeight))
+        return CGFloat(cellheight)
+
+    }
+
+}
+
+
+// Extension to prepare Collection View for Daily Weather
 extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
+    // Defining Size of CollectionViewCell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         var height = CGFloat()
@@ -428,14 +437,16 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         
     }
     
+    //Defining Number of Collection Cells: Aufgabe -> 5 Tage
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         var number = Int()
-        number = dailyModels.count
+        number = min(dailyModels.count,5)
         return number
         
     }
     
+    //Defining how cell is configured -> Daily Weather Forecast
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell

@@ -56,9 +56,6 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     }()
     
     
-    
-    
-    
     static let identifier = "WeatherTableViewCell"
     
     
@@ -67,8 +64,6 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        
         
         textFieldNote.delegate = self
         
@@ -159,8 +154,19 @@ class WeatherTableViewCell: UITableViewCell, UITextFieldDelegate {
             defaults.set(arrayTimes, forKey: "saveArray")
             
             UserDefaults.standard.set(dictForSavings, forKey: "saveDict")
-            let result = UserDefaults.standard.value(forKey: "saveDict")
+            _ = UserDefaults.standard.value(forKey: "saveDict")
             
+        } else {
+            if let index = arrayTimes.firstIndex(of: timeOfDay) {
+                arrayTimes.remove(at: index)
+            }
+            dictForSavings.removeValue(forKey: "\(timeOfDay)")
+            
+            let defaults = UserDefaults.standard
+            defaults.set(arrayTimes, forKey: "saveArray")
+            
+            UserDefaults.standard.set(dictForSavings, forKey: "saveDict")
+            _ = UserDefaults.standard.value(forKey: "saveDict")
         }
     }
     
