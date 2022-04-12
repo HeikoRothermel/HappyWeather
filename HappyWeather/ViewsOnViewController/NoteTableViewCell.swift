@@ -8,6 +8,7 @@
 import UIKit
 
 class NoteTableViewCell: UITableViewCell {
+    
     static let identifier = "NoteTableViewCell"
     
     private let greyBackgroundView: UIView = {

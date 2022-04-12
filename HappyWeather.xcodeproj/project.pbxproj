@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5A69C81A8EC8850AE6A35634 /* Pods_HappyWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75DCC89CDF309914F948AB63 /* Pods_HappyWeather.framework */; };
 		E846A98128038CAA003F3995 /* CitiesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E846A98028038CAA003F3995 /* CitiesButton.swift */; };
+		E846A9832804F1F6003F3995 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E846A9822804F1F6003F3995 /* DetailTableViewCell.swift */; };
 		E87DA5A427F8E3D9004BB7AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DA5A327F8E3D9004BB7AA /* AppDelegate.swift */; };
 		E87DA5A627F8E3D9004BB7AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DA5A527F8E3D9004BB7AA /* SceneDelegate.swift */; };
 		E87DA5A827F8E3D9004BB7AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DA5A727F8E3D9004BB7AA /* ViewController.swift */; };
@@ -31,6 +32,7 @@
 		75DCC89CDF309914F948AB63 /* Pods_HappyWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HappyWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D201A9AE359ADDF3755D6E36 /* Pods-HappyWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyWeather.release.xcconfig"; path = "Target Support Files/Pods-HappyWeather/Pods-HappyWeather.release.xcconfig"; sourceTree = "<group>"; };
 		E846A98028038CAA003F3995 /* CitiesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesButton.swift; sourceTree = "<group>"; };
+		E846A9822804F1F6003F3995 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		E87DA5A027F8E3D9004BB7AA /* HappyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E87DA5A327F8E3D9004BB7AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E87DA5A527F8E3D9004BB7AA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				E8B61300280357DA00EBE04C /* DetailViewController.swift */,
+				E846A9822804F1F6003F3995 /* DetailTableViewCell.swift */,
 			);
 			path = DetailViewController;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				E846A98128038CAA003F3995 /* CitiesButton.swift in Sources */,
 				E87DA5A827F8E3D9004BB7AA /* ViewController.swift in Sources */,
 				E87DA5A427F8E3D9004BB7AA /* AppDelegate.swift in Sources */,
+				E846A9832804F1F6003F3995 /* DetailTableViewCell.swift in Sources */,
 				E8E0E4CA27F9C249007206C8 /* WeatherTableViewCell.swift in Sources */,
 				E8B612F528017E8F00EBE04C /* NoteTableViewCell.swift in Sources */,
 				E87FA01327FCBC9300C314E3 /* GlobalParameters.swift in Sources */,
