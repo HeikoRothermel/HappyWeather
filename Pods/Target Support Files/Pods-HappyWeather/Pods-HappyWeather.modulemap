@@ -1,0 +1,6 @@
+framework module Pods_HappyWeather {
+  umbrella header "Pods-HappyWeather-umbrella.h"
+
+  export *
+  module * { export * }
+}
